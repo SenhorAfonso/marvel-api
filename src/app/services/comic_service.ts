@@ -1,19 +1,25 @@
+import ComicReposity from '../repositories/comic_repository';
+
 class ComicService {
 
   static addNewComic() {
-    return 'Creating new comic';
+    const result = ComicReposity.addNewComic();
+    return result;
   }
 
   static getAllComics() {
-    return 'Getting all comics';
+    const result = ComicReposity.getAllComics();
+    return result;
   }
 
   static updateComicInfo() {
-    return 'Updating comic info';
+    const result = ComicReposity.updateComicInfo();
+    return result;
   }
 
   static deleteComicInfo() {
-    return 'Deleting comic info';
+    const result = ComicReposity.deleteComicInfo();
+    return result;
   }
 
 }
