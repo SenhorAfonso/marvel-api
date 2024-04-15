@@ -13,12 +13,12 @@ class ComicController {
     res.status(status).json({ success, message, data: result });
   }
 
-  static  getAllComics(
+  static async getAllComics(
     req: Request,
     res: Response
   ) {
-    const result = ComicService.getAllComics();
-    res.send(result);
+    const { success, status, message, result } = await ComicService.getAllComics();
+    res.status(status).json({ success, message, data: result });
   }
 
   static  updateComicInfo(

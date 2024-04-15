@@ -21,8 +21,19 @@ class ComicReposity {
     return { success, status, message, result };
   }
 
-  static getAllComics() {
-    return 'Getting all comics';
+  static async getAllComics():
+  Promise<{
+    message: string;
+    status: number,
+    success: boolean,
+    result: mongoose.Document[]
+  }> {
+    const message: string = 'Comic successfully created!';
+    const status: number = StatusCodes.CREATED;
+    const success: boolean = true;
+
+    const result = await comics_model.find();
+    return { success, status, message, result };
   }
 
   static updateComicInfo() {
