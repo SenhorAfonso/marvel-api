@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import ComicService from '../services/comic_service';
 
 class ComicController {
 
@@ -6,28 +7,32 @@ class ComicController {
     req: Request,
     res: Response
   ) {
-    res.send('Creating new comic');
+    const result = ComicService.addNewComic();
+    res.send(result);
   }
 
-  static getAllComics(
+  static  getAllComics(
     req: Request,
     res: Response
   ) {
-    res.send('Getting all comics');
+    const result = ComicService.getAllComics();
+    res.send(result);
   }
 
-  static updateComicInfo(
+  static  updateComicInfo(
     req: Request,
     res: Response
   ) {
-    res.send('Updating comic info');
+    const result = ComicService.updateComicInfo();
+    res.send(result);
   }
 
-  static deleteComicInfo(
+  static  deleteComicInfo(
     req: Request,
     res: Response
   ) {
-    res.send('Deleting comic info');
+    const result = ComicService.deleteComicInfo();
+    res.send(result);
   }
 }
 
