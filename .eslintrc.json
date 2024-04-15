@@ -67,5 +67,13 @@
           "always"
       ]
   },
-  "overrides": []
+  "overrides": [
+    {
+      "files": ["app.ts", "connectDB.ts"],
+      "rules": {
+        "no-console": "off",
+        "no-new": "off"
+      }
+    }
+  ]
 }
