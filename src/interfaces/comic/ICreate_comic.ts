@@ -1,8 +1,8 @@
-interface ICreateNewComic {
+interface ICreate_comic {
   title: string;
   description: string;
   publishDate: string;
   folder: string;
 }
 
-export default ICreateNewComic;
+export default ICreate_comic;
