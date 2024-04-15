@@ -1,9 +1,10 @@
 import ComicReposity from '../repositories/comic_repository';
-import ICreateNewComic from '../../interfaces/comic/ICreateNewComic';
+import ICreate_comic from '../../interfaces/comic/ICreate_comic';
+import IUpdate_comic from '../../interfaces/comic/IUpdate_comic';
 
 class ComicService {
 
-  static async addNewComic(payload: ICreateNewComic) {
+  static async addNewComic(payload: ICreate_comic) {
     const result = await ComicReposity.addNewComic(payload);
     return result;
   }
@@ -13,8 +14,8 @@ class ComicService {
     return result;
   }
 
-  static updateComicInfo() {
-    const result = ComicReposity.updateComicInfo();
+  static updateComicInfo(comicId: string, payload: IUpdate_comic) {
+    const result = ComicReposity.updateComicInfo(comicId, payload);
     return result;
   }
 

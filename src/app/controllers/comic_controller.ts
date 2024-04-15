@@ -21,12 +21,15 @@ class ComicController {
     res.status(status).json({ success, message, data: result });
   }
 
-  static  updateComicInfo(
+  static async updateComicInfo(
     req: Request,
     res: Response
   ) {
-    const result = ComicService.updateComicInfo();
-    res.send(result);
+    const { comicId } = req.params;
+    const { title, description, publishDate, folder } = req.body;
+    const { success, status, message, result } = await ComicService.updateComicInfo(comicId, { title, description, publishDate, folder });
+
+    res.status(status).json({ success, message, data: result });
   }
 
   static  deleteComicInfo(
