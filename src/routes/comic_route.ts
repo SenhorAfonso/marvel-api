@@ -5,7 +5,7 @@ const comicRouter = Router();
 
 comicRouter.post('/comics', ComicController.addNewComic);
 comicRouter.get('/comics', ComicController.getAllComics);
-comicRouter.put('/comic/:id', ComicController.updateComicInfo);
-comicRouter.delete('/comic/:id', ComicController.deleteComicInfo);
+comicRouter.put('/comic/:comicId', ComicController.updateComicInfo);
+comicRouter.delete('/comic/:comicId', ComicController.deleteComicInfo);
 
 export default comicRouter;
