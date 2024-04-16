@@ -32,12 +32,14 @@ class ComicController {
     res.status(status).json({ success, message, data: result });
   }
 
-  static  deleteComicInfo(
+  static async deleteComicInfo(
     req: Request,
     res: Response
   ) {
-    const result = ComicService.deleteComicInfo();
-    res.send(result);
+    const { comicId } = req.params;
+    const { success, status, message, result } = await ComicService.deleteComicInfo(comicId);
+
+    res.status(status).json({ success, message, result });
   }
 }
 

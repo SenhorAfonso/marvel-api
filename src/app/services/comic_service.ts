@@ -19,8 +19,8 @@ class ComicService {
     return result;
   }
 
-  static deleteComicInfo() {
-    const result = ComicReposity.deleteComicInfo();
+  static deleteComicInfo(comicId: string) {
+    const result = ComicReposity.deleteComicInfo(comicId);
     return result;
   }
 

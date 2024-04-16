@@ -51,8 +51,19 @@ class ComicReposity {
     return { success, status, message, result };
   }
 
-  static deleteComicInfo() {
-    return 'Deleting comic info';
+  static async deleteComicInfo(comicId: string): Promise<{
+    message: string;
+    status: number;
+    success: boolean;
+    result: mongoose.Document
+  }> {
+    const message: string = 'Comic successfully deleted!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
+    const result = await comics_model.findById({ _id: comicId }) as mongoose.Document;
+
+    return { success, status, message, result };
   }
 }
 
