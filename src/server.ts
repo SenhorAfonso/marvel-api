@@ -1,4 +1,5 @@
 import express from 'express';
+import comicRouter from './routes/comic_route';
 
 class Server {
   public server: express.Application;
@@ -10,6 +11,7 @@ class Server {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use('/api/v1/', comicRouter);
   }
 
 }
