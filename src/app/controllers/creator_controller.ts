@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import CreatorService from '../services/creator_service';
 
 class CreatorController {
 
@@ -6,7 +7,7 @@ class CreatorController {
     req: Request,
     res: Response
   ) {
-    const result = 'Creating a new creator';
+    const result = CreatorService.fetchCreators();
     res.send(result);
   }
 
@@ -14,7 +15,7 @@ class CreatorController {
     req: Request,
     res: Response
   ) {
-    const result = 'Retrieving all creators';
+    const result = CreatorService.getCreators();
     res.send(result);
   }
 
@@ -22,7 +23,7 @@ class CreatorController {
     req: Request,
     res: Response
   ) {
-    const result = 'Updating a creator';
+    const result = CreatorService.updateCreator();
     res.send(result);
   }
 
@@ -30,7 +31,7 @@ class CreatorController {
     req: Request,
     res: Response
   ) {
-    const result = 'Deleting a creator';
+    const result = CreatorService.deleteCreator();
     res.send(result);
   }
 
