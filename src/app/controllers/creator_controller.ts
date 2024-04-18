@@ -3,11 +3,11 @@ import CreatorService from '../services/creator_service';
 
 class CreatorController {
 
-  static fetchCreators(
+  static async fetchCreators(
     req: Request,
     res: Response
   ) {
-    const result = CreatorService.fetchCreators();
+    const result = await CreatorService.fetchCreators();
     res.send(result);
   }
 
