@@ -1,7 +1,9 @@
+import creatorSchema from '../models/creator_schema';
+
 class CreatorRepository {
 
-  static saveCreators() {
-    const result = 'Creating a new creator';
+  static saveCreators(creators: any[]) {
+    const result = creatorSchema.create(creators);
     return result;
   }
 
