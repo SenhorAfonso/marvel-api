@@ -4,17 +4,17 @@ import ICreate_comic from '../../interfaces/comic/ICreate_comic';
 import IUpdate_comic from '../../interfaces/comic/IUpdate_comic';
 import comics_model from '../models/comics_model';
 
-class ComicReposity {
+class ComicRepository {
 
-  static async addNewComic(
-    payload: ICreate_comic
+  static async saveComics(
+    payload: ICreate_comic[]
   ): Promise<{
     message: string;
     status: number;
     success: boolean;
-    result: mongoose.Document
+    result: mongoose.Document[]
   }> {
-    const message: string = 'Comic successfully created!';
+    const message: string = 'Comics successfully fetched from API!';
     const status: number = StatusCodes.CREATED;
     const success: boolean = true;
 
@@ -22,8 +22,7 @@ class ComicReposity {
     return { success, status, message, result };
   }
 
-  static async getAllComics():
-  Promise<{
+  static async getAllComics(): Promise<{
     message: string;
     status: number,
     success: boolean,
@@ -67,4 +66,4 @@ class ComicReposity {
   }
 }
 
-export default ComicReposity;
+export default ComicRepository;

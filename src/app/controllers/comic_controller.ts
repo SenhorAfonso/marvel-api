@@ -3,13 +3,11 @@ import ComicService from '../services/comic_service';
 
 class ComicController {
 
-  static async addNewComic(
+  static async fetchComics(
     req: Request,
     res: Response
   ) {
-    const { title, description, publishDate, folder } = req.body;
-    const { success, status, message, result } = await ComicService.addNewComic({ title, description, publishDate, folder });
-
+    const { success, status, message, result } = await ComicService.fetchComics();
     res.status(status).json({ success, message, data: result });
   }
 
