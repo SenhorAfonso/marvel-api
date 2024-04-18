@@ -1,21 +1,14 @@
 import Router from 'express';
+import CreatorController from '../app/controllers/creator_controller';
 
 const creatorRouter = Router();
 
-creatorRouter.post('/creators', (req, res) => {
-  res.send('Creating a new creator');
-});
+creatorRouter.get('/fetch-creators', CreatorController.fetchCreators);
 
-creatorRouter.get('/creators', (req, res) => {
-  res.send('Retrieving all creators');
-});
+creatorRouter.get('/creators', CreatorController.getCreators);
 
-creatorRouter.put('/creator/:id', (req, res) => {
-  res.send('Updating a creator');
-});
+creatorRouter.put('/creator/:id', CreatorController.updateCreator);
 
-creatorRouter.delete('/creator/:id', (req, res) => {
-  res.send('Deleting a creator');
-});
+creatorRouter.delete('/creator/:id', CreatorController.deleteCreator);
 
 export default creatorRouter;
