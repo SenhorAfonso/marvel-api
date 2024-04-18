@@ -1,22 +1,24 @@
+import CreatorRepository from '../repositories/creator_repository';
+
 class CreatorService {
 
   static fetchCreators() {
-    const result = 'Creating a new creator';
+    const result = CreatorRepository.saveCreators();
     return result;
   }
 
   static getCreators() {
-    const result = 'Retrieving all creators';
+    const result = CreatorRepository.getCreators();
     return result;
   }
 
   static updateCreator() {
-    const result = 'Updating a creator';
+    const result = CreatorRepository.updateCreator();
     return result;
   }
 
   static deleteCreator() {
-    const result = 'Deleting a creator';
+    const result = CreatorRepository.deleteCreator();
     return result;
   }
 
