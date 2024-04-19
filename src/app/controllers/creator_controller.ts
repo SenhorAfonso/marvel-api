@@ -29,12 +29,14 @@ class CreatorController {
     res.send(result);
   }
 
-  static deleteCreator(
+  static async deleteCreator(
     req: Request,
     res: Response
   ) {
-    const result = CreatorService.deleteCreator();
-    res.send(result);
+    const { creatorID } = req.params;
+    const { success, message, status, result } = await CreatorService.deleteCreator(creatorID);
+
+    res.status(status).json({ code: status, success, message, data: { result } });
   }
 
 }

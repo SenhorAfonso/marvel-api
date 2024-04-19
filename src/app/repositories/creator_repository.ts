@@ -32,9 +32,20 @@ class CreatorRepository {
     return result;
   }
 
-  static deleteCreator() {
-    const result = 'Deleting a creator';
-    return result;
+  static async deleteCreator(creatorID: string) {
+    const success: boolean = true;
+    const message: string = 'Creator deleted';
+    const status: number = StatusCodes.OK;
+
+    const creatorToDelete = await creatorSchema.findByIdAndDelete({ _id: creatorID });
+
+    if (!creatorToDelete) {
+      throw new Error(`The id ${creatorID} is not associated with an record`);
+    }
+
+    await creatorSchema.findByIdAndDelete({ _id: creatorID });
+
+    return { success, message, status, result: creatorToDelete };
   }
 
 }

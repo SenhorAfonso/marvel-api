@@ -35,8 +35,8 @@ class CreatorService {
     return result;
   }
 
-  static deleteCreator() {
-    const result = CreatorRepository.deleteCreator();
+  static async deleteCreator(creatorID: string) {
+    const result = await CreatorRepository.deleteCreator(creatorID);
     return result;
   }
 
