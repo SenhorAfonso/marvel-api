@@ -24,8 +24,8 @@ class CreatorService {
     return result;
   }
 
-  static getCreators() {
-    const result = CreatorRepository.getCreators();
+  static async getCreators() {
+    const result = await CreatorRepository.getCreators();
     return result;
   }
 

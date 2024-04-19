@@ -11,12 +11,12 @@ class CreatorController {
     res.send(result);
   }
 
-  static getCreators(
+  static async getCreators(
     req: Request,
     res: Response
   ) {
-    const result = CreatorService.getCreators();
-    res.send(result);
+    const { success, message, status, result } = await CreatorService.getCreators();
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
   static updateCreator(
