@@ -1,13 +1,13 @@
 import StatusCodes from 'http-status-codes';
 import mongoose from 'mongoose';
-import ICreate_comic from '../../interfaces/comic/ICreate_comic';
-import IUpdate_comic from '../../interfaces/comic/IUpdate_comic';
-import comics_model from '../models/comics_model';
+import ICreateComic from '../../interfaces/comic/ICreate_comic';
+import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
+import comicsModel from '../models/comics_model';
 
 class ComicRepository {
 
   static async saveComics(
-    payload: ICreate_comic[]
+    payload: ICreateComic[]
   ): Promise<{
     message: string;
     status: number;
@@ -18,7 +18,7 @@ class ComicRepository {
     const status: number = StatusCodes.CREATED;
     const success: boolean = true;
 
-    const result = await comics_model.create(payload);
+    const result = await comicsModel.create(payload);
     return { success, status, message, result };
   }
 
@@ -32,11 +32,11 @@ class ComicRepository {
     const status: number = StatusCodes.OK;
     const success: boolean = true;
 
-    const result = await comics_model.find();
+    const result = await comicsModel.find();
     return { success, status, message, result };
   }
 
-  static async updateComicInfo(comicId: string, newComicInfo: IUpdate_comic): Promise<{
+  static async updateComicInfo(comicId: string, newComicInfo: IUpdateComic): Promise<{
     message: string;
     status: number;
     success: boolean;
@@ -46,7 +46,7 @@ class ComicRepository {
     const status: number = StatusCodes.OK;
     const success: boolean = true;
 
-    const result = await comics_model.findByIdAndUpdate(comicId, newComicInfo, { new: true }) as mongoose.Document;
+    const result = await comicsModel.findByIdAndUpdate(comicId, newComicInfo, { new: true }) as mongoose.Document;
     return { success, status, message, result };
   }
 
@@ -60,7 +60,7 @@ class ComicRepository {
     const status: number = StatusCodes.OK;
     const success: boolean = true;
 
-    const result = await comics_model.findById({ _id: comicId }) as mongoose.Document;
+    const result = await comicsModel.findById({ _id: comicId }) as mongoose.Document;
 
     return { success, status, message, result };
   }
