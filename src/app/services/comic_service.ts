@@ -4,6 +4,8 @@ import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
 import serverConfig from '../../configs/serverConfig';
 import APIUtils from '../utils/api_utis';
 import IComicModel from '../../interfaces/comic/IComic_model';
+import IHasResponseBody from '../../interfaces/IHasResponseBody';
+import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 
 class ComicService {
 
@@ -13,10 +15,10 @@ class ComicService {
     success: boolean;
     result: mongoose.Document[]
   }> {
-    const comicsRequest = await fetch(`https:// gateway.marvel.com/v1/public/comics?title=Secret%20Wars${serverConfig.MARVEL_API_AUTH}`);
-    const comicsResponseBody = await comicsRequest.json();
+    const comicsRequest = await fetch(`https://gateway.marvel.com/v1/public/comics${serverConfig.MARVEL_API_AUTH}&title=Secret%20Wars`);
+    const comicsResponseBody: IHasResponseBody<IComicResponseBody> = await comicsRequest.json();
 
-    const comicsArray: IComicModel[] = comicsResponseBody.data.results;
+    const comicsArray = comicsResponseBody.data.results;
     const filteredComicsArray: IComicModel[] = [];
 
     comicsArray.forEach(registro => {
