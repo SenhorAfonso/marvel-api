@@ -1,8 +1,9 @@
 import serverConfig from '../../configs/serverConfig';
+import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 
 class APIUtils {
 
-  static getComic(comics: any) {
+  static getComic(comics: IComicResponseBody) {
     const comic = {
       title: comics.title,
       description: comics.description,

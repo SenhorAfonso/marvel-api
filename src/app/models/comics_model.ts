@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import IComic_model from '../../interfaces/comic/IComic_model';
+import IComicModel from '../../interfaces/comic/IComic_model';
 
-const comicSchema = new mongoose.Schema<IComic_model>({
+const comicSchema = new mongoose.Schema<IComicModel>({
   title: {
     type: String,
     require: [true, 'Comic title is a required field!']
@@ -10,7 +10,7 @@ const comicSchema = new mongoose.Schema<IComic_model>({
     type: String,
     require: [true, 'Comic description is a required field!']
   },
-  publish_date: {
+  publishDate: {
     type: String,
     require: [true, 'Comid publish_date is a required field!']
   },
@@ -20,4 +20,4 @@ const comicSchema = new mongoose.Schema<IComic_model>({
   }
 });
 
-export default mongoose.model<IComic_model>('comicModel', comicSchema);
+export default mongoose.model<IComicModel>('comicModel', comicSchema);

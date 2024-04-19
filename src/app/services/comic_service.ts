@@ -1,9 +1,11 @@
 import mongoose from 'mongoose';
 import ComicRepository from '../repositories/comic_repository';
-import IUpdate_comic from '../../interfaces/comic/IUpdate_comic';
+import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
 import serverConfig from '../../configs/serverConfig';
 import APIUtils from '../utils/api_utis';
-import IComic_model from '../../interfaces/comic/IComic_model';
+import IComicModel from '../../interfaces/comic/IComic_model';
+import IHasResponseBody from '../../interfaces/IHasResponseBody';
+import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 
 class ComicService {
 
@@ -13,18 +15,18 @@ class ComicService {
     success: boolean;
     result: mongoose.Document[]
   }> {
-    const comics_request = await fetch(`http://gateway.marvel.com/v1/public/comics${serverConfig.MARVEL_API_AUTH}`);
-    const comics_response_body = await comics_request.json();
+    const comicsRequest = await fetch(`https://gateway.marvel.com/v1/public/comics${serverConfig.MARVEL_API_AUTH}&title=Secret%20Wars`);
+    const comicsResponseBody: IHasResponseBody<IComicResponseBody> = await comicsRequest.json();
 
-    const comics_array: IComic_model[] = comics_response_body.data.results;
-    const filtered_comics_array: IComic_model[] = [];
+    const comicsArray = comicsResponseBody.data.results;
+    const filteredComicsArray: IComicModel[] = [];
 
-    comics_array.forEach(registro => {
+    comicsArray.forEach(registro => {
       const comic = APIUtils.getComic(registro);
-      filtered_comics_array.push(comic);
+      filteredComicsArray.push(comic);
     });
 
-    const result = await ComicRepository.saveComics(filtered_comics_array);
+    const result = await ComicRepository.saveComics(filteredComicsArray);
     return result;
   }
 
@@ -33,7 +35,7 @@ class ComicService {
     return result;
   }
 
-  static updateComicInfo(comicId: string, payload: IUpdate_comic) {
+  static updateComicInfo(comicId: string, payload: IUpdateComic) {
     const result = ComicRepository.updateComicInfo(comicId, payload);
     return result;
   }
