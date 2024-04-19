@@ -7,8 +7,8 @@ class CreatorController {
     req: Request,
     res: Response
   ) {
-    const result = await CreatorService.fetchCreators();
-    res.send(result);
+    const { success, message, status, result } = await CreatorService.fetchCreators();
+    res.status(status).json({ code: status, success, message, data: { result } });
   }
 
   static async getCreators(
@@ -25,8 +25,8 @@ class CreatorController {
   ) {
     const { creatorID } = req.params;
     const { name, role, sagaComic, otherComics } = req.body;
-    const result = await CreatorService.updateCreator({ creatorID, name, role, sagaComic, otherComics });
-    res.send(result);
+    const { success, message, status, result } = await CreatorService.updateCreator({ creatorID, name, role, sagaComic, otherComics });
+    res.status(status).json({ code: status, success, message, data: { result } });
   }
 
   static async deleteCreator(

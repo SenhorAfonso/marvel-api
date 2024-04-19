@@ -6,13 +6,17 @@ import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 class CreatorRepository {
 
   static async saveCreators(creators: Array<ICreators>) {
+    const success: boolean = true;
+    const message: string = 'The creators were registered!';
+    const status: number = StatusCodes.OK;
+
     const result = await creatorSchema.create(creators);
-    return result;
+    return { success, message, status, result };;
   }
 
   static async getCreators() {
     const success: boolean = true;
-    const message: string = 'All cretors were retrieved!';
+    const message: string = 'All creators were retrieved!';
     const status: number = StatusCodes.OK;
 
     const result = await creatorSchema.find();
@@ -20,6 +24,9 @@ class CreatorRepository {
   }
 
   static async updateCreator(payload: IUpdateCreatorInfo) {
+    const success: boolean = true;
+    const message: string = 'The creator were updated!';
+    const status: number = StatusCodes.OK;
     const { creatorID, ...newInfoCreator } = payload;
 
     const creatorToUpdate = await creatorSchema.findById({ _id: creatorID });
@@ -29,7 +36,7 @@ class CreatorRepository {
     }
 
     const result = await creatorSchema.findByIdAndUpdate({ _id: creatorID }, newInfoCreator, { new: true });
-    return result;
+    return { success, message, status, result };
   }
 
   static async deleteCreator(creatorID: string) {
