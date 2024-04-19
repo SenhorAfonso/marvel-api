@@ -5,6 +5,7 @@ import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 import ICreators from '../../interfaces/creators/ICreators';
 import ICreatorsArray from '../../interfaces/creators/ICreatorsArray';
 import CreatorRepository from '../repositories/creator_repository';
+import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 
 class CreatorService {
 
@@ -29,8 +30,8 @@ class CreatorService {
     return result;
   }
 
-  static updateCreator() {
-    const result = CreatorRepository.updateCreator();
+  static async updateCreator(payload: IUpdateCreatorInfo) {
+    const result = await CreatorRepository.updateCreator(payload);
     return result;
   }
 

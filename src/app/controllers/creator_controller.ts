@@ -19,11 +19,13 @@ class CreatorController {
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
-  static updateCreator(
+  static async updateCreator(
     req: Request,
     res: Response
   ) {
-    const result = CreatorService.updateCreator();
+    const { creatorID } = req.params;
+    const { name, role, sagaComic, otherComics } = req.body;
+    const result = await CreatorService.updateCreator({ creatorID, name, role, sagaComic, otherComics });
     res.send(result);
   }
 
