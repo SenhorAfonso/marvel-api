@@ -7,8 +7,8 @@ creatorRouter.get('/fetch-creators', CreatorController.fetchCreators);
 
 creatorRouter.get('/creators', CreatorController.getCreators);
 
-creatorRouter.put('/creator/:id', CreatorController.updateCreator);
+creatorRouter.put('/creator/:creatorID', CreatorController.updateCreator);
 
-creatorRouter.delete('/creator/:id', CreatorController.deleteCreator);
+creatorRouter.delete('/creator/:creatorID', CreatorController.deleteCreator);
 
 export default creatorRouter;
