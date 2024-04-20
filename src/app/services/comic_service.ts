@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 import ComicRepository from '../repositories/comic_repository';
 import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
 import serverConfig from '../../configs/serverConfig';
-import APIUtils from '../utils/api_utis';
 import IComicModel from '../../interfaces/comic/IComic_model';
 import IHasResponseBody from '../../interfaces/IHasResponseBody';
 import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
@@ -21,8 +20,13 @@ class ComicService {
     const comicsArray = comicsResponseBody.data.results;
     const filteredComicsArray: IComicModel[] = [];
 
-    comicsArray.forEach(registro => {
-      const comic = APIUtils.getComic(registro);
+    comicsArray.forEach(marvelComic => {
+      const comic = {
+        title: marvelComic.title,
+        description: marvelComic.description,
+        publishDate: marvelComic.dates[0].date,
+        folder: marvelComic.thumbnail.path + serverConfig.IMAGE_QUALITY + serverConfig.IMAGE_QUALITY
+      };
       filteredComicsArray.push(comic);
     });
 
