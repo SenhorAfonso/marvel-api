@@ -6,6 +6,7 @@ import ICreators from '../../interfaces/creators/ICreators';
 import ICreatorsArray from '../../interfaces/creators/ICreatorsArray';
 import CreatorRepository from '../repositories/creator_repository';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
+import IPagination from '../../interfaces/IPagination';
 
 class CreatorService {
 
@@ -25,8 +26,8 @@ class CreatorService {
     return result;
   }
 
-  static async getCreators() {
-    const result = await CreatorRepository.getCreators();
+  static async getCreators(pagination: IPagination) {
+    const result = await CreatorRepository.getCreators(pagination);
     return result;
   }
 
