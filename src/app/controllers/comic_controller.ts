@@ -56,6 +56,19 @@ class ComicController {
 
     res.status(status).json({ success, message, result });
   }
+
+  static async reseteCreators(
+    req: Request,
+    res: Response
+  ) {
+    const message: string = 'Comics successfully reseted!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
+    await ComicService.deleteManyComics();
+    const { result } = await ComicService.fetchComics();
+    res.status(status).json({ success, message, result });
+  }
 }
 
 export default ComicController;

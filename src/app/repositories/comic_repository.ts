@@ -42,6 +42,10 @@ class ComicRepository {
     const result = await comicsModel.findById({ _id: comicId }) as mongoose.Document;
     return { result };
   }
+
+  static async deleteManyComics() {
+    await comicsModel.deleteMany({});
+  }
 }
 
 export default ComicRepository;

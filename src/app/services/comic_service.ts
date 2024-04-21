@@ -54,9 +54,13 @@ class ComicService {
   }
 
   static deleteComicInfo(comicId: string) {
-    client.del('fetch-comics');
     const result = ComicRepository.deleteComicInfo(comicId);
     return result;
+  }
+
+  static async deleteManyComics(){
+    client.del('fetch-comics');
+    await ComicRepository.deleteManyComics();
   }
 
 }
