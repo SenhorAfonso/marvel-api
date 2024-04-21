@@ -7,18 +7,18 @@ const client = new Redis();
 
 declare module 'mongoose' {
   interface Query<any> {
-      cache(options: ICacheOptions): Query<any>;
-      useCache: boolean;
-      hashKey: string;
-      mongooseCollection: {
-        name: string;
-      }
+    cache(options: ICacheOptions): Query<any>;
+    useCache: boolean;
+    hashCache: ICacheOptions;
+    mongooseCollection: {
+      name: string;
+    }
   }
 }
 
 mongoose.Query.prototype.cache = function cache(options: ICacheOptions) {
   this.useCache = true;
-  this.hashKey = JSON.stringify(options?.key || '');
+  this.hashCache = options;
 
   return this;
 };
@@ -32,6 +32,7 @@ mongoose.Query.prototype.exec = async function exec() {
 
   const key = JSON.stringify({
     ...this.getQuery(),
+    method: this.hashCache.method,
     collection: this.mongooseCollection.name
   });
 

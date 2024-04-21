@@ -1,5 +1,6 @@
 interface ICacheOptions {
-  key: string
+  method: 'get',
+  userID?: string
 }
 
 export default ICacheOptions;

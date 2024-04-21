@@ -4,6 +4,7 @@ import creatorSchema from '../models/creator_schema';
 import ICreators from '../../interfaces/creators/ICreators';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 import IPagination from '../../interfaces/IPagination';
+import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
 
 class CreatorRepository {
 
@@ -33,11 +34,16 @@ class CreatorRepository {
     const message: string = 'All creators were retrieved!';
     const status: number = StatusCodes.OK;
     const { limit, skip, sort } = pagination;
+    const hashCache: ICacheOptions = {
+      method: 'get'
+    };
 
-    const result = await creatorSchema.find()
+    const result = await creatorSchema
+      .find()
       .limit(limit)
       .skip(skip)
-      .sort(sort);
+      .sort(sort)
+      .cache(hashCache);
 
     return { success, message, status, result };
   }
