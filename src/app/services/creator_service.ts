@@ -75,7 +75,6 @@ class CreatorService {
   static async getCreatorsInfo(creatorsArray: ICreatorsArray[], sagaComic: string) {
     const creators = await Promise.all(creatorsArray.map(async creatorInfo => {
       const creator = {
-        creatorUri: creatorInfo.resourceURI,
         name: creatorInfo.name,
         role: creatorInfo.role,
         sagaComic,
