@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import { StatusCodes } from 'http-status-codes';
 import creatorSchema from '../models/creator_schema';
 import ICreators from '../../interfaces/creators/ICreators';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
@@ -11,28 +10,15 @@ class CreatorRepository {
   static async saveCreators(
     creators: Array<ICreators>
   ): Promise<{
-    success: boolean,
-    message: string,
-    status: number,
     result: mongoose.Document[]
   }> {
-    const success: boolean = true;
-    const message: string = 'The creators were registered!';
-    const status: number = StatusCodes.OK;
-
     const result = await creatorSchema.create(creators);
-    return { success, message, status, result };
+    return { result };
   }
 
   static async getCreators(pagination: IPagination): Promise<{
-    success: boolean,
-    message: string,
-    status: number,
     result: mongoose.Document[]
   }> {
-    const success: boolean = true;
-    const message: string = 'All creators were retrieved!';
-    const status: number = StatusCodes.OK;
     const { limit, skip, sort } = pagination;
     const hashCache: ICacheOptions = {
       method: 'get'
@@ -45,20 +31,15 @@ class CreatorRepository {
       .sort(sort)
       .cache(hashCache);
 
-    return { success, message, status, result };
+    return { result };
   }
 
   static async updateCreator(
     payload: IUpdateCreatorInfo
   ): Promise<{
-    success: boolean,
-    message: string,
-    status: number,
     result: mongoose.Document
   }> {
-    const success: boolean = true;
-    const message: string = 'The creator were updated!';
-    const status: number = StatusCodes.OK;
+
     const { creatorID, ...newInfoCreator } = payload;
 
     let creatorToUpdate = await creatorSchema.findById({ _id: creatorID });
@@ -68,21 +49,14 @@ class CreatorRepository {
     }
 
     creatorToUpdate = await creatorSchema.findByIdAndUpdate({ _id: creatorID }, newInfoCreator, { new: true });
-    return { success, message, status, result: creatorToUpdate! };
+    return { result: creatorToUpdate! };
   }
 
   static async deleteCreator(
     creatorID: string
   ): Promise<{
-    success: boolean,
-    message: string,
-    status: number,
     result: mongoose.Document
   }> {
-    const success: boolean = true;
-    const message: string = 'Creator deleted';
-    const status: number = StatusCodes.OK;
-
     const creatorToDelete = await creatorSchema.findByIdAndDelete({ _id: creatorID });
 
     if (!creatorToDelete) {
@@ -91,7 +65,11 @@ class CreatorRepository {
 
     await creatorSchema.findByIdAndDelete({ _id: creatorID });
 
-    return { success, message, status, result: creatorToDelete };
+    return { result: creatorToDelete };
+  }
+
+  static async deleteManyCreators() {
+    await creatorSchema.deleteMany({});
   }
 
 }

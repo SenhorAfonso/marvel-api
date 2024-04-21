@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import StatusCodes from 'http-status-codes';
 import ComicService from '../services/comic_service';
 
 class ComicController {
@@ -7,15 +8,23 @@ class ComicController {
     req: Request,
     res: Response
   ) {
-    const { success, status, message, result } = await ComicService.fetchComics();
-    res.status(status).json({ success, message, data: result });
+    const message: string = 'Comics successfully fetched from API!';
+    const status: number = StatusCodes.CREATED;
+    const success: boolean = true;
+
+    const { result } = await ComicService.fetchComics();
+    res.status(status).json({ success, message, data: { result, available: result.length } });
   }
 
   static async getAllComics(
     req: Request,
     res: Response
   ) {
-    const { success, status, message, result } = await ComicService.getAllComics(req.query);
+    const message: string = 'All comics retrieved!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
+    const { result } = await ComicService.getAllComics(req.query);
     res.status(status).json({ success, message, data: { result, available: result.length } });
   }
 
@@ -23,9 +32,13 @@ class ComicController {
     req: Request,
     res: Response
   ) {
+    const message: string = 'Comic updated!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
     const { comicId } = req.params;
     const { title, description, publishDate, folder } = req.body;
-    const { success, status, message, result } = await ComicService.updateComicInfo(comicId, { title, description, publishDate, folder });
+    const { result } = await ComicService.updateComicInfo(comicId, { title, description, publishDate, folder });
 
     res.status(status).json({ success, message, data: result });
   }
@@ -34,9 +47,26 @@ class ComicController {
     req: Request,
     res: Response
   ) {
-    const { comicId } = req.params;
-    const { success, status, message, result } = await ComicService.deleteComicInfo(comicId);
+    const message: string = 'Comic successfully deleted!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
 
+    const { comicId } = req.params;
+    const { result } = await ComicService.deleteComicInfo(comicId);
+
+    res.status(status).json({ success, message, result });
+  }
+
+  static async reseteCreators(
+    req: Request,
+    res: Response
+  ) {
+    const message: string = 'Comics successfully reseted!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
+    await ComicService.deleteManyComics();
+    const { result } = await ComicService.fetchComics();
     res.status(status).json({ success, message, result });
   }
 }
