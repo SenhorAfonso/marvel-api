@@ -1,4 +1,4 @@
-export interface ICharacter {
+export interface ICharacterDTO {
   name: string;
   description: string;
   thumbnail: string;
