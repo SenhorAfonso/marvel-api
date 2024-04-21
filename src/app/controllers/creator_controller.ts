@@ -15,7 +15,7 @@ class CreatorController {
     req: Request,
     res: Response
   ) {
-    const { success, message, status, result } = await CreatorService.getCreators();
+    const { success, message, status, result } = await CreatorService.getCreators(req.body);
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 

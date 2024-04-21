@@ -1,8 +1,10 @@
+import mongoose from 'mongoose';
 import { StatusCodes } from 'http-status-codes';
 import creatorSchema from '../models/creator_schema';
 import ICreators from '../../interfaces/creators/ICreators';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
-import mongoose from 'mongoose';
+import IPagination from '../../interfaces/IPagination';
+import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
 
 class CreatorRepository {
 
@@ -22,7 +24,7 @@ class CreatorRepository {
     return { success, message, status, result };
   }
 
-  static async getCreators(): Promise<{
+  static async getCreators(pagination: IPagination): Promise<{
     success: boolean,
     message: string,
     status: number,
@@ -31,8 +33,18 @@ class CreatorRepository {
     const success: boolean = true;
     const message: string = 'All creators were retrieved!';
     const status: number = StatusCodes.OK;
+    const { limit, skip, sort } = pagination;
+    const hashCache: ICacheOptions = {
+      method: 'get'
+    };
 
-    const result = await creatorSchema.find();
+    const result = await creatorSchema
+      .find()
+      .limit(limit)
+      .skip(skip)
+      .sort(sort)
+      .cache(hashCache);
+
     return { success, message, status, result };
   }
 

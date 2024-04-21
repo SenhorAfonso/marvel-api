@@ -7,7 +7,8 @@ const serverConfig = {
   DATABASE_URI: process.env.DATABASE_URI,
   MARVEL_API_AUTH: `?ts=${process.env.MARVEL_TS}&apikey=${process.env.MARVEL_PUBLIC_KEY}&hash=${process.env.MARVEL_HASH}`,
   IMAGE_QUALITY: process.env.IMAGE_QUALITY,
-  IMAGE_EXTENSION: process.env.IMAGE_EXTENSION
+  IMAGE_EXTENSION: process.env.IMAGE_EXTENSION,
+  CACHE_EXPIRATION_TIME: process.env.CACHE_EXPIRATION_TIME
 };
 
 export default serverConfig;

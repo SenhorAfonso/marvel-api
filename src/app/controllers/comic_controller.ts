@@ -15,8 +15,8 @@ class ComicController {
     req: Request,
     res: Response
   ) {
-    const { success, status, message, result } = await ComicService.getAllComics();
-    res.status(status).json({ success, message, data: result });
+    const { success, status, message, result } = await ComicService.getAllComics(req.query);
+    res.status(status).json({ success, message, data: { result, available: result.length } });
   }
 
   static async updateComicInfo(
