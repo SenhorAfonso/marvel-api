@@ -18,7 +18,7 @@ declare module 'mongoose' {
 
 mongoose.Query.prototype.cache = function cache(options: ICacheOptions) {
   this.useCache = true;
-  this.hashKey = JSON.stringify(options.key || '');
+  this.hashKey = JSON.stringify(options?.key || '');
 
   return this;
 };
