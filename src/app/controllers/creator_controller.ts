@@ -15,13 +15,7 @@ class CreatorController {
     req: Request,
     res: Response
   ) {
-    const { limit, skip, page, sort } = req.query;
-    const { success, message, status, result } = await CreatorService.getCreators({
-      limit: Number(limit),
-      skip: Number(skip),
-      page: Number(page),
-      sort: String(sort)
-    });
+    const { success, message, status, result } = await CreatorService.getCreators(req.body);
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 

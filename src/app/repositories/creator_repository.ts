@@ -32,22 +32,12 @@ class CreatorRepository {
     const success: boolean = true;
     const message: string = 'All creators were retrieved!';
     const status: number = StatusCodes.OK;
-    const defaultLimit: number = 3;
-    const defaultPage: number = 1;
-    const defaultSkip: number = 0;
-    const defaultSort: 'asc' | 'desc' = 'asc';
-
-    let { limit, skip, page, sort } = pagination;
-    limit ??= defaultLimit;
-    skip ??= (page - defaultPage) * limit || skip || defaultSkip;
-    page ??= defaultPage;
-    sort ??= defaultSort;
+    const { limit, skip, sort } = pagination;
 
     const result = await creatorSchema.find()
       .limit(limit)
       .skip(skip)
-      .sort(sort)
-      .cache();
+      .sort(sort);
 
     return { success, message, status, result };
   }

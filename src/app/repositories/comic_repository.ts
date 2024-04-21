@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import ICreateComic from '../../interfaces/comic/ICreate_comic';
 import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
 import comicsModel from '../models/comics_model';
+import IPagination from '../../interfaces/IPagination';
 
 class ComicRepository {
 
@@ -22,7 +23,7 @@ class ComicRepository {
     return { success, status, message, result };
   }
 
-  static async getAllComics(): Promise<{
+  static async getAllComics(pagination: IPagination): Promise<{
     message: string;
     status: number,
     success: boolean,
@@ -31,8 +32,14 @@ class ComicRepository {
     const message: string = 'All comics retrieved!';
     const status: number = StatusCodes.OK;
     const success: boolean = true;
+    const { limit, skip, sort } = pagination;
 
-    const result = await comicsModel.find();
+    const result = await comicsModel.find()
+      .limit(limit)
+      .skip(skip)
+      .sort(sort)
+      .cache();
+
     return { success, status, message, result };
   }
 

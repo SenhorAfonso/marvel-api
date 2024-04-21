@@ -5,6 +5,8 @@ import serverConfig from '../../configs/serverConfig';
 import IComicModel from '../../interfaces/comic/IComic_model';
 import IHasResponseBody from '../../interfaces/IHasResponseBody';
 import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
+import IPagination from '../../interfaces/IPagination';
+import APIUtils from '../utils/APIUtils';
 
 class ComicService {
 
@@ -34,8 +36,9 @@ class ComicService {
     return result;
   }
 
-  static getAllComics() {
-    const result = ComicRepository.getAllComics();
+  static getAllComics(pagination: IPagination) {
+    pagination = APIUtils.createQueryObject(pagination);
+    const result = ComicRepository.getAllComics(pagination);
     return result;
   }
 
