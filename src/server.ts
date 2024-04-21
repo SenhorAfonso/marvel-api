@@ -15,7 +15,7 @@ class Server {
   middlewares() {
     this.server.use(express.json());
     this.server.use(compression({ threshold: 0 }));
-    this.server.use(queue({ activeLimit: 10, queuedLimit: 10 }));
+    this.server.use(queue({ activeLimit: 12, queuedLimit: 50 }));
     this.server.use('/api/v1/', comicRouter);
     this.server.use('/api/v1/', creatorRouter);
   }
