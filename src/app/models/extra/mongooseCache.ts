@@ -48,3 +48,5 @@ mongoose.Query.prototype.exec = async function exec() {
 
   return result;
 };
+
+export default client;
