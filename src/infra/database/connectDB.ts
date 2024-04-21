@@ -12,7 +12,6 @@ class Database {
   async connect() {
     try {
       await this.ORM.connect(this.URI);
-      console.log('Database connected');
     } catch (error) {
       throw new Error('Can not connect to database!');
     }
