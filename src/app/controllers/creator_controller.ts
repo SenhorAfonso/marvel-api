@@ -56,6 +56,20 @@ class CreatorController {
     res.status(status).json({ code: status, success, message, data: { result } });
   }
 
+  static async reseteCreators(
+    req: Request,
+    res: Response
+  ) {
+    const success: boolean = true;
+    const message: string = 'The creators were reseted!';
+    const status: number = StatusCodes.OK;
+
+    await CreatorService.deleteManyCreators();
+    const { result } = await CreatorService.fetchCreators();
+
+    res.status(status).json({ success, message, data: { result, available: result.length } });
+  }
+
 }
 
 export default CreatorController;

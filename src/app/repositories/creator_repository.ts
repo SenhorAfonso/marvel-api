@@ -68,6 +68,10 @@ class CreatorRepository {
     return { result: creatorToDelete };
   }
 
+  static async deleteManyCreators() {
+    await creatorSchema.deleteMany({});
+  }
+
 }
 
 export default CreatorRepository;
