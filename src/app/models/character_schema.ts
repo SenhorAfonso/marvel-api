@@ -12,6 +12,9 @@ const characterSchema = new Schema<ICharacter>(
     thumbnail: {
       type: String,
     },
+    comic: {
+      type: String
+    }
   },
 
   {

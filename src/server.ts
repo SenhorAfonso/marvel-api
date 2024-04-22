@@ -1,6 +1,7 @@
 import express from 'express';
 import comicRouter from './routes/comic_route';
 import creatorRouter from './routes/creators_flow';
+import characterRouter from './routes/character_route';
 
 class Server {
   public server: express.Application;
@@ -14,8 +15,8 @@ class Server {
     this.server.use(express.json());
     this.server.use('/api/v1/', comicRouter);
     this.server.use('/api/v1/', creatorRouter);
+    this.server.use('/api/v1/', characterRouter);
   }
-
 }
 
 export default new Server().server;
