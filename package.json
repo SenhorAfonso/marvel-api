@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "nodemon dist/app.js",
     "lint": "eslint ./src",
-    "cannon": "autocannon -c 500 -d 20 -w 10 --renderStatusCodes --latency --warmup [ -c 1 -d 2 ] localhost:3000/api/v1/creators"
+    "cannon": "autocannon -c 500 -d 20 -w 10 --renderStatusCodes --latency --warmup [ -c 1 -d 2 ] localhost:3000/api/v1/creators",
+    "test": "npx jest ./src/tests/ --detectOpenHandles"
   },
   "author": "",
   "license": "ISC",

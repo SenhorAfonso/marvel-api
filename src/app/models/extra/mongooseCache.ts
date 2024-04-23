@@ -6,8 +6,8 @@ import ICacheOptions from '../../../interfaces/ImongooseCacheOptions';
 const client = new Redis();
 
 declare module 'mongoose' {
-  interface Query<any> {
-    cache(options: ICacheOptions): Query<any>;
+  interface Query<ResultType, DocType, THelpers, RawDocType, QueryOp> {
+    cache(options: ICacheOptions): Query<ResultType, DocType, THelpers, RawDocType, QueryOp>;
     useCache: boolean;
     hashCache: ICacheOptions;
     mongooseCollection: {
@@ -27,7 +27,7 @@ const originalExec = mongoose.Query.prototype.exec;
 
 mongoose.Query.prototype.exec = async function exec() {
   if (!this.useCache) {
-    return originalExec.apply(this, arguments);
+    return originalExec.apply(this);
   }
 
   const key = JSON.stringify({
@@ -42,9 +42,11 @@ mongoose.Query.prototype.exec = async function exec() {
     return JSON.parse(cacheValue);
   }
 
-  const result = await originalExec.apply(this, arguments);
+  const result = await originalExec.apply(this);
 
   client.set(key, JSON.stringify(result), 'EX', Number(serverConfig.CACHE_EXPIRATION_TIME));
 
   return result;
 };
+
+export default client;
