@@ -77,7 +77,15 @@
       ],
       "rules": {
         "no-console": "off",
-        "no-new": "off"
+        "no-new": "off",
+        "no-magic-numbers": "off"
+      }
+    },
+    {
+      "files": ["ComicHttpResponses.test.ts", "CreatorHttpResponses.test.ts", "APIUtils.ts"],
+      "rules": {
+        "no-magic-numbers": "off",
+        "no-underscore-dangle": "off"
       }
     },
     {

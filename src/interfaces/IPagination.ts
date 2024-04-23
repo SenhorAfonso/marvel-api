@@ -1,8 +1,8 @@
 interface IPagination {
-  limit?: string | number;
-  page?: string | number;
-  skip?: string | number;
-  sort?: string | number;
+  limit?: string;
+  page?: string;
+  skip?: string;
+  sort?: string;
 }
 
 export default IPagination;

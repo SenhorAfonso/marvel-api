@@ -1,8 +1,8 @@
 import queue from 'express-queue';
 import express from 'express';
 import compression from 'compression';
-import comicRouter from './routes/comic_route';
-import creatorRouter from './routes/creators_flow';
+import comicRouter from './routes/comicRoute';
+import creatorRouter from './routes/creatorsRoute';
 import characterRouter from './routes/character_route';
 
 class Server {

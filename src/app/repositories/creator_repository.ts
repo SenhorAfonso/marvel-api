@@ -2,8 +2,8 @@ import mongoose from 'mongoose';
 import creatorSchema from '../models/creator_schema';
 import ICreators from '../../interfaces/creators/ICreators';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
-import IPagination from '../../interfaces/IPagination';
 import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
+import IQueryObject from '../../interfaces/IQueryObject';
 
 class CreatorRepository {
 
@@ -16,10 +16,10 @@ class CreatorRepository {
     return { result };
   }
 
-  static async getCreators(pagination: IPagination): Promise<{
+  static async getCreators(queryObject: IQueryObject): Promise<{
     result: mongoose.Document[]
   }> {
-    const { limit, skip, sort } = pagination;
+    const { limit, skip, sort } = queryObject;
     const hashCache: ICacheOptions = {
       method: 'get'
     };
@@ -31,6 +31,16 @@ class CreatorRepository {
       .sort(sort)
       .cache(hashCache);
 
+    return { result };
+  }
+
+  static async getSingleCreator(creatorID: string) {
+    const result = await creatorSchema.findById({ _id: creatorID });
+    return { result };
+  }
+
+  static async addCreator(newCreator: any) {
+    const result = await creatorSchema.create(newCreator);
     return { result };
   }
 
