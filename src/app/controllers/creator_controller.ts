@@ -28,6 +28,33 @@ class CreatorController {
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
+  static async getSingleCreator(
+    req: Request,
+    res: Response
+  ) {
+    const success: boolean = true;
+    const message: string = 'Single creator retrieved!';
+    const status: number = StatusCodes.OK;
+
+    const { creatorID } = req.params;
+    const { result } = await CreatorService.getSingleCreator(creatorID);
+    res.status(status).json({ code: status, success, message, data: { result } });
+  }
+
+  static async addCreator(
+    req: Request,
+    res: Response
+  ) {
+    const success: boolean = true;
+    const message: string = 'New creator added!';
+    const status: number = StatusCodes.OK;
+
+    const { name, role, sagaComic, otherComics } = req.body;
+    const { result } = await CreatorService.addCreator({ name, role, sagaComic, otherComics });
+    res.status(status).json({ code: status, success, message, data: { result } });
+
+  }
+
   static async updateCreator(
     req: Request,
     res: Response
@@ -56,7 +83,7 @@ class CreatorController {
     res.status(status).json({ code: status, success, message, data: { result } });
   }
 
-  static async reseteCreators(
+  static async resetCreators(
     req: Request,
     res: Response
   ) {
@@ -67,7 +94,7 @@ class CreatorController {
     await CreatorService.deleteManyCreators();
     const { result } = await CreatorService.fetchCreators();
 
-    res.status(status).json({ success, message, data: { result, available: result.length } });
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
 }
