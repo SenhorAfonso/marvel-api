@@ -2,7 +2,7 @@ import queue from 'express-queue';
 import express from 'express';
 import compression from 'compression';
 import comicRouter from './routes/comic_route';
-import creatorRouter from './routes/creators_flow';
+import creatorRouter from './routes/creatorsRoute';
 
 class Server {
   public server: express.Application;
