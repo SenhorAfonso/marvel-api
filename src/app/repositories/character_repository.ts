@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 /* eslint-disable no-return-await */
 import { Model } from 'mongoose';
 import { ICharacter } from '../../interfaces/character/ICharacter';
@@ -11,7 +12,7 @@ export default class CharacterRepository implements ICharacterRepository<ICharac
     this.characterModel = model;
   }
 
-  async create(character: ICharacter): Promise<ICharacter> {
+  async create(character: ICharacter[] | ICharacter): Promise<ICharacter> {
     return await this.characterModel.create(character);
   }
 

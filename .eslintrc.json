@@ -1,38 +1,38 @@
 {
   "env": {
-      "node": true,
-      "es2016": true
+    "node": true,
+    "es2016": true
   },
   "extends": [
-      "airbnb",
-      "airbnb/hooks",
-      "prettier",
-      "plugin:import/errors",
-      "plugin:import/warnings",
-      "plugin:import/typescript",
-      "eslint:all",
-      "plugin:@typescript-eslint/recommended"
+    "airbnb",
+    "airbnb/hooks",
+    "prettier",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "eslint:all",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-      "ecmaVersion": "latest",
-      "sourceType": "module"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
   "plugins": [
-      "@typescript-eslint"
+    "@typescript-eslint"
   ],
   "rules": {
-    "no-trailing-spaces":"error",
-    "no-param-reassign":"off",
-    "padding-line-between-statements":"error",
-    "no-multiple-empty-lines":"error",
+    "no-trailing-spaces": "error",
+    "no-param-reassign": "off",
+    "padding-line-between-statements": "error",
+    "no-multiple-empty-lines": "error",
     "space-in-parens": "warn",
     "sort-keys": "off",
     "object-curly-spacing": "error",
-    "no-shadow":"off",
+    "no-shadow": "off",
     "sort-imports": "off",
-    "init-declarations":"off",
-    "lines-between-class-members":"off",
+    "init-declarations": "off",
+    "lines-between-class-members": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "max-lines-per-function": "off",
     "max-statements": [
@@ -49,27 +49,32 @@
         "tsx": "never"
       }
     ],
-      "indent": [
-          "error",
-          2,
-          { "SwitchCase": 1 }
-      ],
-      "linebreak-style": [
-          "off",
-          "unix"
-      ],
-      "quotes": [
-          "error",
-          "single"
-      ],
-      "semi": [
-          "error",
-          "always"
-      ]
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "linebreak-style": [
+      "off",
+      "unix"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ]
   },
   "overrides": [
     {
-      "files": ["app.ts", "connectDB.ts"],
+      "files": [
+        "app.ts",
+        "connectDB.ts"
+      ],
       "rules": {
         "no-console": "off",
         "no-new": "off",
@@ -81,6 +86,14 @@
       "rules": {
         "no-magic-numbers": "off",
         "no-underscore-dangle": "off"
+      }
+    },
+    {
+      "files": [
+        "characterAdapter.ts"
+      ],
+      "rules": {
+        "class-methods-use-this": "off"
       }
     }
   ]
