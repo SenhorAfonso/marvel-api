@@ -39,8 +39,18 @@ class CreatorService {
   }
 
   static async getCreators(pagination: IPagination) {
-    pagination = APIUtils.createQueryObject(pagination);
-    const result = await CreatorRepository.getCreators(pagination);
+    const queryObject = APIUtils.createQueryObject(pagination);
+    const result = await CreatorRepository.getCreators(queryObject);
+    return result;
+  }
+
+  static async getSingleCreator(creatorID: string) {
+    const result = await CreatorRepository.getSingleCreator(creatorID);
+    return result;
+  }
+
+  static async addCreator(newCreator: any) {
+    const result = await CreatorRepository.addCreator(newCreator);
     return result;
   }
 

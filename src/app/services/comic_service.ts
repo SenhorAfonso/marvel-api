@@ -8,6 +8,7 @@ import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 import IPagination from '../../interfaces/IPagination';
 import APIUtils from '../utils/APIUtils';
 import client from '../models/extra/mongooseCache';
+import IQueryObject from '../../interfaces/IQueryObject';
 
 class ComicService {
 
@@ -43,8 +44,8 @@ class ComicService {
   }
 
   static getAllComics(pagination: IPagination) {
-    pagination = APIUtils.createQueryObject(pagination);
-    const result = ComicRepository.getAllComics(pagination);
+    const queryObject: IQueryObject = APIUtils.createQueryObject(pagination);
+    const result = ComicRepository.getAllComics(queryObject);
     return result;
   }
 
