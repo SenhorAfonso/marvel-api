@@ -22,7 +22,6 @@ class ComicService {
     } else {
       const comicsRequest = await fetch(`https://gateway.marvel.com/v1/public/comics${serverConfig.MARVEL_API_AUTH}&title=Secret%20Wars`);
       const comicsResponseBody: IHasResponseBody<IComicResponseBody> = await comicsRequest.json();
-
       const comicsArray = comicsResponseBody.data.results;
       const filteredComicsArray: IComicModel[] = [];
 
@@ -46,6 +45,16 @@ class ComicService {
   static getAllComics(pagination: IPagination) {
     const queryObject: IQueryObject = APIUtils.createQueryObject(pagination);
     const result = ComicRepository.getAllComics(queryObject);
+    return result;
+  }
+
+  static addComic(newComic: any) {
+    const result = ComicRepository.addComic(newComic);
+    return result;
+  }
+
+  static getSingleComic(comicId: string) {
+    const result = ComicRepository.getSingleComic(comicId);
     return result;
   }
 

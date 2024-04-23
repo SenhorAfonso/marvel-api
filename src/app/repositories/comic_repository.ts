@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import ICreateComic from '../../interfaces/comic/ICreate_comic';
 import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
-import comicsModel from '../models/comics_model';
+import comicsModel from '../models/comicsModel';
 import IQueryObject from '../../interfaces/IQueryObject';
 import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
 
@@ -30,6 +30,16 @@ class ComicRepository {
       .sort(sort)
       .cache(hashCache);
 
+    return { result };
+  }
+
+  static async addComic(newComic: any) {
+    const result = await comicsModel.create(newComic);
+    return { result };
+  }
+
+  static async getSingleComic(comicId: string) {
+    const result = await comicsModel.findById({ _id: comicId });
     return { result };
   }
 

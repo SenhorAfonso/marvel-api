@@ -13,26 +13,52 @@ class ComicController {
     const success: boolean = true;
 
     const { result } = await ComicService.fetchComics();
-    res.status(status).json({ success, message, data: { result, available: result.length } });
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
   static async getAllComics(
     req: Request,
     res: Response
   ) {
-    const message: string = 'All comics retrieved!';
+    const message: string = 'All comics were retrieved!';
     const status: number = StatusCodes.OK;
     const success: boolean = true;
 
     const { result } = await ComicService.getAllComics(req.query);
-    res.status(status).json({ success, message, data: { result, available: result.length } });
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
+  }
+
+  static async getSingleComic(
+    req: Request,
+    res: Response
+  ) {
+    const success: boolean = true;
+    const message: string = 'Single comic retrieved!';
+    const status: number = StatusCodes.OK;
+
+    const { comicId } = req.params;
+    const { result } = await ComicService.getSingleComic(comicId);
+    res.status(status).json({ code: status, success, message, data: { result } });
+  }
+
+  static async addComic(
+    req: Request,
+    res: Response
+  ) {
+    const message: string = 'New Comic added!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
+    const { title, description, publishDate, folder } = req.body;
+    const { result } = await ComicService.addComic({ title, description, publishDate, folder });
+    res.status(status).json({ code: status, success, message, data: { result } });
   }
 
   static async updateComicInfo(
     req: Request,
     res: Response
   ) {
-    const message: string = 'Comic updated!';
+    const message: string = 'The Comic were updated!';
     const status: number = StatusCodes.OK;
     const success: boolean = true;
 
@@ -40,7 +66,7 @@ class ComicController {
     const { title, description, publishDate, folder } = req.body;
     const { result } = await ComicService.updateComicInfo(comicId, { title, description, publishDate, folder });
 
-    res.status(status).json({ success, message, data: result });
+    res.status(status).json({ code: status, success, message, data: { result } });
   }
 
   static async deleteComicInfo(
@@ -54,7 +80,7 @@ class ComicController {
     const { comicId } = req.params;
     const { result } = await ComicService.deleteComicInfo(comicId);
 
-    res.status(status).json({ success, message, result });
+    res.status(status).json({ code: status, success, message, data: { result } });
   }
 
   static async reseteCreators(
@@ -67,7 +93,7 @@ class ComicController {
 
     await ComicService.deleteManyComics();
     const { result } = await ComicService.fetchComics();
-    res.status(status).json({ success, message, result });
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 }
 
