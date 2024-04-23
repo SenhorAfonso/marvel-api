@@ -1,6 +1,10 @@
 /* eslint-disable no-return-await */
+import serverConfig from '../../configs/serverConfig';
 import { ICharacterDTO } from '../../DTOs/character/ICharacterDTO';
 import { ICharacter } from '../../interfaces/character/ICharacter';
+import ICharacterResponseBody from '../../interfaces/character/ICharacterResponseBody';
+import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
+import IHasResponseBody from '../../interfaces/generics/IHasResponseBody';
 import CharacterAdapter from '../adapter/character/characterAdapter';
 import CharacterRepository from '../repositories/character_repository';
 
@@ -8,9 +12,55 @@ export default class CharacterService {
   private readonly characterRepository: CharacterRepository;
   private readonly characterAdapter: CharacterAdapter;
 
-  constructor(characterRepository: CharacterRepository) {
-    this.characterRepository = characterRepository;
+  constructor() {
+    this.characterRepository = new CharacterRepository();
     this.characterAdapter = new CharacterAdapter();
+  }
+
+  allCharacters: ICharacter[] = [];
+
+  // adicionar cachê
+  async fetchCharData(URL: string, comic: any) {
+    try {
+      const characterRequest = await fetch(`${URL}${serverConfig.MARVEL_API_AUTH}`);
+
+      const response: IHasResponseBody<ICharacterResponseBody> = await characterRequest.json();
+      const characterArr = response.data.results;
+      const characterPerComicArr: ICharacter[] = [];
+
+      characterArr.forEach((response) => {
+        const character: ICharacter = {
+          name: response.name,
+          description: response.description,
+          thumbnail: response.thumbnail.path + serverConfig.IMAGE_QUALITY + serverConfig.IMAGE_EXTENSION,
+          comic,
+        };
+        const characterEntity = this.characterAdapter.toEntity(character);
+        characterPerComicArr.push(characterEntity);
+      });
+
+      return await this.characterRepository.create(characterPerComicArr);
+    } catch (error: any) {
+      throw new Error(`Failed to fetch character data from the comic '${comic.title}': ${error.message}`);
+    }
+  }
+
+  async fetchComicData() {
+    try {
+      const comicRequest = await fetch(
+        `https://gateway.marvel.com/v1/public/comics${serverConfig.MARVEL_API_AUTH}&title=Secret%20Wars`,
+      );
+
+      const response: IHasResponseBody<IComicResponseBody> = await comicRequest.json();
+      const comicArr = response.data.results;
+
+      comicArr.forEach((response) => {
+        const characterURL: string = response.characters.collectionURI;
+        this.fetchCharData(characterURL, response.title);
+      });
+    } catch (error: any) {
+      throw new Error(`Failed to fetch comic data: ${error.message}`);
+    }
   }
 
   async create(character: ICharacterDTO): Promise<ICharacter> {
