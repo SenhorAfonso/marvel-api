@@ -1,5 +1,3 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-magic-numbers */
 import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
@@ -19,6 +17,7 @@ describe('Check for Creator Entity\'s routes', () => {
   });
 
   afterEach(async () => {
+    client.flushall();
     await creatorSchema.deleteMany({});
   });
 
