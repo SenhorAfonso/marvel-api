@@ -9,7 +9,7 @@ class CreatorController {
     res: Response
   ) {
     const success: boolean = true;
-    const message: string = 'The creators were registered!';
+    const message: string = 'Creators successfully fetched from API!';
     const status: number = StatusCodes.OK;
 
     const { result } = await CreatorService.fetchCreators();
