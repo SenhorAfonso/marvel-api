@@ -33,7 +33,7 @@ describe('Check for Creator Entity\'s routes', () => {
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
-    expect(response.body.message).toBe('The creators were registered!');
+    expect(response.body.message).toBe('Creators successfully fetched from API!');
     expect(response.body.data.available).toBe(84);
   }, 10000);
 

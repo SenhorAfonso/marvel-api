@@ -3,7 +3,7 @@ import ComicRepository from '../repositories/comic_repository';
 import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
 import serverConfig from '../../configs/serverConfig';
 import IComicModel from '../../interfaces/comic/IComic_model';
-import IHasResponseBody from '../../interfaces/IHasResponseBody';
+import IHasResponseBody from '../../interfaces/generics/IHasResponseBody';
 import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 import IPagination from '../../interfaces/IPagination';
 import APIUtils from '../utils/APIUtils';
