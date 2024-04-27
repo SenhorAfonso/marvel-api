@@ -19,7 +19,6 @@ export default class CharacterService {
 
   allCharacters: ICharacter[] = [];
 
-  // adicionar cachê
   async fetchCharData(URL: string, comic: any) {
     try {
       const characterRequest = await fetch(`${URL}${serverConfig.MARVEL_API_AUTH}`);
@@ -39,10 +38,16 @@ export default class CharacterService {
         characterPerComicArr.push(characterEntity);
       });
 
-      return await this.characterRepository.create(characterPerComicArr);
+      const result = await this.characterRepository.save(characterPerComicArr);
+      return result;
     } catch (error: any) {
       throw new Error(`Failed to fetch character data from the comic '${comic.title}': ${error.message}`);
     }
+  }
+
+  async getSinglecharacter(characterId: string) {
+    const result = await this.characterRepository.getSinglecharacter(characterId);
+    return result;
   }
 
   async fetchComicData() {
@@ -79,5 +84,9 @@ export default class CharacterService {
 
   async deleteById(id: string): Promise<void> {
     await this.characterRepository.deleteById(id);
+  }
+
+  async deleteManyCharacters() {
+    await this.characterRepository.deleteManyCharacters();
   }
 }
