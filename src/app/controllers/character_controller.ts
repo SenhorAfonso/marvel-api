@@ -102,4 +102,17 @@ export default class CharacterController {
     await this.characterService.fetchComicData();
     response.status(status).json({ code: status, success, message });
   }
+
+  async getByComicCount(
+    req: Request,
+    res: Response
+  ) {
+    const { comicCount } = req.query;
+    const message: string = `Characters that starred in more than ${comicCount} comics were retrived!`;
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
+    const result = await this.characterService.getByComicCount(Number(comicCount));
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
+  }
 }
