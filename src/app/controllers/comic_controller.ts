@@ -83,7 +83,7 @@ class ComicController {
     res.status(status).json({ code: status, success, message, data: { result } });
   }
 
-  static async reseteCreators(
+  static async resetComics(
     req: Request,
     res: Response
   ) {
@@ -93,6 +93,19 @@ class ComicController {
 
     await ComicService.deleteManyComics();
     const { result } = await ComicService.fetchComics();
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
+  }
+
+  static async getByPageCount(
+    req: Request,
+    res: Response
+  ) {
+    const { numPages } = req.query;
+    const message: string = `Comics with number of pages greater than ${numPages} were retrieved!`;
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
+
+    const result = await ComicService.getByPageCount(Number(numPages));
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 }

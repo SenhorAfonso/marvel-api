@@ -60,6 +60,11 @@ class ComicRepository {
   static async deleteManyComics() {
     await comicsModel.deleteMany({});
   }
+
+  static async getByPageCount(threshold: number): Promise<mongoose.Document[]> {
+    const result = await comicsModel.find({ pageCount: { $gt: threshold } });
+    return result;
+  }
 }
 
 export default ComicRepository;
