@@ -1,6 +1,7 @@
 interface IComicResponseBody {
   title: string,
   description: string,
+  pageCount: number,
   dates: [
     {
       type: string,
