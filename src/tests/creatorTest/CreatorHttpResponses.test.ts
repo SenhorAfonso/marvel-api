@@ -2,7 +2,7 @@ import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import server from '../../server';
-import creatorSchema from '../../app/models/creator_schema';
+import creatorSchema from '../../app/models/creatorModel';
 import client from '../../app/models/extra/mongooseCache';
 
 let mongoServer: MongoMemoryServer;

@@ -12,6 +12,9 @@ const creatorSchema = new mongoose.Schema({
   },
   otherComics: {
     type: [String]
+  },
+  collectionSize: {
+    type: Number
   }
 });
 
