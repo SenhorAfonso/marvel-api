@@ -3,4 +3,5 @@ export interface ICharacterDTO {
   description: string;
   thumbnail: string;
   comic: string;
+  comicCount: number;
 }

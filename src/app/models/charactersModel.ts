@@ -14,6 +14,9 @@ const characterSchema = new Schema<ICharacter>(
     },
     comic: {
       type: String
+    },
+    comicCount: {
+      type: Number
     }
   },
 
