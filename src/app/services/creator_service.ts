@@ -104,6 +104,11 @@ class CreatorService {
     return result;
   }
 
+  static async getByNameLength(nameLength: number) {
+    const result = await CreatorRepository.getByNameLength(nameLength);
+    return result;
+  }
+
 }
 
 export default CreatorService;

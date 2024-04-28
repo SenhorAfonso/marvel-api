@@ -87,6 +87,11 @@ class CreatorRepository {
     return result;
   }
 
+  static async getByNameLength(nameLength: number): Promise<mongoose.Document[]> {
+    const result = await creatorModel.find({ $where: `this.name.length > ${nameLength}` });
+    return result;
+  }
+
 }
 
 export default CreatorRepository;
