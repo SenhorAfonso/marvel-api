@@ -9,6 +9,7 @@ characterRouter.post('/character', characterController.create.bind(characterCont
 characterRouter.get('/characters', characterController.findAll.bind(characterController));
 characterRouter.get('/reset-characters', characterController.resetCharacters.bind(characterController));
 characterRouter.get('/characters/comicCount', characterController.getByComicCount.bind(characterController));
+characterRouter.get('/characters/secondTitle', characterController.getWithSecondTitle.bind(characterController));
 characterRouter.get('/character/:characterId', characterController.getSingle.bind(characterController));
 characterRouter.put('/character/:characterId', characterController.updateById.bind(characterController));
 characterRouter.delete('/character/:characterId', characterController.deleteById.bind(characterController));

@@ -95,4 +95,9 @@ export default class CharacterService {
     const result = await this.characterRepository.getByComicCount(comicCount);
     return result;
   }
+
+  async getWithSecondTitle() {
+    const result = await this.characterRepository.getWithSecondTitle();
+    return result;
+  }
 }

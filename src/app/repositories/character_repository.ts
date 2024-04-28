@@ -46,4 +46,9 @@ export default class CharacterRepository implements ICharacterRepository<ICharac
     const result = await this.characterModel.find({ comicCount: { $gt: comicCount } });
     return result;
   }
+
+  async getWithSecondTitle() {
+    const result = await this.characterModel.find({ name: /\(/iu });
+    return result;
+  }
 }
