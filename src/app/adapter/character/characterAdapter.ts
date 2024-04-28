@@ -8,7 +8,8 @@ export default class CharacterAdapter implements Adapter<ICharacterDTO, ICharact
       name: external.name,
       description: external.description,
       thumbnail: external.thumbnail,
-      comic: external.comic
+      comic: external.comic,
+      comicCount: external.comicCount
     };
   }
 
@@ -17,7 +18,8 @@ export default class CharacterAdapter implements Adapter<ICharacterDTO, ICharact
       name: internal.name,
       description: internal.description,
       thumbnail: internal.thumbnail,
-      comic: internal.comic
+      comic: internal.comic,
+      comicCount: internal.comicCount
     };
   }
 }

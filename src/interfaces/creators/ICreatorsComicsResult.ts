@@ -1,5 +1,6 @@
 interface ICreatorsComicResult {
   comics: {
+    available: number,
     items: [
       {
         resourceURI: string,

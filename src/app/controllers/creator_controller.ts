@@ -97,6 +97,32 @@ class CreatorController {
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
+  static async getByCollectionSize(
+    req: Request,
+    res: Response
+  ) {
+    const { collSize } = req.query;
+    const success: boolean = true;
+    const message: string = `Creators with collection greater than ${collSize} comics were retrieved!`;
+    const status: number = StatusCodes.OK;
+
+    const result = await CreatorService.getByCollectionSize(Number(collSize));
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
+  }
+
+  static async getByNameLength(
+    req: Request,
+    res: Response
+  ) {
+    const { nameLength } = req.query;
+    const success: boolean = true;
+    const message: string = `Creators with name length greater than ${nameLength} characters were retrieved!`;
+    const status: number = StatusCodes.OK;
+
+    const result = await CreatorService.getByNameLength(Number(nameLength));
+    res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
+  }
+
 }
 
 export default CreatorController;

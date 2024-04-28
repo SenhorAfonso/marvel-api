@@ -14,6 +14,9 @@ const comicSchema = new mongoose.Schema<IComicModel>({
     type: String,
     require: [true, 'Comid publish_date is a required field!']
   },
+  pageCount: {
+    type: Number
+  },
   folder: {
     type: String,
     require: [true, 'Comic folder is a required field!']

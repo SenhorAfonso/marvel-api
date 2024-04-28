@@ -7,6 +7,8 @@ creatorRouter.get('/fetch-creators', CreatorController.fetchCreators);
 creatorRouter.get('/reset-creators', CreatorController.resetCreators);
 creatorRouter.get('/creators', CreatorController.getCreators);
 creatorRouter.post('/creator', CreatorController.addCreator);
+creatorRouter.get('/creators/collectionSize', CreatorController.getByCollectionSize);
+creatorRouter.get('/creators/nameLength', CreatorController.getByNameLength);
 creatorRouter.get('/creator/:creatorID', CreatorController.getSingleCreator);
 creatorRouter.put('/creator/:creatorID', CreatorController.updateCreator);
 creatorRouter.delete('/creator/:creatorID', CreatorController.deleteCreator);
