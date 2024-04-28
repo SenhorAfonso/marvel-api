@@ -72,6 +72,7 @@ class CreatorService {
   static async getCreatorComics(creatorURL: string) {
     const individualCollectionRequest = await fetch(`${creatorURL}${serverConfig.MARVEL_API_AUTH}`);
     const individualCollectionRequestBody: IHasResponseBody<ICreatorsComicResult> = await individualCollectionRequest.json();
+    const individualCollectionSize = individualCollectionRequestBody.data.results[0].comics.available;
     const individualCollectionItems = individualCollectionRequestBody.data.results[0].comics.items;
     const otherComics: string[] = [];
 
@@ -79,21 +80,28 @@ class CreatorService {
       otherComics.push(comic.name);
     });
 
-    return otherComics;
+    return { otherComics, individualCollectionSize };
   }
 
   static async getCreatorsInfo(creatorsArray: ICreatorsArray[], sagaComic: string) {
     const creators = await Promise.all(creatorsArray.map(async creatorInfo => {
+      const collection = await this.getCreatorComics(creatorInfo.resourceURI);
       const creator = {
         name: creatorInfo.name,
         role: creatorInfo.role,
         sagaComic,
-        otherComics: await this.getCreatorComics(creatorInfo.resourceURI)
+        otherComics: collection.otherComics,
+        collectionSize: collection.individualCollectionSize
       };
       return creator;
     }));
 
     return creators;
+  }
+
+  static async getByCollectionSize(collSize: number) {
+    const result = await CreatorRepository.getByCollectionSize(collSize);
+    return result;
   }
 
 }
