@@ -33,6 +33,7 @@ export default class CharacterService {
           description: response.description,
           thumbnail: response.thumbnail.path + serverConfig.IMAGE_QUALITY + serverConfig.IMAGE_EXTENSION,
           comic,
+          comicCount: response.comics.available,
         };
         const characterEntity = this.characterAdapter.toEntity(character);
         characterPerComicArr.push(characterEntity);
@@ -88,5 +89,15 @@ export default class CharacterService {
 
   async deleteManyCharacters() {
     await this.characterRepository.deleteManyCharacters();
+  }
+
+  async getByComicCount(comicCount: number) {
+    const result = await this.characterRepository.getByComicCount(comicCount);
+    return result;
+  }
+
+  async getWithSecondTitle() {
+    const result = await this.characterRepository.getWithSecondTitle();
+    return result;
   }
 }

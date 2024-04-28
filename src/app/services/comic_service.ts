@@ -30,6 +30,7 @@ class ComicService {
           title: marvelComic.title,
           description: marvelComic.description,
           publishDate: marvelComic.dates[0].date,
+          pageCount: marvelComic.pageCount,
           folder: marvelComic.thumbnail.path + serverConfig.IMAGE_QUALITY + serverConfig.IMAGE_QUALITY
         };
         filteredComicsArray.push(comic);
@@ -71,6 +72,11 @@ class ComicService {
   static async deleteManyComics(){
     client.del('fetch-comics');
     await ComicRepository.deleteManyComics();
+  }
+
+  static async getByPageCount(threshold: number) {
+    const result = await ComicRepository.getByPageCount(threshold);
+    return result;
   }
 
 }

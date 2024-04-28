@@ -41,4 +41,14 @@ export default class CharacterRepository implements ICharacterRepository<ICharac
   async deleteManyCharacters() {
     await this.characterModel.deleteMany({});
   }
+
+  async getByComicCount(comicCount: number) {
+    const result = await this.characterModel.find({ comicCount: { $gt: comicCount } });
+    return result;
+  }
+
+  async getWithSecondTitle() {
+    const result = await this.characterModel.find({ name: /\(/iu });
+    return result;
+  }
 }
