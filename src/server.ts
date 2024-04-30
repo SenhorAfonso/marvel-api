@@ -4,6 +4,7 @@ import compression from 'compression';
 import comicRouter from './routes/comicRoute';
 import creatorRouter from './routes/creatorsRoute';
 import characterRouter from './routes/character_route';
+import ErrorhandlingMiddleware from './app/middlewares/errorHandlingMiddleware';
 
 class Server {
   public server: express.Application;
@@ -20,6 +21,7 @@ class Server {
     this.server.use('/api/v1/', comicRouter);
     this.server.use('/api/v1/', creatorRouter);
     this.server.use('/api/v1/', characterRouter);
+    this.server.use(ErrorhandlingMiddleware.ErrorHandler);
   }
 }
 
