@@ -4,6 +4,10 @@ import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
 import comicsModel from '../models/comicsModel';
 import IQueryObject from '../../interfaces/IQueryObject';
 import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
+import InternalServerError from '../errors/internalServerError';
+import NotFoundError from '../errors/notFoundError';
+import BadRequestdError from '../errors/badRequestError';
+import APIUtils from '../utils/APIUtils';
 
 class ComicRepository {
 
@@ -12,11 +16,17 @@ class ComicRepository {
   ): Promise<{
     result: mongoose.Document[]
   }> {
-    const result = await comicsModel.create(payload);
-    return { result };
+    try{
+      const result = await comicsModel.create(payload);
+      return { result };
+    } catch (error) {
+      throw new InternalServerError();
+    }
   }
 
-  static async getAllComics(queryObject: IQueryObject): Promise<{
+  static async getAllComics(
+    queryObject: IQueryObject
+  ): Promise<{
     result: mongoose.Document[]
   }> {
     const { limit, skip, sort } = queryObject;
@@ -30,40 +40,113 @@ class ComicRepository {
       .sort(sort)
       .cache(hashCache);
 
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError('There is no comic registered');
+    }
+
     return { result };
   }
 
-  static async addComic(newComic: any) {
-    const result = await comicsModel.create(newComic);
-    return { result };
-  }
-
-  static async getSingleComic(comicId: string) {
-    const result = await comicsModel.findById({ _id: comicId });
-    return { result };
-  }
-
-  static async updateComicInfo(comicId: string, newComicInfo: IUpdateComic): Promise<{
+  static async addComic(
+    newComic: any
+  ): Promise<{
     result: mongoose.Document
   }> {
-    const result = await comicsModel.findByIdAndUpdate(comicId, newComicInfo, { new: true }) as mongoose.Document;
-    return { result };
+    try{
+      const result = await comicsModel.create(newComic);
+      return { result };
+    } catch (error) {
+      throw new InternalServerError();
+    }
   }
 
-  static async deleteComicInfo(comicId: string): Promise<{
-    result: mongoose.Document
+  static async getSingleComic(
+    comicId: string
+  ): Promise<{
+    result: mongoose.Document | null
   }> {
-    const result = await comicsModel.findById({ _id: comicId }) as mongoose.Document;
+    let result: mongoose.Document | null;
+
+    try {
+      result = await comicsModel.findById({ _id: comicId });
+    } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestdError('Id format is invalid');
+      } else {
+        throw new InternalServerError();
+      }
+    }
+
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError('thre is no register asociated to this id');
+    }
+
     return { result };
   }
 
-  static async deleteManyComics() {
-    await comicsModel.deleteMany({});
+  static async updateComicInfo(
+    comicId: string,
+    newComicInfo: IUpdateComic
+  ): Promise<{
+    result: mongoose.Document | null
+  }> {
+    let result: mongoose.Document | null;
+
+    try{
+      result = await comicsModel.findByIdAndUpdate(comicId, newComicInfo, { new: true });
+    } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestdError('Id format invalid');
+      } else {
+        throw new InternalServerError();
+      }
+    }
+
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError('thre is no register asociated to this id');
+    }
+
+    return { result };
   }
 
-  static async getByPageCount(threshold: number): Promise<mongoose.Document[]> {
-    const result = await comicsModel.find({ pageCount: { $gt: threshold } });
-    return result;
+  static async deleteComicInfo(
+    comicId: string
+  ): Promise<{
+    result: mongoose.Document | null
+  }> {
+    let result: mongoose.Document | null;
+
+    try {
+      result = await comicsModel.findById({ _id: comicId });
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
+    return { result };
+  }
+
+  static async deleteManyComics(): Promise<void> {
+    try {
+      await comicsModel.deleteMany({});
+    } catch (error) {
+      throw new InternalServerError();
+    }
+  }
+
+  static async getByPageCount(
+    threshold: number
+  ): Promise<{
+    result: mongoose.Document[] | null
+  }> {
+    let result: mongoose.Document[] | null;
+
+    try {
+      result = await comicsModel.find({ pageCount: { $gt: threshold } });
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
+    return { result };
   }
 }
 
