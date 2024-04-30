@@ -52,18 +52,19 @@ class ComicRepository {
   ): Promise<{
     result: mongoose.Document
   }> {
+    let result: mongoose.Document | null;
     try{
-      const result = await comicsModel.create(newComic);
-      return { result };
+      result = await comicsModel.create(newComic);
     } catch (error) {
       throw new InternalServerError();
     }
+    return { result };
   }
 
   static async getSingleComic(
     comicId: string
   ): Promise<{
-    result: mongoose.Document | null
+    result: mongoose.Document
   }> {
     let result: mongoose.Document | null;
 
@@ -81,14 +82,14 @@ class ComicRepository {
       throw new NotFoundError('thre is no register asociated to this id');
     }
 
-    return { result };
+    return { result: result! };
   }
 
   static async updateComicInfo(
     comicId: string,
     newComicInfo: IUpdateComic
   ): Promise<{
-    result: mongoose.Document | null
+    result: mongoose.Document
   }> {
     let result: mongoose.Document | null;
 
@@ -106,13 +107,13 @@ class ComicRepository {
       throw new NotFoundError('thre is no register asociated to this id');
     }
 
-    return { result };
+    return { result: result! };
   }
 
   static async deleteComicInfo(
     comicId: string
   ): Promise<{
-    result: mongoose.Document | null
+    result: mongoose.Document
   }> {
     let result: mongoose.Document | null;
 
@@ -122,7 +123,7 @@ class ComicRepository {
       throw new InternalServerError();
     }
 
-    return { result };
+    return { result: result! };
   }
 
   static async deleteManyComics(): Promise<void> {
@@ -136,7 +137,7 @@ class ComicRepository {
   static async getByPageCount(
     threshold: number
   ): Promise<{
-    result: mongoose.Document[] | null
+    result: mongoose.Document[]
   }> {
     let result: mongoose.Document[] | null;
 
@@ -146,7 +147,7 @@ class ComicRepository {
       throw new InternalServerError();
     }
 
-    return { result };
+    return { result: result! };
   }
 }
 
