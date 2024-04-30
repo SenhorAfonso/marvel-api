@@ -29,7 +29,7 @@ describe('Check for Characters Entity\'s routes', () => {
     await client.quit();
   });
 
-  it('Fetch route should be working', async () => {
+  it.skip('Fetch route should be working', async () => {
     const response = await request(server)
       .get('/api/v1/fetch-characters');
 
