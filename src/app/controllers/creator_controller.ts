@@ -106,7 +106,7 @@ class CreatorController {
     const message: string = `Creators with collection greater than ${collSize} comics were retrieved!`;
     const status: number = StatusCodes.OK;
 
-    const result = await CreatorService.getByCollectionSize(Number(collSize));
+    const { result } = await CreatorService.getByCollectionSize(Number(collSize));
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
@@ -119,7 +119,7 @@ class CreatorController {
     const message: string = `Creators with name length greater than ${nameLength} characters were retrieved!`;
     const status: number = StatusCodes.OK;
 
-    const result = await CreatorService.getByNameLength(Number(nameLength));
+    const { result } = await CreatorService.getByNameLength(Number(nameLength));
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
