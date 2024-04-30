@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import queue from 'express-queue';
 import express from 'express';
 import compression from 'compression';
