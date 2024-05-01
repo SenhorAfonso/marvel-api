@@ -5,7 +5,7 @@ const MIN_DESC_LENGTH = 5;
 
 class ValidateComics {
 
-  static CreateComicValication() {
+  static CreateComicValidation() {
     const validationObject = Joi.object({
       title: Joi.string()
         .min(MIN_TITLE_LENGTH)
