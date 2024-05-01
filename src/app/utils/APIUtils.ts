@@ -13,6 +13,13 @@ class APIUtils {
     return queryObject;
   }
 
+  static isEmpty(target: any | any[]) {
+    if (Array.isArray(target)) {
+      return target.length === 0;
+    }
+    return target === null || target === undefined;
+  }
+
 }
 
 export default APIUtils;

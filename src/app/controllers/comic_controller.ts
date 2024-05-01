@@ -105,7 +105,7 @@ class ComicController {
     const status: number = StatusCodes.OK;
     const success: boolean = true;
 
-    const result = await ComicService.getByPageCount(Number(numPages));
+    const { result } = await ComicService.getByPageCount(Number(numPages));
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 }
