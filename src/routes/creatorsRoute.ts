@@ -1,6 +1,8 @@
 import Router from 'express';
 import CreatorController from '../app/controllers/creator_controller';
 import AuthenticationMiddleware from '../app/middlewares/authenticationMiddleware';
+import validationMiddleware from '../app/middlewares/validationMiddleware';
+import ValidateCreators from '../app/validations/creator/validateCreator';
 
 const creatorRouter = Router();
 
@@ -10,7 +12,10 @@ creatorRouter.get('/reset-creators',  [ AuthenticationMiddleware.AuthenticateTok
 
 creatorRouter.get('/creators',  [ AuthenticationMiddleware.AuthenticateToken ], CreatorController.getCreators);
 
-creatorRouter.post('/creator',  [ AuthenticationMiddleware.AuthenticateToken ], CreatorController.addCreator);
+creatorRouter.post('/creator',  [
+  AuthenticationMiddleware.AuthenticateToken,
+  validationMiddleware('body', ValidateCreators.AddCreatorValidation())
+], CreatorController.addCreator);
 
 creatorRouter.get('/creators/collectionSize',  [ AuthenticationMiddleware.AuthenticateToken ], CreatorController.getByCollectionSize);
 
