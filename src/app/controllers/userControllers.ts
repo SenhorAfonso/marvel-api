@@ -14,7 +14,7 @@ class userController {
 
     const { username, email, password, confirmPassword } = req.body;
 
-    const result = await userService.registerNewUser({ username, email, password, confirmPassword });
+    const { result } = await userService.registerNewUser({ username, email, password, confirmPassword });
 
     res.status(status).json({ code: status, success, message, data: { result } });
   }
@@ -28,7 +28,7 @@ class userController {
     const status: number = StatusCodes.OK;
 
     const { email, password } = req.body;
-    const result = await userService.loginUser({ email, password });
+    const { result } = await userService.loginUser({ email, password });
 
     res.status(status).json({ code: status, success, message, data: { result } });
   }
