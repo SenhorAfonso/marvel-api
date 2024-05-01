@@ -10,6 +10,7 @@ import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 import IPagination from '../../interfaces/IPagination';
 import APIUtils from '../utils/APIUtils';
 import client from '../models/extra/mongooseCache';
+import IAddNewCreator from '../../interfaces/creators/IAddNewCreator';
 
 class CreatorService {
 
@@ -49,7 +50,8 @@ class CreatorService {
     return result;
   }
 
-  static async addCreator(newCreator: any) {
+  static async addCreator(newCreator: IAddNewCreator) {
+    newCreator.collectionSize = newCreator.otherComics.length + 1;
     const result = await CreatorRepository.addCreator(newCreator);
     return result;
   }
