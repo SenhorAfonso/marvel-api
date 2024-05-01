@@ -4,6 +4,10 @@ import ICreators from '../../interfaces/creators/ICreators';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
 import IQueryObject from '../../interfaces/IQueryObject';
+import InternalServerError from '../errors/internalServerError';
+import BadRequestdError from '../errors/badRequestError';
+import APIUtils from '../utils/APIUtils';
+import NotFoundError from '../errors/notFoundError';
 
 class CreatorRepository {
 
@@ -12,11 +16,20 @@ class CreatorRepository {
   ): Promise<{
     result: mongoose.Document[]
   }> {
-    const result = await creatorModel.create(creators);
+    let result: mongoose.Document[] | null;
+
+    try {
+      result = await creatorModel.create(creators);
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
     return { result };
   }
 
-  static async getCreators(queryObject: IQueryObject): Promise<{
+  static async getCreators(
+    queryObject: IQueryObject
+  ): Promise<{
     result: mongoose.Document[]
   }> {
     const { limit, skip, sort } = queryObject;
@@ -24,23 +37,62 @@ class CreatorRepository {
       method: 'get'
     };
 
-    const result = await creatorModel
-      .find()
-      .limit(limit)
-      .skip(skip)
-      .sort(sort)
-      .cache(hashCache);
+    let result: mongoose.Document[] | null;
 
-    return { result };
+    try {
+      result = await creatorModel
+        .find()
+        .limit(limit)
+        .skip(skip)
+        .sort(sort)
+        .cache(hashCache);
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError('There is no creatores registered!');
+    }
+
+    return { result: result! };
   }
 
-  static async getSingleCreator(creatorID: string) {
-    const result = await creatorModel.findById({ _id: creatorID });
-    return { result };
+  static async getSingleCreator(
+    creatorID: string
+  ): Promise<{
+    result: mongoose.Document
+  }> {
+    let result: mongoose.Document | null;
+
+    try {
+      result = await creatorModel.findById({ _id: creatorID });
+    } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestdError('Id format is invalid');
+      } else {
+        throw new InternalServerError();
+      }
+    }
+
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError('There is no creator with such id');
+    }
+
+    return { result: result! };
   }
 
-  static async addCreator(newCreator: any) {
-    const result = await creatorModel.create(newCreator);
+  static async addCreator(
+    newCreator: any
+  ): Promise<{
+    result: mongoose.Document
+  }> {
+    let result: mongoose.Document | null;
+    try {
+      result = await creatorModel.create(newCreator);
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
     return { result };
   }
 
@@ -49,13 +101,18 @@ class CreatorRepository {
   ): Promise<{
     result: mongoose.Document
   }> {
-
     const { creatorID, ...newInfoCreator } = payload;
 
-    let creatorToUpdate = await creatorModel.findById({ _id: creatorID });
+    let creatorToUpdate: mongoose.Document | null = null;
 
-    if (!creatorToUpdate) {
-      throw new Error(`The id ${creatorID} is not associated with an record`);
+    try {
+      creatorToUpdate = await creatorModel.findById({ _id: creatorID });
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
+    if (APIUtils.isEmpty(creatorToUpdate)) {
+      throw new NotFoundError(`The id ${creatorID} is not associated with an record`);
     }
 
     creatorToUpdate = await creatorModel.findByIdAndUpdate({ _id: creatorID }, newInfoCreator, { new: true });
@@ -67,29 +124,75 @@ class CreatorRepository {
   ): Promise<{
     result: mongoose.Document
   }> {
-    const creatorToDelete = await creatorModel.findByIdAndDelete({ _id: creatorID });
+    let creatorToDelete: mongoose.Document | null = null;
 
-    if (!creatorToDelete) {
+    try {
+      creatorToDelete = await creatorModel.findByIdAndDelete({ _id: creatorID });
+    } catch (error) {
+      if (error) {
+        if (error instanceof mongoose.Error.CastError) {
+          throw new BadRequestdError('Id format is invalid');
+        } else {
+          throw new InternalServerError();
+        }
+      }
+    }
+
+    if (APIUtils.isEmpty(creatorToDelete)) {
       throw new Error(`The id ${creatorID} is not associated with an record`);
     }
 
     await creatorModel.findByIdAndDelete({ _id: creatorID });
 
-    return { result: creatorToDelete };
+    return { result: creatorToDelete! };
   }
 
   static async deleteManyCreators() {
-    await creatorModel.deleteMany({});
+    try {
+      await creatorModel.deleteMany({});
+    } catch (error) {
+      throw new InternalServerError();
+    }
   }
 
-  static async getByCollectionSize(collSize: number): Promise<mongoose.Document[]> {
-    const result = await creatorModel.find({ collectionSize: { $gt: collSize } });
-    return result;
+  static async getByCollectionSize(
+    collSize: number
+  ): Promise<{
+    result: mongoose.Document[]
+  }> {
+    let result: mongoose.Document[] | null;
+
+    try {
+      result = await creatorModel.find({ collectionSize: { $gt: collSize } });
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError();
+    }
+
+    return { result };
   }
 
-  static async getByNameLength(nameLength: number): Promise<mongoose.Document[]> {
-    const result = await creatorModel.find({ $where: `this.name.length > ${nameLength}` });
-    return result;
+  static async getByNameLength(
+    nameLength: number
+  ): Promise<{
+    result: mongoose.Document[]
+  }> {
+    let result: mongoose.Document[] | null;
+
+    try {
+      result = await creatorModel.find({ $where: `this.name.length > ${nameLength}` });
+    } catch (error) {
+      throw new InternalServerError();
+    }
+
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError();
+    }
+
+    return { result };
   }
 
 }

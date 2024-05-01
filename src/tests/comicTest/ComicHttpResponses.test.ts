@@ -54,6 +54,7 @@ describe('Check for Comic Entity\'s routes', () => {
       title: 'How to make good tests with jest',
       description: 'A comic about tests',
       publishDate: '27/05/2009',
+      pageCount: 35,
       folder: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg'
     };
 
@@ -71,6 +72,7 @@ describe('Check for Comic Entity\'s routes', () => {
       title: 'How to make good tests with jest',
       description: 'A comic about tests',
       publishDate: '27/05/2009',
+      pageCount: 35,
       folder: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg'
     };
 
@@ -94,6 +96,7 @@ describe('Check for Comic Entity\'s routes', () => {
       title: 'How to make good tests',
       description: 'A comic about tests',
       publishDate: '27/05/2009',
+      pageCount: 35,
       folder: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg'
     };
 
@@ -122,14 +125,11 @@ describe('Check for Comic Entity\'s routes', () => {
 
   it('Delete Single Comic route should be working', async () => {
     const newComic = {
-      name: 'Cretor Teste',
-      role: 'Tester',
-      sagaComic: 'nodejs',
-      otherComics: [
-        'jest',
-        'mocha',
-        'chai'
-      ]
+      title: 'How to make good tests',
+      description: 'A comic about tests',
+      publishDate: '27/05/2009',
+      pageCount: 35,
+      folder: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg'
     };
 
     const ComicResponse = await request(server)
