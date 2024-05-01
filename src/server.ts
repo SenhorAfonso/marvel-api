@@ -6,6 +6,7 @@ import comicRouter from './routes/comicRoute';
 import creatorRouter from './routes/creatorsRoute';
 import characterRouter from './routes/character_route';
 import ErrorhandlingMiddleware from './app/middlewares/errorHandlingMiddleware';
+import userRouter from './routes/userRoute';
 
 class Server {
   public server: express.Application;
@@ -19,6 +20,7 @@ class Server {
     this.server.use(express.json());
     this.server.use(compression({ threshold: 0 }));
     this.server.use(queue({ activeLimit: 12, queuedLimit: 50 }));
+    this.server.use('/api/v1/', userRouter);
     this.server.use('/api/v1/', comicRouter);
     this.server.use('/api/v1/', creatorRouter);
     this.server.use('/api/v1/', characterRouter);
