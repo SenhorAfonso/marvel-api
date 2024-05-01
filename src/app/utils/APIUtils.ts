@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import IPagination from '../../interfaces/IPagination';
 
 class APIUtils {
@@ -18,6 +19,11 @@ class APIUtils {
       return target.length === 0;
     }
     return target === null || target === undefined;
+  }
+
+  static passwordsDontMatch(password: string, hash: string): boolean {
+    const match = bcrypt.compareSync(password, hash);
+    return !match;
   }
 
 }
