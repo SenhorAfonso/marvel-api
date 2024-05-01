@@ -18,7 +18,7 @@ class AuthenticationMiddleware {
       throw new UnauthenticatedError();
     }
 
-    const token = authHeader.split(' ')[0];
+    const token = authHeader.split(' ')[1];
 
     try {
       const { userID } = jwt.verify(token, serverConfig.JWT_SECRET!) as IJwtPayload;
