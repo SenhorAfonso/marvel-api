@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
+import ILoginUserPayload from '../../interfaces/user/ILoginUserPayload';
+import serverConfig from '../../configs/serverConfig';
 
 const MIN_NAME_LENGTH: number = 5;
 
@@ -11,7 +14,8 @@ const userSchema = new mongoose.Schema({
   },
   email: {
     type: String,
-    require: [true, 'Email is a required field!']
+    require: [true, 'Email is a required field!'],
+    unique: [true, 'Email is already registered!']
   },
   password: {
     type: String,
@@ -20,4 +24,9 @@ const userSchema = new mongoose.Schema({
 
 });
 
-export default mongoose.model('userModel', userSchema);
+userSchema.pre('save', async function hash() {
+  const salt: string = serverConfig.BCRYPT_SALT!;
+  this.password = await bcrypt.hash(this.password!, salt);
+});
+
+export default mongoose.model<ILoginUserPayload>('userModel', userSchema);
