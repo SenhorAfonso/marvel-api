@@ -48,7 +48,6 @@ class ValidateCreators {
         .required(),
 
       collectionSize: Joi.number()
-        .required()
     });
 
     return validationObject;

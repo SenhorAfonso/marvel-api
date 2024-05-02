@@ -57,9 +57,7 @@ class CreatorService {
   }
 
   static async updateCreator(creatorNewInfo: IUpdateCreatorInfo) {
-    if (!creatorNewInfo.collectionSize) {
-      creatorNewInfo.collectionSize = creatorNewInfo.otherComics.length + 1;
-    }
+    creatorNewInfo.collectionSize = creatorNewInfo.otherComics.length + 1;
 
     const result = await CreatorRepository.updateCreator(creatorNewInfo);
     return result;
