@@ -23,7 +23,10 @@ creatorRouter.get('/creators/nameLength',  [ AuthenticationMiddleware.Authentica
 
 creatorRouter.get('/creator/:creatorID',  [ AuthenticationMiddleware.AuthenticateToken ], CreatorController.getSingleCreator);
 
-creatorRouter.put('/creator/:creatorID',  [ AuthenticationMiddleware.AuthenticateToken ], CreatorController.updateCreator);
+creatorRouter.put('/creator/:creatorID',  [
+  AuthenticationMiddleware.AuthenticateToken,
+  validationMiddleware('body', ValidateCreators.UpdateCreatorValidation())
+], CreatorController.updateCreator);
 
 creatorRouter.delete('/creator/:creatorID',  [ AuthenticationMiddleware.AuthenticateToken ], CreatorController.deleteCreator);
 

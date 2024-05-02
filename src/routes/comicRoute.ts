@@ -21,7 +21,10 @@ comicRouter.post('/comic',[
 
 comicRouter.get('/comic/:comicId', [ AuthenticationMiddleware.AuthenticateToken ], ComicController.getSingleComic);
 
-comicRouter.put('/comic/:comicId', [ AuthenticationMiddleware.AuthenticateToken ], ComicController.updateComicInfo);
+comicRouter.put('/comic/:comicId', [
+  AuthenticationMiddleware.AuthenticateToken,
+  validationMiddleware('body', ValidateComics.UpdateComicValidation())
+], ComicController.updateComicInfo);
 
 comicRouter.delete('/comic/:comicId', [ AuthenticationMiddleware.AuthenticateToken ], ComicController.deleteComicInfo);
 
