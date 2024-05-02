@@ -28,6 +28,29 @@ class ValidateComics {
     return validationObject;
   }
 
+  static UpdateComicValidation() {
+    const validationObject = Joi.object({
+      title: Joi.string()
+        .min(MIN_TITLE_LENGTH)
+        .required(),
+
+      description: Joi.string()
+        .min(MIN_DESC_LENGTH)
+        .required(),
+
+      publishDate: Joi.string()
+        .required(),
+
+      pageCount: Joi.number()
+        .required(),
+
+      folder: Joi.string()
+        .required()
+    });
+
+    return validationObject;
+  }
+
 }
 
 export default ValidateComics;
