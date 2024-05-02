@@ -10,7 +10,8 @@ const serverConfig = {
   IMAGE_EXTENSION: process.env.IMAGE_EXTENSION,
   CACHE_EXPIRATION_TIME: process.env.CACHE_EXPIRATION_TIME,
   JWT_SECRET: process.env.JWT_SECRET,
-  BCRYPT_SALT: process.env.BCRYPT_SALT
+  BCRYPT_SALT: process.env.BCRYPT_SALT,
+  USER_TOKEN_TEST: process.env.USER_TOKEN_TEST
 };
 
 export default serverConfig;
