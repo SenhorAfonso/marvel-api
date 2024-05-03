@@ -79,7 +79,7 @@ class ComicRepository {
     }
 
     if (APIUtils.isEmpty(result)) {
-      throw new NotFoundError('thre is no register asociated to this id');
+      throw new NotFoundError('there is no register asociated to this id');
     }
 
     return { result: result! };
@@ -97,14 +97,14 @@ class ComicRepository {
       result = await comicsModel.findByIdAndUpdate(comicId, newComicInfo, { new: true });
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) {
-        throw new BadRequestdError('Id format invalid');
+        throw new BadRequestdError('Id format is invalid');
       } else {
         throw new InternalServerError();
       }
     }
 
     if (APIUtils.isEmpty(result)) {
-      throw new NotFoundError('thre is no register asociated to this id');
+      throw new NotFoundError('there is no register asociated to this id');
     }
 
     return { result: result! };

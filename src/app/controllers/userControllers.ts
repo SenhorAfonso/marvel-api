@@ -10,7 +10,7 @@ class userController {
   ) {
     const success: boolean = true;
     const message: string = 'User successfully registered!';
-    const status: number = StatusCodes.OK;
+    const status: number = StatusCodes.CREATED;
 
     const { username, email, password, confirmPassword } = req.body;
 
