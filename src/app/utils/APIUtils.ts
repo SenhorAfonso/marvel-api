@@ -26,6 +26,18 @@ class APIUtils {
     return !match;
   }
 
+  static passwordsAreInvalid(password: string, confirmPassword: string): boolean {
+    if (!password || !confirmPassword) {
+      return true;
+    }
+
+    if (password !== confirmPassword) {
+      return true;
+    }
+
+    return false;
+  }
+
 }
 
 export default APIUtils;
