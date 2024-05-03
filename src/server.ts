@@ -2,6 +2,8 @@ import 'express-async-errors';
 import queue from 'express-queue';
 import express from 'express';
 import compression from 'compression';
+import swaggerUi from 'swagger-ui-express';
+import swagger_output from '../swagger_output.json';
 import comicRouter from './routes/comicRoute';
 import creatorRouter from './routes/creatorsRoute';
 import characterRouter from './routes/character_route';
@@ -18,6 +20,7 @@ class Server {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use('/docs', swaggerUi.serve, swaggerUi.setup(swagger_output));
     this.server.use(compression({ threshold: 0 }));
     this.server.use(queue({ activeLimit: 12, queuedLimit: 50 }));
     this.server.use('/api/v1/', userRouter);
