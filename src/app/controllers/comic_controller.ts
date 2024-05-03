@@ -12,7 +12,8 @@ class ComicController {
     const status: number = StatusCodes.CREATED;
     const success: boolean = true;
 
-    const { result } = await ComicService.fetchComics();
+    const { result, responseTime } = await ComicService.fetchComics();
+    res.setHeader('X-Response-Time', responseTime);
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 

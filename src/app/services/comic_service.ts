@@ -12,7 +12,11 @@ import IQueryObject from '../../interfaces/IQueryObject';
 
 class ComicService {
 
-  static async fetchComics(): Promise<{ result: mongoose.Document[] }> {
+  static async fetchComics(): Promise<{
+    result: mongoose.Document[],
+    responseTime: number
+  }> {
+    const responseStart = Date.now();
     const cachedValue = await client.get('fetch-comics');
     let result: mongoose.Document[];
 
@@ -40,7 +44,8 @@ class ComicService {
       await client.set('fetch-comics', JSON.stringify(result), 'EX', serverConfig.CACHE_EXPIRATION_TIME!);
 
     }
-    return { result };
+    const responseTime = Date.now() - responseStart;
+    return { result, responseTime };
   }
 
   static getAllComics(pagination: IPagination) {
