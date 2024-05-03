@@ -4,7 +4,7 @@ import ILoginUserPayload from '../../interfaces/user/ILoginUserPayload';
 import userModel from '../models/userModel';
 import InternalServerError from '../errors/internalServerError';
 import APIUtils from '../utils/APIUtils';
-import BadRequestdError from '../errors/badRequestError';
+import BadRequestError from '../errors/badRequestError';
 import IUserDocument from '../../interfaces/user/IUserDocument';
 import DuplicatedValueError from '../errors/duplicatedValueError';
 
@@ -43,11 +43,11 @@ class userRepository {
     }
 
     if (APIUtils.isEmpty(result)) {
-      throw new BadRequestdError('The email or password provided is incorrect!');
+      throw new BadRequestError('The email or password provided is incorrect!');
     }
     const userPassword = result.password;
     if (APIUtils.passwordsDontMatch(password, userPassword)) {
-      throw new BadRequestdError('The email or password provided is incorrect!');
+      throw new BadRequestError('The email or password provided is incorrect!');
     }
 
     return { result };
