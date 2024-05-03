@@ -12,7 +12,8 @@ class CreatorController {
     const message: string = 'Creators successfully fetched from API!';
     const status: number = StatusCodes.OK;
 
-    const { result } = await CreatorService.fetchCreators();
+    const { result, responseTime } = await CreatorService.fetchCreators();
+    res.setHeader('X-Response-Time', responseTime);
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
