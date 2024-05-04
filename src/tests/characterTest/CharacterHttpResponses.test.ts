@@ -1,4 +1,3 @@
-/* eslint-disable */
 import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
@@ -30,10 +29,15 @@ describe('Check for Characters Entity\'s routes', () => {
     await client.quit();
   });
 
-  it.skip('Fetch route should be working', async () => {
+  it('Fetch route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
     const response = await request(server)
-      .get('/api/v1/fetch-characters');
+      .get('/api/v1/fetch-characters')
+      .auth(token, { type: 'bearer' });
 
+    expect(response.body.code).toBe(StatusCodes.CREATED);
+    expect(response.body.success).toBeTruthy();
+    expect(response.body.message).toBe('Characters successfully fetched from API!');
   }, 10000);
 
   it('Get all route should be working', async () => {
@@ -53,16 +57,16 @@ describe('Check for Characters Entity\'s routes', () => {
     const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
       name: 'Flash',
-      description: "I'm not meant to be here!",
+      description: 'I\'m not meant to be here!',
       thumbnail: 'https://static.wikia.nocookie.net/dccomics/images/b/b3/The_Flash_Vol_1_782_Textless_Variant.jpg/revision/latest?cb=20230714165251&path-prefix=pt',
-      comic: 'Flashpoint'
+      comic: 'Flashpoint',
+      comicCount: 2500
     };
 
     const response = await request(server)
       .post('/api/v1/character')
       .send(newCharacter)
       .auth(token, { type: 'bearer' });
-
 
     expect(response.body.code).toBe(StatusCodes.CREATED);
     expect(response.body.success).toBeTruthy();
@@ -73,10 +77,11 @@ describe('Check for Characters Entity\'s routes', () => {
   it('Get Single Comic route should be working', async () => {
     const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
-      name: 'Flash',
-      description: "I'm not meant to be here!",
+      name: 'Mercury',
+      description: 'Speedster who died from a gunshot!',
       thumbnail: 'https://static.wikia.nocookie.net/dccomics/images/b/b3/The_Flash_Vol_1_782_Textless_Variant.jpg/revision/latest?cb=20230714165251&path-prefix=pt',
-      comic: 'Flashpoint'
+      comic: 'Flashpoint',
+      comicCount: 2500
     };
 
     const characterResponse = await request(server)
@@ -87,7 +92,8 @@ describe('Check for Characters Entity\'s routes', () => {
     const characterID = characterResponse.body.data.result._id;
 
     const response = await request(server)
-      .get(`/api/v1/character/${characterID}`);
+      .get(`/api/v1/character/${characterID}`)
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
@@ -99,9 +105,10 @@ describe('Check for Characters Entity\'s routes', () => {
     const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
       name: 'Flash',
-      description: "I'm not meant to be here!",
+      description: 'I\'m not meant to be here!',
       thumbnail: 'https://static.wikia.nocookie.net/dccomics/images/b/b3/The_Flash_Vol_1_782_Textless_Variant.jpg/revision/latest?cb=20230714165251&path-prefix=pt',
-      comic: 'Flashpoint'
+      comic: 'Flashpoint',
+      comicCount: 2500
     };
 
     const ComicResponse = await request(server)
@@ -113,14 +120,16 @@ describe('Check for Characters Entity\'s routes', () => {
 
     const newCharacterInfo = {
       name: 'Mercury',
-      description: "Speedster who died from a gunshot!",
+      description: 'Speedster who died from a gunshot!',
       thumbnail: 'https://static.wikia.nocookie.net/dccomics/images/b/b3/The_Flash_Vol_1_782_Textless_Variant.jpg/revision/latest?cb=20230714165251&path-prefix=pt',
-      comic: 'Flashpoint'
+      comic: 'Flashpoint',
+      comicCount: 2500
     };
 
     const response = await request(server)
       .put(`/api/v1/character/${comicID}`)
-      .send(newCharacterInfo);
+      .send(newCharacterInfo)
+      .auth(token, { type: 'bearer' });;
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -130,9 +139,11 @@ describe('Check for Characters Entity\'s routes', () => {
   it('Delete Single Comic route should be working', async () => {
     const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
-      name: 'Cretor Teste',
-      role: 'Tester',
-      sagaComic: ''
+      name: 'Mercury',
+      description: 'Speedster who died from a gunshot!',
+      thumbnail: 'https://static.wikia.nocookie.net/dccomics/images/b/b3/The_Flash_Vol_1_782_Textless_Variant.jpg/revision/latest?cb=20230714165251&path-prefix=pt',
+      comic: 'Flashpoint',
+      comicCount: 2500
     };
 
     const ComicResponse = await request(server)
@@ -143,9 +154,10 @@ describe('Check for Characters Entity\'s routes', () => {
     const ComicID = ComicResponse.body.data.result._id;
 
     const response = await request(server)
-      .delete(`/api/v1/character/${ComicID}`);
+      .delete(`/api/v1/character/${ComicID}`)
+      .auth(token, { type: 'bearer' });;
 
-    expect(response.status).toBe(StatusCodes.NO_CONTENT)
+    expect(response.status).toBe(StatusCodes.NO_CONTENT);
   }, 15000);
 
   it('Reset Comic route should be working', async () => {
@@ -156,7 +168,7 @@ describe('Check for Characters Entity\'s routes', () => {
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
-    expect(response.body.message).toBe('Characters successfully reseted!')
+    expect(response.body.message).toBe('Characters successfully reseted!');
   }, 15000);
 
 });
