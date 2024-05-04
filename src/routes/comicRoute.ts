@@ -16,12 +16,15 @@ comicRouter.get('/comics/pageCount', [ AuthenticationMiddleware.AuthenticateToke
 
 comicRouter.post('/comic',[
   AuthenticationMiddleware.AuthenticateToken,
-  validationMiddleware('body', ValidateComics.CreateComicValication())
+  validationMiddleware('body', ValidateComics.CreateComicValidation())
 ], ComicController.addComic);
 
 comicRouter.get('/comic/:comicId', [ AuthenticationMiddleware.AuthenticateToken ], ComicController.getSingleComic);
 
-comicRouter.put('/comic/:comicId', [ AuthenticationMiddleware.AuthenticateToken ], ComicController.updateComicInfo);
+comicRouter.put('/comic/:comicId', [
+  AuthenticationMiddleware.AuthenticateToken,
+  validationMiddleware('body', ValidateComics.UpdateComicValidation())
+], ComicController.updateComicInfo);
 
 comicRouter.delete('/comic/:comicId', [ AuthenticationMiddleware.AuthenticateToken ], ComicController.deleteComicInfo);
 

@@ -6,6 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 import server from '../../server';
 import client from '../../app/models/extra/mongooseCache';
 import charactersModel from '../../app/models/charactersModel';
+import serverConfig from '../../configs/serverConfig';
 
 let mongoServer: MongoMemoryServer;
 let mongoURI: string;
@@ -36,9 +37,12 @@ describe('Check for Characters Entity\'s routes', () => {
   }, 10000);
 
   it('Get all route should be working', async () => {
+    const token = serverConfig.USER_TOKEN_TEST!;
+
     await request(server).get('/api/v1/characters');
     const response = await request(server)
-      .get('/api/v1/characters');
+      .get('/api/v1/characters')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
@@ -46,6 +50,7 @@ describe('Check for Characters Entity\'s routes', () => {
   }, 15000);
 
   it('Add Character route should be working', async () => {
+    const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
       name: 'Flash',
       description: "I'm not meant to be here!",
@@ -55,7 +60,8 @@ describe('Check for Characters Entity\'s routes', () => {
 
     const response = await request(server)
       .post('/api/v1/character')
-      .send(newCharacter);
+      .send(newCharacter)
+      .auth(token, { type: 'bearer' });
 
 
     expect(response.body.code).toBe(StatusCodes.CREATED);
@@ -65,6 +71,7 @@ describe('Check for Characters Entity\'s routes', () => {
   }, 15000);
 
   it('Get Single Comic route should be working', async () => {
+    const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
       name: 'Flash',
       description: "I'm not meant to be here!",
@@ -74,7 +81,8 @@ describe('Check for Characters Entity\'s routes', () => {
 
     const characterResponse = await request(server)
       .post('/api/v1/character')
-      .send(newCharacter);
+      .send(newCharacter)
+      .auth(token, { type: 'bearer' });
 
     const characterID = characterResponse.body.data.result._id;
 
@@ -88,6 +96,7 @@ describe('Check for Characters Entity\'s routes', () => {
   }, 15000);
 
   it('Update Comic info route should be working', async () => {
+    const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
       name: 'Flash',
       description: "I'm not meant to be here!",
@@ -97,7 +106,8 @@ describe('Check for Characters Entity\'s routes', () => {
 
     const ComicResponse = await request(server)
       .post('/api/v1/character')
-      .send(newCharacter);
+      .send(newCharacter)
+      .auth(token, { type: 'bearer' });
 
     const comicID = ComicResponse.body.data.result._id;
 
@@ -118,6 +128,7 @@ describe('Check for Characters Entity\'s routes', () => {
   }, 15000);
 
   it('Delete Single Comic route should be working', async () => {
+    const token = serverConfig.USER_TOKEN_TEST!;
     const newCharacter = {
       name: 'Cretor Teste',
       role: 'Tester',
@@ -126,7 +137,8 @@ describe('Check for Characters Entity\'s routes', () => {
 
     const ComicResponse = await request(server)
       .post('/api/v1/character')
-      .send(newCharacter);
+      .send(newCharacter)
+      .auth(token, { type: 'bearer' });
 
     const ComicID = ComicResponse.body.data.result._id;
 
@@ -137,8 +149,10 @@ describe('Check for Characters Entity\'s routes', () => {
   }, 15000);
 
   it('Reset Comic route should be working', async () => {
+    const token = serverConfig.USER_TOKEN_TEST!;
     const response = await request(server)
-      .get('/api/v1/reset-characters');
+      .get('/api/v1/reset-characters')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();

@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import server from '../../server';
 import creatorSchema from '../../app/models/creatorModel';
 import client from '../../app/models/extra/mongooseCache';
+import serverConfig from '../../configs/serverConfig';
 
 let mongoServer: MongoMemoryServer;
 let mongoURI: string;
@@ -28,8 +29,11 @@ describe('Check for Creator Entity\'s routes', () => {
   });
 
   it('Fetch route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const response = await request(server)
-      .get('/api/v1/fetch-creators');
+      .get('/api/v1/fetch-creators')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -38,9 +42,15 @@ describe('Check for Creator Entity\'s routes', () => {
   }, 10000);
 
   it('Get all route should be working', async () => {
-    await request(server).get('/api/v1/fetch-creators');
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
+    await request(server)
+      .get('/api/v1/fetch-creators')
+      .auth(token, { type: 'bearer' });
+
     const response = await request(server)
-      .get('/api/v1/creators');
+      .get('/api/v1/creators')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -49,6 +59,8 @@ describe('Check for Creator Entity\'s routes', () => {
   }, 15000);
 
   it('Add Creator route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newCreator = {
       name: 'Cretor Teste',
       role: 'Tester',
@@ -62,7 +74,8 @@ describe('Check for Creator Entity\'s routes', () => {
 
     const response = await request(server)
       .post('/api/v1/creator')
-      .send(newCreator);
+      .send(newCreator)
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -70,6 +83,8 @@ describe('Check for Creator Entity\'s routes', () => {
   }, 15000);
 
   it('Get Single Creator route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newCreator = {
       name: 'Cretor Teste',
       role: 'Tester',
@@ -83,12 +98,14 @@ describe('Check for Creator Entity\'s routes', () => {
 
     const creatorResponse = await request(server)
       .post('/api/v1/creator')
-      .send(newCreator);
+      .send(newCreator)
+      .auth(token, { type: 'bearer' });
 
     const creatorID = creatorResponse.body.data.result._id;
 
     const response = await request(server)
-      .get(`/api/v1/creator/${creatorID}`);
+      .get(`/api/v1/creator/${creatorID}`)
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -97,6 +114,8 @@ describe('Check for Creator Entity\'s routes', () => {
   }, 15000);
 
   it('Update creator info route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newCreator = {
       name: 'Cretor Teste',
       role: 'Tester',
@@ -110,7 +129,8 @@ describe('Check for Creator Entity\'s routes', () => {
 
     const creatorResponse = await request(server)
       .post('/api/v1/creator')
-      .send(newCreator);
+      .send(newCreator)
+      .auth(token, { type: 'bearer' });
 
     const creatorID = creatorResponse.body.data.result._id;
 
@@ -127,7 +147,8 @@ describe('Check for Creator Entity\'s routes', () => {
 
     const response = await request(server)
       .put(`/api/v1/creator/${creatorID}`)
-      .send(newCreatorInfo);
+      .send(newCreatorInfo)
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -136,6 +157,8 @@ describe('Check for Creator Entity\'s routes', () => {
   }, 15000);
 
   it('Delete Single Creator route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newCreator = {
       name: 'Cretor Teste',
       role: 'Tester',
@@ -149,12 +172,14 @@ describe('Check for Creator Entity\'s routes', () => {
 
     const creatorResponse = await request(server)
       .post('/api/v1/creator')
-      .send(newCreator);
+      .send(newCreator)
+      .auth(token, { type: 'bearer' });
 
     const creatorID = creatorResponse.body.data.result._id;
 
     const response = await request(server)
-      .delete(`/api/v1/creator/${creatorID}`);
+      .delete(`/api/v1/creator/${creatorID}`)
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -163,8 +188,11 @@ describe('Check for Creator Entity\'s routes', () => {
   }, 15000);
 
   it('Reset Creator route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const response = await request(server)
-      .get('/api/v1/reset-creators');
+      .get('/api/v1/reset-creators')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();

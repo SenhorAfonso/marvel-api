@@ -5,6 +5,7 @@ import { StatusCodes } from 'http-status-codes';
 import server from '../../server';
 import comicsModel from '../../app/models/comicsModel';
 import client from '../../app/models/extra/mongooseCache';
+import serverConfig from '../../configs/serverConfig';
 
 let mongoServer: MongoMemoryServer;
 let mongoURI: string;
@@ -29,8 +30,11 @@ describe('Check for Comic Entity\'s routes', () => {
   });
 
   it('Fetch route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const response = await request(server)
-      .get('/api/v1/fetch-comics');
+      .get('/api/v1/fetch-comics')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.CREATED);
     expect(response.body.success).toBeTruthy();
@@ -39,9 +43,15 @@ describe('Check for Comic Entity\'s routes', () => {
   }, 10000);
 
   it('Get all route should be working', async () => {
-    await request(server).get('/api/v1/fetch-comics');
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
+    await request(server)
+      .get('/api/v1/fetch-comics')
+      .auth(token, { type: 'bearer' });
+
     const response = await request(server)
-      .get('/api/v1/comics');
+      .get('/api/v1/comics')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
@@ -50,6 +60,8 @@ describe('Check for Comic Entity\'s routes', () => {
   }, 15000);
 
   it('Add Comic route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newComic = {
       title: 'How to make good tests with jest',
       description: 'A comic about tests',
@@ -60,7 +72,8 @@ describe('Check for Comic Entity\'s routes', () => {
 
     const response = await request(server)
       .post('/api/v1/comic')
-      .send(newComic);
+      .send(newComic)
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -68,6 +81,8 @@ describe('Check for Comic Entity\'s routes', () => {
   }, 15000);
 
   it('Get Single Comic route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newComic = {
       title: 'How to make good tests with jest',
       description: 'A comic about tests',
@@ -78,12 +93,14 @@ describe('Check for Comic Entity\'s routes', () => {
 
     const ComicResponse = await request(server)
       .post('/api/v1/comic')
-      .send(newComic);
+      .send(newComic)
+      .auth(token, { type: 'bearer' });
 
     const ComicID = ComicResponse.body.data.result._id;
 
     const response = await request(server)
-      .get(`/api/v1/comic/${ComicID}`);
+      .get(`/api/v1/comic/${ComicID}`)
+      .auth(token, { type: 'bearer' });;
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -92,6 +109,8 @@ describe('Check for Comic Entity\'s routes', () => {
   }, 15000);
 
   it('Update Comic info route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newComic = {
       title: 'How to make good tests',
       description: 'A comic about tests',
@@ -102,7 +121,8 @@ describe('Check for Comic Entity\'s routes', () => {
 
     const ComicResponse = await request(server)
       .post('/api/v1/comic')
-      .send(newComic);
+      .send(newComic)
+      .auth(token, { type: 'bearer' });
 
     const ComicID = ComicResponse.body.data.result._id;
 
@@ -110,12 +130,14 @@ describe('Check for Comic Entity\'s routes', () => {
       title: 'How to make good tests with pytest',
       description: 'Another comic about tests, but with python',
       publishDate: '20/02/1991',
-      folder: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAfbG2qFSS5c9d7PKn3OjRC6CE6vJzlwyyI5vl75GN2g&s'
+      folder: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAfbG2qFSS5c9d7PKn3OjRC6CE6vJzlwyyI5vl75GN2g&s',
+      pageCount: 35
     };
 
     const response = await request(server)
       .put(`/api/v1/comic/${ComicID}`)
-      .send(newComicInfo);
+      .send(newComicInfo)
+      .auth(token, { type: 'bearer' });;
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -124,6 +146,8 @@ describe('Check for Comic Entity\'s routes', () => {
   }, 15000);
 
   it('Delete Single Comic route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const newComic = {
       title: 'How to make good tests',
       description: 'A comic about tests',
@@ -134,12 +158,14 @@ describe('Check for Comic Entity\'s routes', () => {
 
     const ComicResponse = await request(server)
       .post('/api/v1/comic')
-      .send(newComic);
+      .send(newComic)
+      .auth(token, { type: 'bearer' });
 
     const ComicID = ComicResponse.body.data.result._id;
 
     const response = await request(server)
-      .delete(`/api/v1/comic/${ComicID}`);
+      .delete(`/api/v1/comic/${ComicID}`)
+      .auth(token, { type: 'bearer' });;
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
@@ -148,8 +174,11 @@ describe('Check for Comic Entity\'s routes', () => {
   }, 15000);
 
   it('Reset Comic route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     const response = await request(server)
-      .get('/api/v1/reset-comics');
+      .get('/api/v1/reset-comics')
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(200);
     expect(response.body.success).toBeTruthy();
