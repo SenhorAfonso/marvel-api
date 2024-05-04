@@ -5,7 +5,7 @@ import IHasResponseBody from '../../interfaces/generics/IHasResponseBody';
 import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 import ICreators from '../../interfaces/creators/ICreators';
 import ICreatorsArray from '../../interfaces/creators/ICreatorsArray';
-import CreatorRepository from '../repositories/creator_repository';
+import CreatorRepository from '../repositories/creatorRepository';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 import IPagination from '../../interfaces/IPagination';
 import APIUtils from '../utils/APIUtils';
