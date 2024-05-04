@@ -1,12 +1,10 @@
-/* eslint-disable */
-
 import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
+import { StatusCodes } from 'http-status-codes';
 import server from '../../server';
 import client from '../../app/models/extra/mongooseCache';
 import comicsModel from '../../app/models/comicsModel';
-import { StatusCodes } from 'http-status-codes';
 import charactersModel from '../../app/models/charactersModel';
 import creatorModel from '../../app/models/creatorModel';
 import serverConfig from '../../configs/serverConfig';
@@ -90,40 +88,29 @@ describe('Check for Creator Entity\'s routes', () => {
     expect(response.body.data.available).toBe(20);
   }, LONG_RUNNING_TEST);
 
-  it.skip('getByComicCount route should be working', async () => {
+  it('getByComicCount route should be working', async () => {
     const token: string = serverConfig.USER_TOKEN_TEST!;
 
-    await request(server)
-      .get('/api/v1/fetch-characters')
-      .auth(token, { type: 'bearer' });
-
     const response = await request(server)
-      .get('/api/v1/character/comicCount')
+      .get('/api/v1/characters/comicCount')
       .query({ comicCount: 30 })
       .auth(token, { type: 'bearer' });
 
-    console.log(response.body)
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
-    expect(response.body.message).toBe('Comics with number of pages greater than 30 were retrieved!');
-    expect(response.body.data.available).toBe(20);
+    expect(response.body.message).toBe('Characters that starred in more than 30 comics were retrived!');
   }, LONG_RUNNING_TEST);
 
-  it.skip('getBysecondTitle route should be working', async () => {
+  it('getBysecondTitle route should be working', async () => {
     const token: string = serverConfig.USER_TOKEN_TEST!;
 
-    await request(server)
-      .get('/api/v1/fetch-characters')
-      .auth(token, { type: 'bearer' });
-
     const response = await request(server)
-      .get('/api/v1/character/secondTitle')
+      .get('/api/v1/characters/secondTitle')
       .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
-    expect(response.body.message).toBe('Comics with number of pages greater than 30 were retrieved!');
-    expect(response.body.data.available).toBe(20);
+    expect(response.body.message).toBe('Characters that hava a second title were retrieved');
   }, LONG_RUNNING_TEST);
 
 });
