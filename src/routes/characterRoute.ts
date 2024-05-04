@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import CharacterController from '../app/controllers/character_controller';
+import CharacterController from '../app/controllers/characterController';
 import validationMiddleware from '../app/middlewares/validationMiddleware';
 import ValidateCharacters from '../app/validations/character/validateCharacter';
 import AuthenticationMiddleware from '../app/middlewares/authenticationMiddleware';
