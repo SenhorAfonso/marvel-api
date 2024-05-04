@@ -1,14 +1,13 @@
-/* eslint-disable */
-
 import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
+import { StatusCodes } from 'http-status-codes';
 import server from '../../server';
 import client from '../../app/models/extra/mongooseCache';
 import comicsModel from '../../app/models/comicsModel';
-import { StatusCodes } from 'http-status-codes';
 import charactersModel from '../../app/models/charactersModel';
 import creatorModel from '../../app/models/creatorModel';
+import serverConfig from '../../configs/serverConfig';
 
 let mongoServer: MongoMemoryServer;
 let mongoURI: string;
@@ -37,12 +36,15 @@ describe('Check for Creator Entity\'s routes', () => {
   });
 
   it('getByCollectionSize route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
     await request(server)
-      .get('/api/v1/fetch-creators');
+      .get('/api/v1/fetch-creators')
+      .auth(token, { type: 'bearer' });
 
     const response = await request(server)
       .get('/api/v1/creators/collectionSize')
-      .query({ collSize: 2500 });
+      .query({ collSize: 2500 })
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
@@ -51,12 +53,16 @@ describe('Check for Creator Entity\'s routes', () => {
   }, LONG_RUNNING_TEST);
 
   it('getByNameLength route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     await request(server)
-      .get('/api/v1/fetch-creators');
+      .get('/api/v1/fetch-creators')
+      .auth(token, { type: 'bearer' });
 
     const response = await request(server)
       .get('/api/v1/creators/nameLength')
-      .query({ nameLength: 10 });
+      .query({ nameLength: 10 })
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
@@ -65,12 +71,16 @@ describe('Check for Creator Entity\'s routes', () => {
   }, LONG_RUNNING_TEST);
 
   it('getByPageCount route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
+
     await request(server)
-      .get('/api/v1/fetch-comics');
+      .get('/api/v1/fetch-comics')
+      .auth(token, { type: 'bearer' });
 
     const response = await request(server)
       .get('/api/v1/comics/pageCount')
-      .query({ numPages: 30 });
+      .query({ numPages: 30 })
+      .auth(token, { type: 'bearer' });
 
     expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
@@ -78,31 +88,29 @@ describe('Check for Creator Entity\'s routes', () => {
     expect(response.body.data.available).toBe(20);
   }, LONG_RUNNING_TEST);
 
-  it.skip('getByComicCount route should be working', async () => {
-    await request(server)
-      .get('/api/v1/fetch-characters');
+  it('getByComicCount route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
 
     const response = await request(server)
-      .get('/api/v1/character/comicCount')
-      .query({ comicCount: 30 });
+      .get('/api/v1/characters/comicCount')
+      .query({ comicCount: 30 })
+      .auth(token, { type: 'bearer' });
 
-    // expect(response.body.code).toBe(StatusCodes.OK);
-    // expect(response.body.success).toBeTruthy();
-    // expect(response.body.message).toBe('Comics with number of pages greater than 30 were retrieved!');
-    // expect(response.body.data.available).toBe(20);
+    expect(response.body.code).toBe(StatusCodes.OK);
+    expect(response.body.success).toBeTruthy();
+    expect(response.body.message).toBe('Characters that starred in more than 30 comics were retrived!');
   }, LONG_RUNNING_TEST);
 
-  it.skip('getBysecondTitle route should be working', async () => {
-    await request(server)
-      .get('/api/v1/fetch-characters');
+  it('getBysecondTitle route should be working', async () => {
+    const token: string = serverConfig.USER_TOKEN_TEST!;
 
     const response = await request(server)
-      .get('/api/v1/character/secondTitle')
+      .get('/api/v1/characters/secondTitle')
+      .auth(token, { type: 'bearer' });
 
-    // expect(response.body.code).toBe(StatusCodes.OK);
-    // expect(response.body.success).toBeTruthy();
-    // expect(response.body.message).toBe('Comics with number of pages greater than 30 were retrieved!');
-    // expect(response.body.data.available).toBe(20);
+    expect(response.body.code).toBe(StatusCodes.OK);
+    expect(response.body.success).toBeTruthy();
+    expect(response.body.message).toBe('Characters that hava a second title were retrieved');
   }, LONG_RUNNING_TEST);
 
 });

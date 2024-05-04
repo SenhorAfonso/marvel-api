@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import IComicModel from '../../interfaces/comic/IComic_model';
+import IComicModel from '../../interfaces/comic/IComicModel';
 
 const comicSchema = new mongoose.Schema<IComicModel>({
   title: {

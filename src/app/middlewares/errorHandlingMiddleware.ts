@@ -13,11 +13,11 @@ class ErrorhandlingMiddleware {
   ) {
     const success: boolean = false;
     if (reqError instanceof APIError) {
-      res.status(reqError.status).json({ success: false, error: { name: reqError.name, messag: reqError.message } });
+      res.status(reqError.status).json({ code: reqError.status, success: false, error: { name: reqError.name, message: reqError.message } });
     } else if (reqError instanceof Joi.ValidationError) {
       const { type, errors } = ErrorhandlingMiddleware.formatJoiValidationErrors(reqError);
 
-      res.status(StatusCodes.BAD_REQUEST).json({ success, type, errors });
+      res.status(StatusCodes.BAD_REQUEST).json({ code: StatusCodes.BAD_REQUEST, success, type, errors });
     }
   }
 

@@ -5,7 +5,7 @@ import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
 import IQueryObject from '../../interfaces/IQueryObject';
 import InternalServerError from '../errors/internalServerError';
-import BadRequestdError from '../errors/badRequestError';
+import BadRequestError from '../errors/badRequestError';
 import APIUtils from '../utils/APIUtils';
 import NotFoundError from '../errors/notFoundError';
 
@@ -68,7 +68,7 @@ class CreatorRepository {
       result = await creatorModel.findById({ _id: creatorID });
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) {
-        throw new BadRequestdError('Id format is invalid');
+        throw new BadRequestError('Id format is invalid');
       } else {
         throw new InternalServerError();
       }
@@ -108,6 +108,9 @@ class CreatorRepository {
     try {
       creatorToUpdate = await creatorModel.findById({ _id: creatorID });
     } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestError('Id format is invalid');
+      }
       throw new InternalServerError();
     }
 
@@ -131,7 +134,7 @@ class CreatorRepository {
     } catch (error) {
       if (error) {
         if (error instanceof mongoose.Error.CastError) {
-          throw new BadRequestdError('Id format is invalid');
+          throw new BadRequestError('Id format is invalid');
         } else {
           throw new InternalServerError();
         }
@@ -139,7 +142,7 @@ class CreatorRepository {
     }
 
     if (APIUtils.isEmpty(creatorToDelete)) {
-      throw new Error(`The id ${creatorID} is not associated with an record`);
+      throw new NotFoundError(`The id ${creatorID} is not associated with an record`);
     }
 
     await creatorModel.findByIdAndDelete({ _id: creatorID });

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import CharacterService from '../services/character_service';
+import CharacterService from '../services/characterService';
 import { ICharacterDTO } from '../../DTOs/character/ICharacterDTO';
 
 export default class CharacterController {
@@ -11,16 +11,12 @@ export default class CharacterController {
   }
 
   async fetchData(request: Request, response: Response): Promise<void> {
-    try {
-      const message: string = 'Characters successfully fetched from API!';
-      const status: number = StatusCodes.CREATED;
-      const success: boolean = true;
+    const message: string = 'Characters successfully fetched from API!';
+    const status: number = StatusCodes.CREATED;
+    const success: boolean = true;
 
-      await this.characterService.fetchComicData();
-      response.status(status).json({ code: status, success, message });
-    } catch (error: any) {
-      response.status(StatusCodes.BAD_REQUEST).json(error.message);
-    }
+    await this.characterService.fetchCharacters();
+    response.status(status).json({ code: status, success, message });
   }
 
   async getSingle(request: Request, response: Response) {
@@ -39,28 +35,17 @@ export default class CharacterController {
     const success: boolean = true;
 
     const createCharacterDTO: ICharacterDTO = request.body;
-
-    try {
-      const result = await this.characterService.create(createCharacterDTO);
-
-      response.status(status).json({ code: status, success, message, data: { result } });
-    } catch (error: any) {
-      response.status(StatusCodes.BAD_REQUEST).json(error.message);
-    }
+    const result = await this.characterService.create(createCharacterDTO);
+    response.status(status).json({ code: status, success, message, data: { result } });
   }
 
   async findAll(request: Request, response: Response) {
-    try {
-      const message: string = 'All characters were retrieved!';
-      const status: number = StatusCodes.OK;
-      const success: boolean = true;
+    const message: string = 'All characters were retrieved!';
+    const status: number = StatusCodes.OK;
+    const success: boolean = true;
 
-      const search = await this.characterService.findAll();
-
-      response.status(status).json({ code: status, success, message, data: { result: search } });
-    } catch (error: any) {
-      response.status(StatusCodes.BAD_REQUEST).json(error.message);
-    }
+    const search = await this.characterService.findAll();
+    response.status(status).json({ code: status, success, message, data: { result: search } });
   }
 
   async updateById(request: Request, response: Response) {
@@ -70,13 +55,9 @@ export default class CharacterController {
 
     const { characterId } = request.params;
     const updateCharacter: ICharacterDTO = request.body;
-    try {
-      await this.characterService.updateById(characterId, updateCharacter);
 
-      response.status(status).json({ code: status, success, message });
-    } catch (error: any) {
-      response.status(StatusCodes.BAD_REQUEST).json(error.message);
-    }
+    await this.characterService.updateById(characterId, updateCharacter);
+    response.status(status).json({ code: status, success, message });
   }
 
   async deleteById(request: Request, response: Response) {
@@ -84,13 +65,9 @@ export default class CharacterController {
     const status: number = StatusCodes.NO_CONTENT;
     const success: boolean = true;
     const { characterId } = request.params;
-    try {
-      await this.characterService.deleteById(characterId);
 
-      response.status(status).json({ code: status, success, message });
-    } catch (error: any) {
-      response.status(StatusCodes.BAD_REQUEST).json(error.message);
-    }
+    await this.characterService.deleteById(characterId);
+    response.status(status).json({ code: status, success, message });
   }
 
   async resetCharacters(request: Request, response: Response) {
@@ -99,14 +76,11 @@ export default class CharacterController {
     const success: boolean = true;
 
     await this.characterService.deleteManyCharacters();
-    await this.characterService.fetchComicData();
+    await this.characterService.fetchCharacters();
     response.status(status).json({ code: status, success, message });
   }
 
-  async getByComicCount(
-    req: Request,
-    res: Response
-  ) {
+  async getByComicCount(req: Request, res: Response) {
     const { comicCount } = req.query;
     const message: string = `Characters that starred in more than ${comicCount} comics were retrived!`;
     const status: number = StatusCodes.OK;
@@ -116,10 +90,7 @@ export default class CharacterController {
     res.status(status).json({ code: status, success, message, data: { result, available: result.length } });
   }
 
-  async getWithSecondTitle(
-    req: Request,
-    res: Response
-  ) {
+  async getWithSecondTitle(req: Request, res: Response) {
     const message: string = 'Characters that hava a second title were retrieved';
     const status: number = StatusCodes.OK;
     const success: boolean = true;

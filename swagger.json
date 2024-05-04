@@ -1,0 +1,2637 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Marvel API",
+    "description": "API Documentation for the Marvel API"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": ""
+    }
+  ],
+  "paths": {
+    "/api/v1/user/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to register a new user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User-signup-payload"
+              },
+              "examples": {
+                "Sign up user": {
+                  "value": {
+                    "username": "AnaxiMano",
+                    "email": "anaxi@gmail.com",
+                    "password": "coelhinh0Malv4do#$%",
+                    "confirmPassword": "coelhinh0Malv4do#$%"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-signup-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "User successfully registered in!",
+                      "data": {
+                        "user": {
+                          "username": "AnaxiMano",
+                          "email": "anaxi@gmail.com",
+                          "password": "$2a$10$EXO/qM/LWImqgAq3A/PPeOZRpHhJa73O/jBd3KRM/XNlzn48VGlCm"
+                        },
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySUQiOiI2NjM2NWRmOWRhMTMwNWE2NzNhNmM3NjAiLCJpYXQiOjE3MTQ4Mzk4NTR9.HL3BP52_ndRCESV_ubGZ1ghCIxuGamk3O_q0ETAiboI"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/API-error"
+                    },
+                    {
+                      "$ref": "#/components/schemas/validation-error"
+                    }
+                  ]
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "email": "The passwords do not match!"
+                      }
+                    }
+                  },
+                  "validation-error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "resource": "email",
+                          "message": "\"email\" must be a valid email"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to log in a user.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User-login-payload"
+              },
+              "examples": {
+                "Login user": {
+                  "value": {
+                    "email": "anaxi@gmail.com",
+                    "password": "coelhinh0Malv4do#$%"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Logged in successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User-login-response"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "User successfully logged in!",
+                      "data": {
+                        "user": {
+                          "username": "string",
+                          "email": "string",
+                          "password": "string"
+                        },
+                        "token": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/API-error"
+                    },
+                    {
+                      "$ref": "#/components/schemas/validation-error"
+                    }
+                  ]
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "email": "The email or password provided is incorrect!"
+                      }
+                    }
+                  },
+                  "validation-error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "resource": "email",
+                          "message": "\"email\" must be a valid email"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fetch-comics": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to fetch comics from the API.",
+        "responses": {
+          "201": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-fetch-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "Comics successfully fetched from API!",
+                      "data": {
+                        "result": [
+                          {
+                            "title": "Comic Title",
+                            "description": "Comic Description",
+                            "publishDate": "Comic Publish date",
+                            "pageCount": 20,
+                            "folder": "Comic Folder URL"
+                          }
+                        ],
+                        "available": 20
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reset-comics": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to reset comics.",
+        "responses": {
+          "200": {
+            "description": "Successfully operation!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-fetch-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Comics successfully reseted!",
+                      "data": {
+                        "result": [
+                          {
+                            "title": "Comic Title",
+                            "description": "Comic Description",
+                            "publishDate": "Comic Publish date",
+                            "pageCount": 20,
+                            "folder": "Comic Folder URL"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comics": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to get all comics.",
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-fetch-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Comics successfully fetched from API!",
+                      "data": {
+                        "result": [
+                          {
+                            "title": "Comic Title",
+                            "description": "Comic Description",
+                            "publishDate": "Comic Publish date",
+                            "pageCount": 20,
+                            "folder": "Comic Folder URL"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comics/pageCount": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to get comics by number of pages.",
+        "parameters": [
+          {
+            "name": "numPages",
+            "description": "Number of pages",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-fetch-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Comics with number of pages greater than x were retrieved!",
+                      "data": {
+                        "result": [
+                          {
+                            "title": "Comic Title",
+                            "description": "Comic Description",
+                            "publishDate": "Comic Publish date",
+                            "pageCount": 20,
+                            "folder": "Comic Folder URL"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comic": {
+      "post": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to add a new comic.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create-comic-payload"
+              },
+              "examples": {
+                "Create comic": {
+                  "value": {
+                    "title": "Comic Title",
+                    "description": "Comic Description",
+                    "publishDate": "Comic Publish date",
+                    "pageCount": 25,
+                    "folder": "Comic Folder URL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-fetch-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "New Comic added!",
+                      "data": {
+                        "title": "Comic Title",
+                        "description": "Comic Description",
+                        "publishDate": "Comic Publish date",
+                        "pageCount": 20,
+                        "folder": "Comic Folder URL"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/validation-error"
+                },
+                "examples": {
+                  "validation-error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "resource": "pageCount",
+                          "message": "\"pageCount\" must be a number"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/comic/:comicId": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to get a single comic.",
+        "parameters": [
+          {
+            "name": "comicId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comic ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Single comic retrieved!",
+                      "data": {
+                        "result": {
+                          "title": "Comic Title",
+                          "description": "Comic Description",
+                          "publishDate": "Comic Publish date",
+                          "pageCount": 40,
+                          "folder": "Comic Folder URL"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "name": "Bad-Request-Error",
+                          "message": "id format is invalid."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to update a comic.",
+        "parameters": [
+          {
+            "name": "comicId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comic ID"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create-comic-payload"
+              },
+              "examples": {
+                "Update comic": {
+                  "value": {
+                    "title": "Another Comic Title",
+                    "description": "Another Comic Description",
+                    "publishDate": "Another Comic Publish date",
+                    "pageCount": 25,
+                    "folder": "Another Comic Folder URL"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "The comic were updated!",
+                      "data": {
+                        "result": {
+                          "title": "Comic Title",
+                          "description": "Comic Description",
+                          "publishDate": "Comic Publish date",
+                          "pageCount": 40,
+                          "folder": "Comic Folder URL"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/API-error"
+                    },
+                    {
+                      "$ref": "#/components/schemas/validation-error"
+                    }
+                  ]
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "email": "The id format is invalid!"
+                      }
+                    }
+                  },
+                  "validation-error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "resource": "pageCount",
+                          "message": "\"pageCount\" must be a number"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "there is no register asociated to this id"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to delete a comic.",
+        "parameters": [
+          {
+            "name": "comicId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comic ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Comic successfully deleted!",
+                      "data": {
+                        "result": {
+                          "title": "Comic Title",
+                          "description": "Comic Description",
+                          "publishDate": "Comic Publish date",
+                          "pageCount": 40,
+                          "folder": "Comic Folder URL"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "email": "The id format is invalid!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "there is no register asociated to this id"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fetch-creators": {
+      "get": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators from API.",
+        "responses": {
+          "201": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-fetch-response"
+                },
+                "examples": {
+                  "creator": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Creators successfully fetched from API!",
+                      "data": {
+                        "result": [
+                          {
+                            "name": "Jonathan Hickman",
+                            "role": "writer",
+                            "sagaComic": "Secret Wars (2015) #7",
+                            "otherComics": [
+                              "Aliens Vs. Avengers (2024) #1",
+                              "Amazing Fantasy (2022) #1000",
+                              "Amazing Spider-Man: Full Circle (2019) #1",
+                              "Astonishing Tales (2009) #1",
+                              "Astonishing Tales (2009) #2",
+                              "Astonishing Tales (2009) #3",
+                              "Astonishing Tales (2009) #4",
+                              "Astonishing Tales (2009) #5",
+                              "Astonishing Tales (2009) #6",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "Avengers Vol. 6: Infinite Avengers (Trade Paperback)",
+                              "AVENGERS VOL. 2: THE LAST WHITE EVENT TPB  (Trade Paperback)",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "AVENGERS VOL. 4: INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS VOL. 6: INFINITE AVENGERS TPB (MARVEL NOW) (Trade Paperback)",
+                              "AVENGERS VOL. 3: PRELUDE TO INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS: TIME RUNS OUT (Trade Paperback)",
+                              "Avengers (2012) #1",
+                              "Avengers (2012) #2",
+                              "Avengers (2012) #2 (Jrjr Variant)"
+                            ],
+                            "collectionSize": 931
+                          }
+                        ],
+                        "available": 20
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reset-creators": {
+      "get": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to reset creators.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully operation!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-fetch-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Creators successfully reseted!",
+                      "data": {
+                        "result": [
+                          {
+                            "name": "Jonathan Hickman",
+                            "role": "writer",
+                            "sagaComic": "Secret Wars (2015) #7",
+                            "otherComics": [
+                              "Aliens Vs. Avengers (2024) #1",
+                              "Amazing Fantasy (2022) #1000",
+                              "Amazing Spider-Man: Full Circle (2019) #1",
+                              "Astonishing Tales (2009) #1",
+                              "Astonishing Tales (2009) #2",
+                              "Astonishing Tales (2009) #3",
+                              "Astonishing Tales (2009) #4",
+                              "Astonishing Tales (2009) #5",
+                              "Astonishing Tales (2009) #6",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "Avengers Vol. 6: Infinite Avengers (Trade Paperback)",
+                              "AVENGERS VOL. 2: THE LAST WHITE EVENT TPB  (Trade Paperback)",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "AVENGERS VOL. 4: INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS VOL. 6: INFINITE AVENGERS TPB (MARVEL NOW) (Trade Paperback)",
+                              "AVENGERS VOL. 3: PRELUDE TO INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS: TIME RUNS OUT (Trade Paperback)",
+                              "Avengers (2012) #1",
+                              "Avengers (2012) #2",
+                              "Avengers (2012) #2 (Jrjr Variant)"
+                            ],
+                            "collectionSize": 931
+                          }
+                        ],
+                        "available": 20
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/creators": {
+      "get": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators from API.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-fetch-response"
+                },
+                "examples": {
+                  "cretor": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Creators successfully fetched from API!",
+                      "data": {
+                        "result": [
+                          {
+                            "name": "Jonathan Hickman",
+                            "role": "writer",
+                            "sagaComic": "Secret Wars (2015) #7",
+                            "otherComics": [
+                              "Aliens Vs. Avengers (2024) #1",
+                              "Amazing Fantasy (2022) #1000",
+                              "Amazing Spider-Man: Full Circle (2019) #1",
+                              "Astonishing Tales (2009) #1",
+                              "Astonishing Tales (2009) #2",
+                              "Astonishing Tales (2009) #3",
+                              "Astonishing Tales (2009) #4",
+                              "Astonishing Tales (2009) #5",
+                              "Astonishing Tales (2009) #6",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "Avengers Vol. 6: Infinite Avengers (Trade Paperback)",
+                              "AVENGERS VOL. 2: THE LAST WHITE EVENT TPB  (Trade Paperback)",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "AVENGERS VOL. 4: INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS VOL. 6: INFINITE AVENGERS TPB (MARVEL NOW) (Trade Paperback)",
+                              "AVENGERS VOL. 3: PRELUDE TO INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS: TIME RUNS OUT (Trade Paperback)",
+                              "Avengers (2012) #1",
+                              "Avengers (2012) #2",
+                              "Avengers (2012) #2 (Jrjr Variant)"
+                            ],
+                            "collectionSize": 931
+                          }
+                        ],
+                        "available": 20
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/creator": {
+      "post": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to add a new creator.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create-creator-payload"
+              },
+              "examples": {
+                "Create creator": {
+                  "value": {
+                    "name": "Stan Lee",
+                    "role": "writer",
+                    "sagaComics": "Marvel #1",
+                    "otherComics": [
+                      "All"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Create-creator-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "New creator added!",
+                      "data": {
+                        "name": "Comic Title",
+                        "role": "Comic Description",
+                        "sagaComic": "Comic Publish date",
+                        "otherComics": 20,
+                        "collectionSize": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/validation-error"
+                },
+                "examples": {
+                  "validation-error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "resource": "name",
+                          "message": "\"name\" must be longer than 5 characters"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/creators/collectionSize": {
+      "get": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators by collection size.",
+        "parameters": {
+          "name": "collSize",
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-fetch-response"
+                },
+                "examples": {
+                  "creator": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Creators successfully retrieved!",
+                      "data": {
+                        "result": [
+                          {
+                            "name": "Jonathan Hickman",
+                            "role": "writer",
+                            "sagaComic": "Secret Wars (2015) #7",
+                            "otherComics": [
+                              "Aliens Vs. Avengers (2024) #1",
+                              "Amazing Fantasy (2022) #1000",
+                              "Amazing Spider-Man: Full Circle (2019) #1",
+                              "Astonishing Tales (2009) #1",
+                              "Astonishing Tales (2009) #2",
+                              "Astonishing Tales (2009) #3",
+                              "Astonishing Tales (2009) #4",
+                              "Astonishing Tales (2009) #5",
+                              "Astonishing Tales (2009) #6",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "Avengers Vol. 6: Infinite Avengers (Trade Paperback)",
+                              "AVENGERS VOL. 2: THE LAST WHITE EVENT TPB  (Trade Paperback)",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "AVENGERS VOL. 4: INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS VOL. 6: INFINITE AVENGERS TPB (MARVEL NOW) (Trade Paperback)",
+                              "AVENGERS VOL. 3: PRELUDE TO INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS: TIME RUNS OUT (Trade Paperback)",
+                              "Avengers (2012) #1",
+                              "Avengers (2012) #2",
+                              "Avengers (2012) #2 (Jrjr Variant)"
+                            ],
+                            "collectionSize": 931
+                          }
+                        ],
+                        "available": 20
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "The resource searched was not found!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/creators/nameLength": {
+      "get": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators by name length.",
+        "parameters": {
+          "name": "nameLength",
+          "in": "query",
+          "schema": {
+            "type": "string"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-fetch-response"
+                },
+                "examples": {
+                  "creator": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Creators successfully retrieved!",
+                      "data": {
+                        "result": [
+                          {
+                            "name": "Jonathan Hickman",
+                            "role": "writer",
+                            "sagaComic": "Secret Wars (2015) #7",
+                            "otherComics": [
+                              "Aliens Vs. Avengers (2024) #1",
+                              "Amazing Fantasy (2022) #1000",
+                              "Amazing Spider-Man: Full Circle (2019) #1",
+                              "Astonishing Tales (2009) #1",
+                              "Astonishing Tales (2009) #2",
+                              "Astonishing Tales (2009) #3",
+                              "Astonishing Tales (2009) #4",
+                              "Astonishing Tales (2009) #5",
+                              "Astonishing Tales (2009) #6",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "Avengers Vol. 6: Infinite Avengers (Trade Paperback)",
+                              "AVENGERS VOL. 2: THE LAST WHITE EVENT TPB  (Trade Paperback)",
+                              "Avengers Vol. 5: Adapt or Die (Trade Paperback)",
+                              "AVENGERS VOL. 4: INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS VOL. 6: INFINITE AVENGERS TPB (MARVEL NOW) (Trade Paperback)",
+                              "AVENGERS VOL. 3: PRELUDE TO INFINITY TPB  (Trade Paperback)",
+                              "AVENGERS: TIME RUNS OUT (Trade Paperback)",
+                              "Avengers (2012) #1",
+                              "Avengers (2012) #2",
+                              "Avengers (2012) #2 (Jrjr Variant)"
+                            ],
+                            "collectionSize": 931
+                          }
+                        ],
+                        "available": 20
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "The resource searched was not found!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/creator/:creatorID": {
+      "get": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch a single creator by ID.",
+        "parameters": {
+          "name": "creatorID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "New creator added!",
+                      "data": {
+                        "name": "Comic Title",
+                        "role": "Comic Description",
+                        "sagaComic": "Comic Publish date",
+                        "otherComics": 20,
+                        "collectionSize": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "name": "Bad-Request-Error",
+                          "message": "id format is invalid."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no creator registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to update a creator by ID.",
+        "parameters": {
+          "name": "creatorID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create-creator-payload"
+              },
+              "examples": {
+                "Create creator": {
+                  "value": {
+                    "name": "Stan Lee",
+                    "role": "writer",
+                    "sagaComics": "Marvel #1",
+                    "otherComics": [
+                      "All"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "New creator added!",
+                      "data": {
+                        "name": "Comic Title",
+                        "role": "Comic Description",
+                        "sagaComic": "Comic Publish date",
+                        "otherComics": 20,
+                        "collectionSize": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "name": "Bad-Request-Error",
+                          "message": "id format is invalid."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no creator registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to delete a creator by ID.",
+        "parameters": {
+          "name": "creatorID",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          },
+          "responses": {
+            "200": {
+              "description": "successfully operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Creator-get-single-response"
+                  },
+                  "examples": {
+                    "comic": {
+                      "value": {
+                        "code": 201,
+                        "success": true,
+                        "message": "New creator added!",
+                        "data": {
+                          "name": "Comic Title",
+                          "role": "Comic Description",
+                          "sagaComic": "Comic Publish date",
+                          "otherComics": 20,
+                          "collectionSize": 2
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Payload invalid.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/API-error"
+                  },
+                  "examples": {
+                    "API-Error": {
+                      "value": {
+                        "code": 400,
+                        "success": false,
+                        "errors": [
+                          {
+                            "name": "Bad-Request-Error",
+                            "message": "id format is invalid."
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/API-error"
+                  },
+                  "examples": {
+                    "user": {
+                      "value": {
+                        "code": 400,
+                        "success": false,
+                        "error": {
+                          "name": "Bad-Request-Error",
+                          "message": "There is no creator registered"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/fetch-characters": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to fetch characters from the Marvel API",
+        "responses": {
+          "201": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Characters-fetch-response"
+                },
+                "examples": {
+                  "creator": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "Characters successfully fetched from API!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/character": {
+      "post": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to create a new character",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create-character-payload"
+              },
+              "examples": {
+                "Create character": {
+                  "value": {
+                    "name": "Doctor Strange",
+                    "description": "Supreme Sourcerer",
+                    "thumbnail": "url",
+                    "comic": "Marvel #1",
+                    "comicCount": 1800
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Create-creator-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "New character added!",
+                      "data": {
+                        "name": "Doctor Strange",
+                        "description": "Supreme Sourcerer",
+                        "thumbnail": "url",
+                        "comic": "Marvel #1",
+                        "comicCount": 1800
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/validation-error"
+                },
+                "examples": {
+                  "validation-error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "resource": "name",
+                          "message": "\"name\" must be longer than 5 characters"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/characters": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get all characters",
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Get-characters-response"
+                },
+                "examples": {
+                  "get all characters": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "All characters were retrieved!",
+                      "data": {
+                        "result": [
+                          {
+                            "_id": "66368bf2bc1c27f806181096",
+                            "name": "Thor",
+                            "description": "As the Norse God of thunder and lightning, Thor wields one of the greatest weapons ever made, the enchanted hammer Mjolnir. While others have described Thor as an over-muscled, oafish imbecile, he's quite smart and compassionate.  He's self-assured, and he would never, ever stop fighting for a worthwhile cause.",
+                            "thumbnail": "http://i.annihil.us/u/prod/marvel/i/mg/d/d0/5269657a74350/portrait_uncanny.jpg",
+                            "comic": "Secret Wars (Hardcover)",
+                            "comicCount": 1899,
+                            "createdAt": "2024-05-04T19:26:42.547Z",
+                            "updatedAt": "2024-05-04T19:26:42.547Z",
+                            "__v": 0
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Not found.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/API-error"
+                  },
+                  "examples": {
+                    "user": {
+                      "value": {
+                        "code": 400,
+                        "success": false,
+                        "error": {
+                          "name": "Bad-Request-Error",
+                          "message": "There is no comic registered"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/reset-characters": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to reset characters",
+        "responses": {
+          "200": {
+            "description": "Successfully operation!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Characters-fetch-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Creators successfully reseted!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/characters/comicCount": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get characters by comic count",
+        "parameters": [
+          {
+            "name": "*",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Characters-fetch-response"
+                },
+                "examples": {
+                  "creator": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Characters that starred in more than x comics were retrived!"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/characters/secondTitle": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get characters with a second title",
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Characters-fetch-response"
+                },
+                "examples": {
+                  "creator": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Characters that hava a second title were retrieved"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/character/:characterId": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get a single character by ID",
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Single comic retrieved!",
+                      "data": {
+                        "result": {
+                          "title": "Comic Title",
+                          "description": "Comic Description",
+                          "publishDate": "Comic Publish date",
+                          "pageCount": 40,
+                          "folder": "Comic Folder URL"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "name": "Bad-Request-Error",
+                          "message": "id format is invalid."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to update a character by ID",
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Single comic retrieved!",
+                      "data": {
+                        "result": {
+                          "title": "Comic Title",
+                          "description": "Comic Description",
+                          "publishDate": "Comic Publish date",
+                          "pageCount": 40,
+                          "folder": "Comic Folder URL"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "name": "Bad-Request-Error",
+                          "message": "id format is invalid."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to delete a character by ID",
+        "parameters": [
+          {
+            "name": "characterId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comic-get-single-response"
+                },
+                "examples": {
+                  "comic": {
+                    "value": {
+                      "code": 200,
+                      "success": true,
+                      "message": "Single comic retrieved!",
+                      "data": {
+                        "result": {
+                          "title": "Comic Title",
+                          "description": "Comic Description",
+                          "publishDate": "Comic Publish date",
+                          "pageCount": 40,
+                          "folder": "Comic Folder URL"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
+                          "name": "Bad-Request-Error",
+                          "message": "id format is invalid."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "user": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User-signup-payload": {
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            },
+            "confirmPassword": {
+              "type": "string"
+            }
+          }
+        },
+        "User-signup-response": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "number"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "User-login-payload": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "password": {
+              "type": "string"
+            }
+          }
+        },
+        "User-login-response": {
+          "type": "object",
+          "properties": {
+            "code": "number",
+            "success": "boolean",
+            "message": "string",
+            "data": {
+              "type": "object",
+              "properties": {
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "username": "string",
+                    "email": "string",
+                    "password": "string",
+                    "_id": "string"
+                  }
+                },
+                "token": "string"
+              }
+            }
+          }
+        },
+        "Comic-get-single-response": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "publishDate": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "pageCount": {
+                      "type": "integer"
+                    },
+                    "folder": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Comic-fetch-response": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "title": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "publishDate": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "pageCount": {
+                        "type": "integer"
+                      },
+                      "folder": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Create-comic-payload": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "publishDate": {
+              "type": "string"
+            },
+            "pageCount": {
+              "type": "number"
+            },
+            "folder": {
+              "type": "string"
+            }
+          }
+        },
+        "Create-comic-response": {
+          "type": "object",
+          "properties": {
+            "code": "number",
+            "success": "boolean",
+            "message": "string",
+            "data": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "publishDate": {
+                  "type": "string"
+                },
+                "pageCount": {
+                  "type": "number"
+                },
+                "folder": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Creator-fetch-response": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "number"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "role": {
+                        "type": "string"
+                      },
+                      "sagaComics": {
+                        "type": "string"
+                      },
+                      "otherComics": {
+                        "type": "array",
+                        "properties": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "available": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "Create-creator-payload": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "role": {
+              "type": "string"
+            },
+            "sagaComics": {
+              "type": "string"
+            },
+            "otherComics": {
+              "type": "array",
+              "properties": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "Create-creator-response": {
+          "type": "object",
+          "properties": {
+            "code": "number",
+            "success": "boolean",
+            "message": "string",
+            "data": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "sagaComics": {
+                  "type": "string"
+                },
+                "otherComics": {
+                  "type": "array",
+                  "properties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Creator-get-single-response": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "integer"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "sagaComics": {
+                  "type": "string"
+                },
+                "otherComics": {
+                  "type": "array",
+                  "properties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "Characters-fetch-response": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "number"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            }
+          }
+        },
+        "Create-character-payload": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "String"
+            },
+            "description": {
+              "type": "String"
+            },
+            "thumbnail": {
+              "type": "String"
+            },
+            "comic": {
+              "type": "String"
+            },
+            "comicCount": {
+              "type": "Number"
+            }
+          }
+        },
+        "Create-character-response": {
+          "type": "object",
+          "properties": {
+            "code": "number",
+            "success": "boolean",
+            "message": "string",
+            "name": {
+              "type": "String"
+            },
+            "description": {
+              "type": "String"
+            },
+            "thumbnail": {
+              "type": "String"
+            },
+            "comic": {
+              "type": "String"
+            },
+            "comicCount": {
+              "type": "Number"
+            }
+          }
+        },
+        "Get-characters-response": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "number"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "message": {
+              "type": "string"
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "result": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "thumbnail": {
+                        "type": "string"
+                      },
+                      "comic": {
+                        "type": "string"
+                      },
+                      "comicCount": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "available": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "API-error": {
+          "type": "object",
+          "properties": {
+            "code": {
+              "type": "boolean"
+            },
+            "success": {
+              "type": "boolean"
+            },
+            "error": {
+              "type": "object",
+              "properties": {
+                "name": "string",
+                "message": "string"
+              }
+            }
+          }
+        },
+        "validation-error": {
+          "code": {
+            "type": "boolean"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "type": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "resource": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
+      "tags": [
+        {
+          "name": "User",
+          "description": "User endpoints"
+        },
+        {
+          "name": "Comic",
+          "description": "Comic endpoints"
+        },
+        {
+          "name": "Creator",
+          "description": "Creator endpoints"
+        },
+        {
+          "name": "Character",
+          "description": "Character endpoints"
+        }
+      ]
+    }
+  }
+}

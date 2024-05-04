@@ -1,50 +1,50 @@
 import Joi from 'joi';
 
-const MIN_TITLE_LENGTH = 5;
+const MIN_NAME_LENGTH = 5;
 const MIN_DESC_LENGTH = 5;
 
-class ValidateComics {
+class ValidateCharacters {
 
-  static CreateComicValidation() {
+  static CreateCharacterValidation() {
     const validationObject = Joi.object({
-      title: Joi.string()
-        .min(MIN_TITLE_LENGTH)
+      name: Joi.string()
+        .min(MIN_NAME_LENGTH)
         .required(),
 
       description: Joi.string()
         .min(MIN_DESC_LENGTH)
         .required(),
 
-      publishDate: Joi.string()
+      thumbnail: Joi.string()
         .required(),
 
-      pageCount: Joi.number()
+      comic: Joi.string()
         .required(),
 
-      folder: Joi.string()
+      comicCount: Joi.number()
         .required()
     });
 
     return validationObject;
   }
 
-  static UpdateComicValidation() {
+  static UpdateCharacterValidation() {
     const validationObject = Joi.object({
-      title: Joi.string()
-        .min(MIN_TITLE_LENGTH)
+      name: Joi.string()
+        .min(MIN_NAME_LENGTH)
         .required(),
 
       description: Joi.string()
         .min(MIN_DESC_LENGTH)
         .required(),
 
-      publishDate: Joi.string()
+      thumbnail: Joi.string()
         .required(),
 
-      pageCount: Joi.number()
+      comic: Joi.string()
         .required(),
 
-      folder: Joi.string()
+      comicCount: Joi.number()
         .required()
     });
 
@@ -53,4 +53,4 @@ class ValidateComics {
 
 }
 
-export default ValidateComics;
+export default ValidateCharacters;

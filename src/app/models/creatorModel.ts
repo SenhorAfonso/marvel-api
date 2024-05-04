@@ -2,19 +2,24 @@ import mongoose from 'mongoose';
 
 const creatorSchema = new mongoose.Schema({
   name: {
-    type: String
+    type: String,
+    require: [true, 'Name is a required field!']
   },
   role: {
-    type: String
+    type: String,
+    require: [true, 'Role is a required field!']
   },
   sagaComic: {
-    type: String
+    type: String,
+    require: [true, 'SagaComic is a required field!']
   },
   otherComics: {
-    type: [String]
+    type: [String],
+    require: [true, 'otherComics is a required field!']
   },
   collectionSize: {
-    type: Number
+    type: Number,
+    require: [true, 'CollectionSize is a required field!']
   }
 });
 
