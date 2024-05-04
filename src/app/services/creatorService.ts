@@ -5,7 +5,7 @@ import IHasResponseBody from '../../interfaces/generics/IHasResponseBody';
 import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 import ICreators from '../../interfaces/creators/ICreators';
 import ICreatorsArray from '../../interfaces/creators/ICreatorsArray';
-import CreatorRepository from '../repositories/creator_repository';
+import CreatorRepository from '../repositories/creatorRepository';
 import IUpdateCreatorInfo from '../../interfaces/creators/IUpdateCreatorInfo';
 import IPagination from '../../interfaces/IPagination';
 import APIUtils from '../utils/APIUtils';
@@ -15,10 +15,11 @@ import IAddNewCreator from '../../interfaces/creators/IAddNewCreator';
 class CreatorService {
 
   static async fetchCreators() {
+    const responseStart = Date.now();
     const cachedValue = await client.get('fetch-creators');
     let result: mongoose.Document[];
-
     if (cachedValue) {
+      await client.set('fetch-creators', cachedValue, 'EX', serverConfig.CACHE_EXPIRATION_TIME!);
       result = JSON.parse(cachedValue);
     } else {
       const comicsRequest = await fetch(`https://gateway.marvel.com/v1/public/comics${serverConfig.MARVEL_API_AUTH}&title=Secret%20Wars`);
@@ -35,8 +36,8 @@ class CreatorService {
       ({ result } = await CreatorRepository.saveCreators(creators.flat()));
       await client.set('fetch-creators', JSON.stringify(result), 'EX', serverConfig.CACHE_EXPIRATION_TIME!);
     }
-
-    return { result };
+    const responseTime = Date.now() - responseStart;
+    return { result, responseTime };
   }
 
   static async getCreators(pagination: IPagination) {

@@ -73,7 +73,8 @@
     {
       "files": [
         "app.ts",
-        "connectDB.ts"
+        "connectDB.ts",
+        "creatorService.ts"
       ],
       "rules": {
         "no-console": "off",
@@ -82,10 +83,12 @@
       }
     },
     {
-      "files": ["ComicHttpResponses.test.ts", "CreatorHttpResponses.test.ts", "APIUtils.ts"],
+      "files": ["userRoutesHttpResponses.test.ts", "extraRoutesHttpResponses.test.ts", "ComicHttpResponses.test.ts", "CreatorHttpResponses.test.ts", "apiUtils.test.ts", "APIUtils.ts", "CharacterHttpResponses.test.ts", "ComicHttpResponses.test.ts", "CreatorHttpResponses.test.ts"],
       "rules": {
         "no-magic-numbers": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "max-lines": "off",
+        "no-undefined": "off"
       }
     },
     {
@@ -94,6 +97,32 @@
       ],
       "rules": {
         "class-methods-use-this": "off"
+      }
+    },
+    {
+      "files": ["errorHandlingMiddleware.ts"],
+      "rules": {
+        "max-params": "off",
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["userModel.ts"],
+      "rules": {
+        "no-invalid-this": "off"
+      }
+    },
+    {
+      "files": ["characterRepository.ts", "characterService.ts"],
+      "rules": {
+        "no-return-await": "off",
+        "@typescript-eslint/no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["validateUser.ts"],
+      "rules": {
+        "require-unicode-regexp": "off"
       }
     }
   ]

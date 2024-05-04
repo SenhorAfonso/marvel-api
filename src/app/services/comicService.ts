@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
-import ComicRepository from '../repositories/comic_repository';
-import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
+import ComicRepository from '../repositories/comicRepository';
+import IUpdateComic from '../../interfaces/comic/IUpdateComic';
 import serverConfig from '../../configs/serverConfig';
-import IComicModel from '../../interfaces/comic/IComic_model';
+import IComicModel from '../../interfaces/comic/IComicModel';
 import IHasResponseBody from '../../interfaces/generics/IHasResponseBody';
 import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 import IPagination from '../../interfaces/IPagination';
@@ -12,7 +12,11 @@ import IQueryObject from '../../interfaces/IQueryObject';
 
 class ComicService {
 
-  static async fetchComics(): Promise<{ result: mongoose.Document[] }> {
+  static async fetchComics(): Promise<{
+    result: mongoose.Document[],
+    responseTime: number
+  }> {
+    const responseStart = Date.now();
     const cachedValue = await client.get('fetch-comics');
     let result: mongoose.Document[];
 
@@ -40,7 +44,8 @@ class ComicService {
       await client.set('fetch-comics', JSON.stringify(result), 'EX', serverConfig.CACHE_EXPIRATION_TIME!);
 
     }
-    return { result };
+    const responseTime = Date.now() - responseStart;
+    return { result, responseTime };
   }
 
   static getAllComics(pagination: IPagination) {

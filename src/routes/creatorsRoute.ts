@@ -1,5 +1,5 @@
 import Router from 'express';
-import CreatorController from '../app/controllers/creator_controller';
+import CreatorController from '../app/controllers/creatorController';
 import AuthenticationMiddleware from '../app/middlewares/authenticationMiddleware';
 import validationMiddleware from '../app/middlewares/validationMiddleware';
 import ValidateCreators from '../app/validations/creator/validateCreator';

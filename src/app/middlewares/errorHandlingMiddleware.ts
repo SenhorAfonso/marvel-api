@@ -13,7 +13,7 @@ class ErrorhandlingMiddleware {
   ) {
     const success: boolean = false;
     if (reqError instanceof APIError) {
-      res.status(reqError.status).json({ code: reqError.status, success: false, error: { name: reqError.name, messag: reqError.message } });
+      res.status(reqError.status).json({ code: reqError.status, success: false, error: { name: reqError.name, message: reqError.message } });
     } else if (reqError instanceof Joi.ValidationError) {
       const { type, errors } = ErrorhandlingMiddleware.formatJoiValidationErrors(reqError);
 

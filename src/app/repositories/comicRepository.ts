@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
-import ICreateComic from '../../interfaces/comic/ICreate_comic';
-import IUpdateComic from '../../interfaces/comic/IUpdate_comic';
+import ICreateComic from '../../interfaces/comic/ICreateComic';
+import IUpdateComic from '../../interfaces/comic/IUpdateComic';
 import comicsModel from '../models/comicsModel';
 import IQueryObject from '../../interfaces/IQueryObject';
 import ICacheOptions from '../../interfaces/ImongooseCacheOptions';
 import InternalServerError from '../errors/internalServerError';
 import NotFoundError from '../errors/notFoundError';
-import BadRequestdError from '../errors/badRequestError';
+import BadRequestError from '../errors/badRequestError';
 import APIUtils from '../utils/APIUtils';
 
 class ComicRepository {
@@ -72,14 +72,14 @@ class ComicRepository {
       result = await comicsModel.findById({ _id: comicId });
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) {
-        throw new BadRequestdError('Id format is invalid');
+        throw new BadRequestError('Id format is invalid');
       } else {
         throw new InternalServerError();
       }
     }
 
     if (APIUtils.isEmpty(result)) {
-      throw new NotFoundError('thre is no register asociated to this id');
+      throw new NotFoundError('there is no register asociated to this id');
     }
 
     return { result: result! };
@@ -97,14 +97,14 @@ class ComicRepository {
       result = await comicsModel.findByIdAndUpdate(comicId, newComicInfo, { new: true });
     } catch (error) {
       if (error instanceof mongoose.Error.CastError) {
-        throw new BadRequestdError('Id format invalid');
+        throw new BadRequestError('Id format is invalid');
       } else {
         throw new InternalServerError();
       }
     }
 
     if (APIUtils.isEmpty(result)) {
-      throw new NotFoundError('thre is no register asociated to this id');
+      throw new NotFoundError('there is no register asociated to this id');
     }
 
     return { result: result! };

@@ -3,12 +3,12 @@ import IPagination from '../../interfaces/IPagination';
 
 class APIUtils {
 
-  static createQueryObject(pagination: IPagination) {
+  static createQueryObject(pagination?: IPagination) {
     const queryObject = {
-      limit: Number(pagination.limit) || 3,
-      skip: Number(pagination.skip) || 0,
-      sort: pagination.sort || 'asc',
-      page: Number(pagination.page) || 0
+      limit: Number(pagination?.limit) || 3,
+      skip: Number(pagination?.skip) || 0,
+      sort: pagination?.sort || 'asc',
+      page: Number(pagination?.page) || 0
     };
 
     return queryObject;
@@ -24,6 +24,18 @@ class APIUtils {
   static passwordsDontMatch(password: string, hash: string): boolean {
     const match = bcrypt.compareSync(password, hash);
     return !match;
+  }
+
+  static passwordsAreInvalid(password: string, confirmPassword: string): boolean {
+    if (!password || !confirmPassword) {
+      return true;
+    }
+
+    if (password !== confirmPassword) {
+      return true;
+    }
+
+    return false;
   }
 
 }
