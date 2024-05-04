@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import CharacterService from '../services/character_service';
+import CharacterService from '../services/characterService';
 import { ICharacterDTO } from '../../DTOs/character/ICharacterDTO';
 
 export default class CharacterController {
