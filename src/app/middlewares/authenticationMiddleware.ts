@@ -29,7 +29,7 @@ class AuthenticationMiddleware {
     }
   }
 
-  static authHeaderIsNotValid(token: string): boolean {
+  private static authHeaderIsNotValid(token: string): boolean {
     return !token || !token.startsWith('Bearer ');
   }
 
