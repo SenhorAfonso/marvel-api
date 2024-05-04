@@ -6,7 +6,7 @@ import ICharacterResponseBody from '../../interfaces/character/ICharacterRespons
 import IComicResponseBody from '../../interfaces/comic/IComicResponseBody';
 import IHasResponseBody from '../../interfaces/generics/IHasResponseBody';
 import CharacterAdapter from '../adapter/character/characterAdapter';
-import CharacterRepository from '../repositories/character_repository';
+import CharacterRepository from '../repositories/characterRepository';
 
 export default class CharacterService {
   private readonly characterRepository: CharacterRepository;
