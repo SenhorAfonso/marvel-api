@@ -74,7 +74,7 @@
       "files": [
         "app.ts",
         "connectDB.ts",
-        "creator_service.ts"
+        "creatorService.ts"
       ],
       "rules": {
         "no-console": "off",
@@ -113,7 +113,7 @@
       }
     },
     {
-      "files": ["character_repository.ts", "character_service.ts"],
+      "files": ["characterRepository.ts", "characterService.ts"],
       "rules": {
         "no-return-await": "off",
         "@typescript-eslint/no-unused-vars": "off"
