@@ -12,9 +12,12 @@
     }
   ],
   "paths": {
-    "/user/signup": {
+    "/api/v1/user/signup": {
       "post": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to register a new user.",
         "responses": {
           "default": {
             "description": ""
@@ -27,16 +30,16 @@
                 "type": "object",
                 "properties": {
                   "username": {
-                    "example": "any"
+                    "example": "AnaxiMano"
                   },
                   "email": {
-                    "example": "any"
+                    "example": "anaxi@gmail.com"
                   },
                   "password": {
-                    "example": "any"
+                    "example": "coelhinh0Malv4do#$%"
                   },
                   "confirmPassword": {
-                    "example": "any"
+                    "example": "coelhinh0Malv4do#$%"
                   }
                 }
               }
@@ -45,9 +48,12 @@
         }
       }
     },
-    "/user/login": {
+    "/api/v1/user/login": {
       "post": {
-        "description": "",
+        "tags": [
+          "User"
+        ],
+        "description": "Endpoint to log in a user.",
         "responses": {
           "default": {
             "description": ""
@@ -60,10 +66,10 @@
                 "type": "object",
                 "properties": {
                   "email": {
-                    "example": "any"
+                    "example": "anaxi@gmail.com"
                   },
                   "password": {
-                    "example": "any"
+                    "example": "coelhinh0Malv4do#$%"
                   }
                 }
               }
@@ -72,42 +78,97 @@
         }
       }
     },
-    "/fetch-comics": {
+    "/api/v1/fetch-comics": {
       "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/reset-comics": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/comics": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/comics/pageCount": {
-      "get": {
-        "description": "",
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to fetch comics from the API.",
         "parameters": [
           {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/reset-comics": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to reset comics.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/comics": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to get all comics.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/v1/comics/pageCount": {
+      "get": {
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to get comics by number of pages.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "numPages",
+            "description": "Number of pages",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "*",
             "in": "query",
             "schema": {
               "type": "string"
@@ -121,9 +182,21 @@
         }
       }
     },
-    "/comic": {
+    "/api/v1/comic": {
       "post": {
-        "description": "",
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to add a new comic.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
@@ -135,16 +208,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "title": {
-                    "example": "any"
-                  },
-                  "description": {
-                    "example": "any"
-                  },
-                  "publishDate": {
-                    "example": "any"
-                  },
-                  "folder": {
+                  "*": {
                     "example": "any"
                   }
                 }
@@ -154,14 +218,25 @@
         }
       }
     },
-    "/comic/{comicId}": {
+    "/api/v1/comic/{comicId}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to get a single comic.",
         "parameters": [
           {
             "name": "comicId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comic ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -174,12 +249,23 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to update a comic.",
         "parameters": [
           {
             "name": "comicId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comic ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -196,16 +282,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "title": {
-                    "example": "any"
-                  },
-                  "description": {
-                    "example": "any"
-                  },
-                  "publishDate": {
-                    "example": "any"
-                  },
-                  "folder": {
+                  "*": {
                     "example": "any"
                   }
                 }
@@ -215,12 +292,23 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Comic"
+        ],
+        "description": "Endpoint to delete a comic.",
         "parameters": [
           {
             "name": "comicId",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Comic ID"
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -233,9 +321,48 @@
         }
       }
     },
-    "/fetch-creators": {
+    "/api/v1/fetch-creators": {
       "get": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators from API.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reset-creators": {
+      "get": {
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to reset creators.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
@@ -243,9 +370,21 @@
         }
       }
     },
-    "/reset-creators": {
+    "/api/v1/creators": {
       "get": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators from API.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
@@ -253,19 +392,21 @@
         }
       }
     },
-    "/creators": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/creator": {
+    "/api/v1/creator": {
       "post": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to add a new creator.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "default": {
             "description": ""
@@ -277,16 +418,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "role": {
-                    "example": "any"
-                  },
-                  "sagaComic": {
-                    "example": "any"
-                  },
-                  "otherComics": {
+                  "*": {
                     "example": "any"
                   }
                 }
@@ -296,10 +428,20 @@
         }
       }
     },
-    "/creators/collectionSize": {
+    "/api/v1/creators/collectionSize": {
       "get": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators by collection size.",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "collSize",
             "in": "query",
@@ -315,10 +457,20 @@
         }
       }
     },
-    "/creators/nameLength": {
+    "/api/v1/creators/nameLength": {
       "get": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch creators by name length.",
         "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "nameLength",
             "in": "query",
@@ -334,14 +486,24 @@
         }
       }
     },
-    "/creator/{creatorID}": {
+    "/api/v1/creator/{creatorID}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to fetch a single creator by ID.",
         "parameters": [
           {
             "name": "creatorID",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -354,12 +516,22 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to update a creator by ID.",
         "parameters": [
           {
             "name": "creatorID",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -376,16 +548,7 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "name": {
-                    "example": "any"
-                  },
-                  "role": {
-                    "example": "any"
-                  },
-                  "sagaComic": {
-                    "example": "any"
-                  },
-                  "otherComics": {
+                  "*": {
                     "example": "any"
                   }
                 }
@@ -395,12 +558,22 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Creators"
+        ],
+        "description": "Endpoint to delete a creator by ID.",
         "parameters": [
           {
             "name": "creatorID",
             "in": "path",
             "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
             "schema": {
               "type": "string"
             }
@@ -413,52 +586,96 @@
         }
       }
     },
-    "/fetch-characters": {
+    "/api/v1/fetch-characters": {
       "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/character": {
-      "post": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/characters": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/reset-characters": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
-    "/characters/comicCount": {
-      "get": {
-        "description": "",
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to fetch characters from the Marvel API",
         "parameters": [
           {
-            "name": "comicCount",
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/character": {
+      "post": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to create a new character",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/characters": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get all characters",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/reset-characters": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to reset characters",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/characters/comicCount": {
+      "get": {
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get characters by comic count",
+        "parameters": [
+          {
+            "name": "*",
             "in": "query",
             "schema": {
               "type": "string"
@@ -469,22 +686,38 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
-    "/characters/secondTitle": {
+    "/api/v1/characters/secondTitle": {
       "get": {
-        "description": "",
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get characters with a second title",
         "responses": {
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     },
-    "/character/{characterId}": {
+    "/api/v1/character/{characterId}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to get a single character by ID",
         "parameters": [
           {
             "name": "characterId",
@@ -499,10 +732,18 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to update a character by ID",
         "parameters": [
           {
             "name": "characterId",
@@ -517,10 +758,18 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Character"
+        ],
+        "description": "Endpoint to delete a character by ID",
         "parameters": [
           {
             "name": "characterId",
@@ -535,7 +784,12 @@
           "default": {
             "description": ""
           }
-        }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
       }
     }
   },
