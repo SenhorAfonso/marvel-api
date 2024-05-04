@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import StatusCodes from 'http-status-codes';
-import ComicService from '../services/comic_service';
+import ComicService from '../services/comicService';
 
 class ComicController {
   static async fetchComics(req: Request, res: Response) {
