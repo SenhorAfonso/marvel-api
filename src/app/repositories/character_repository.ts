@@ -1,5 +1,3 @@
-/* eslint-disable new-cap */
-/* eslint-disable no-return-await */
 import { Model } from 'mongoose';
 import { ICharacter } from '../../interfaces/character/ICharacter';
 import { ICharacterRepository } from '../../interfaces/character/ICharacterRepository';
