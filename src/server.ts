@@ -6,7 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from '../swagger.json';
 import comicRouter from './routes/comicRoute';
 import creatorRouter from './routes/creatorsRoute';
-import characterRouter from './routes/character_route';
+import characterRouter from './routes/characterRoute';
 import ErrorhandlingMiddleware from './app/middlewares/errorHandlingMiddleware';
 import userRouter from './routes/userRoute';
 

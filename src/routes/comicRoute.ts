@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import ComicController from '../app/controllers/comic_controller';
+import ComicController from '../app/controllers/comicController';
 import validationMiddleware from '../app/middlewares/validationMiddleware';
 import ValidateComics from '../app/validations/comics/validateComic';
 import AuthenticationMiddleware from '../app/middlewares/authenticationMiddleware';
