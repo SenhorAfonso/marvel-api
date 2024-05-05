@@ -19,7 +19,7 @@ This is the assessment that Professor Bussola gave for the Professional Challeng
 <a id="ancora2"></a>
 ## 🛠️Technologies
 
-<font size="15"> <p align="center"> These are the technologies that i used in this project: <h1>
+<font size="15"> <p align="center"> These are the technologies that we used in this project: <h1>
 </p>  </font> <br />
 
 <div align="center">
