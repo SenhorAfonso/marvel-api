@@ -179,8 +179,10 @@ GET: `/api/v1/fetch-creators/` ➡️ To fetch creators from marvel's API. <br>
 GET: `/api/v1/creators/:id`. ➡️ To retrieve a single creator by id. <br>
 GET: `/api/v1/creators/` ➡️ To retrieve an array of creators. <br>
 GET: `/api/v1/creators-characters/` ➡️ To reset the creators database. <br>
+
 ---
 DELETE: `/api/v1/creator/:id` ➡️ To delete a single creator.  <br>
+
 ---
 PUT: `/api/v1/creator/:id` ➡️ To update a single creator.  <br>
 🚚 endpoint payload:
@@ -212,8 +214,10 @@ GET: `/api/v1/fetch-comics/` ➡️ To fetch comics from marvel's API. <br>
 GET: `/api/v1/comic/:id`. ➡️ To retrieve a single comic by id. <br>
 GET: `/api/v1/comics/` ➡️ To retrieve an array of comics. <br>
 GET: `/api/v1/reset-comics/` ➡️ To reset the comics database. <br>
+
 ---
 DELETE: `/api/v1/comic/:id` ➡️ To delete a single comic.  <br>
+
 ---
 PUT: `/api/v1/comic/:id` ➡️ To update a single comic.  <br>
 🚚 endpoint payload:
@@ -245,8 +249,10 @@ GET: `/api/v1/fetch-characters/` ➡️ To fetch characters from marvel's API. <
 GET: `/api/v1/character/:id`. ➡️ To retrieve a single character by id. <br>
 GET: `/api/v1/characters/` ➡️ To retrieve an array of characters. <br>
 GET: `/api/v1/reset-characters/` ➡️ To reset the characters database. <br>
+
 ---
 DELETE: `/api/v1/character/:id` ➡️ To delete a character comic.  <br>
+
 ---
 PUT: `/api/v1/character/:id` ➡️ To update a single character.  <br>
 🚚 endpoint payload:
