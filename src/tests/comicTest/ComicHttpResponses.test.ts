@@ -350,6 +350,30 @@ describe('Check for Comic Entity\'s routes', () => {
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
+
+    it('Delete comic route should return 400 when the id format is invalid', async () => {
+      const token: string = serverConfig.USER_TOKEN_TEST!;
+
+      const response = await request(server)
+        .delete('/api/v1/comic/invalid')
+        .auth(token, { type: 'bearer' });
+
+      expect(response.body.code).toBe(StatusCodes.BAD_REQUEST);
+      expect(response.body.success).toBeFalsy();
+      expect(response.body.error.message).toBe('id format is invalid');
+    });
+
+    it('Delete comic route should return 404 when the id is not associated to an record', async () => {
+      const token: string = serverConfig.USER_TOKEN_TEST!;
+
+      const response = await request(server)
+        .delete('/api/v1/comic/662fd0381de0f5238869721e')
+        .auth(token, { type: 'bearer' });
+
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
+      expect(response.body.success).toBeFalsy();
+      expect(response.body.error.message).toBe('the id is not associatded with an record');
+    });
   });
 
   describe('Extra Comic Routes', () => {
