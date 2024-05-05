@@ -1,13 +1,13 @@
 import { Model } from 'mongoose';
 import { ICharacter } from '../../interfaces/character/ICharacter';
 import { ICharacterRepository } from '../../interfaces/character/ICharacterRepository';
-import model from '../models/charactersModel';
+import charactersModel from '../models/charactersModel';
 
 export default class CharacterRepository implements ICharacterRepository<ICharacter> {
   private characterModel: Model<ICharacter>;
 
   constructor() {
-    this.characterModel = model;
+    this.characterModel = charactersModel;
   }
 
   async save(character: ICharacter[]) {
@@ -25,7 +25,8 @@ export default class CharacterRepository implements ICharacterRepository<ICharac
   }
 
   async getSinglecharacter(id: string) {
-    return await this.characterModel.find({ _id: id });
+    const result = await this.characterModel.find({ _id: id });
+    return result;
   }
 
   async updateById(id: string, character: ICharacter): Promise<ICharacter | null> {
@@ -41,7 +42,7 @@ export default class CharacterRepository implements ICharacterRepository<ICharac
   }
 
   async getByComicCount(comicCount: number) {
-    const result = await this.characterModel.find({ comicCount: { $gt: comicCount } });
+    const result = await this.characterModel.find({ comicCount: { $gte: comicCount } });
     return result;
   }
 
