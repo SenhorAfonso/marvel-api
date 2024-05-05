@@ -37,8 +37,8 @@ class ComicController {
     const status: number = StatusCodes.CREATED;
     const success: boolean = true;
 
-    const { title, description, publishDate, folder } = req.body;
-    const { result } = await ComicService.addComic({ title, description, publishDate, folder });
+    const { title, description, publishDate, folder, pageCount } = req.body;
+    const { result } = await ComicService.addComic({ title, description, publishDate, folder, pageCount });
     res.status(status).json({ code: status, success, message, data: { result } });
   }
 

@@ -48,7 +48,7 @@ class ComicRepository {
   }
 
   static async addComic(
-    newComic: any
+    newComic: ICreateComic
   ): Promise<{
     result: mongoose.Document
   }> {
@@ -120,8 +120,17 @@ class ComicRepository {
     try {
       result = await comicsModel.findById({ _id: comicId });
     } catch (error) {
+      if (error instanceof mongoose.Error.CastError) {
+        throw new BadRequestError('id format is invalid');
+      }
       throw new InternalServerError();
     }
+
+    if (APIUtils.isEmpty(result)) {
+      throw new NotFoundError('the id is not associatded with an record');
+    }
+
+    await comicsModel.findByIdAndDelete({ _id: comicId });
 
     return { result: result! };
   }
@@ -142,7 +151,7 @@ class ComicRepository {
     let result: mongoose.Document[] | null;
 
     try {
-      result = await comicsModel.find({ pageCount: { $gt: threshold } });
+      result = await comicsModel.find({ pageCount: { $gte: threshold } });
     } catch (error) {
       throw new InternalServerError();
     }

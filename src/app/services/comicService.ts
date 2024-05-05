@@ -9,6 +9,7 @@ import IPagination from '../../interfaces/IPagination';
 import APIUtils from '../utils/APIUtils';
 import client from '../models/extra/mongooseCache';
 import IQueryObject from '../../interfaces/IQueryObject';
+import ICreateComic from '../../interfaces/comic/ICreateComic';
 
 class ComicService {
 
@@ -54,7 +55,7 @@ class ComicService {
     return result;
   }
 
-  static addComic(newComic: any) {
+  static addComic(newComic: ICreateComic) {
     const result = ComicRepository.addComic(newComic);
     return result;
   }

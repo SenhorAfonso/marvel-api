@@ -1,8 +1,9 @@
-interface ICreate_comic {
+interface ICreateComic {
   title: string;
   description: string;
   publishDate: string;
   folder: string;
+  pageCount: number
 }
 
-export default ICreate_comic;
+export default ICreateComic;
