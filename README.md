@@ -107,7 +107,7 @@ These are some of the main features supported by our API:
 These are the steps to you to copy and run the project in your local machine:
 
    ## 1️⃣ Clone this repository:
-    git clone [https://github.com/SenhorAfonso/users-and-events-api.git](https://github.com/SenhorAfonso/marvel-api.git)
+    git clone https://github.com/SenhorAfonso/marvel-api.git
 
    ## 2️⃣ Install the dependencies:
     npm install
