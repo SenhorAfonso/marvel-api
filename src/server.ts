@@ -3,7 +3,7 @@ import queue from 'express-queue';
 import express from 'express';
 import compression from 'compression';
 import swaggerUi from 'swagger-ui-express';
-import swaggerDocs from '../swagger.json';
+import swaggerDocs from './swagger.json';
 import comicRouter from './routes/comicRoute';
 import creatorRouter from './routes/creatorsRoute';
 import characterRouter from './routes/characterRoute';
