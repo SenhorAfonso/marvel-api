@@ -35,7 +35,7 @@ class CreatorController {
   static async addCreator(req: Request, res: Response) {
     const success: boolean = true;
     const message: string = 'New creator added!';
-    const status: number = StatusCodes.OK;
+    const status: number = StatusCodes.CREATED;
 
     const { name, role, sagaComic, otherComics } = req.body;
     const { result } = await CreatorService.addCreator({ name, role, sagaComic, otherComics });
