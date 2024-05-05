@@ -29,8 +29,8 @@
                   "value": {
                     "username": "AnaxiMano",
                     "email": "anaxi@gmail.com",
-                    "password": "coelhinh0Malv4do#$%",
-                    "confirmPassword": "coelhinh0Malv4do#$%"
+                    "password": "coelhinh0Malv4do",
+                    "confirmPassword": "coelhinh0Malv4do"
                   }
                 }
               }
@@ -46,7 +46,7 @@
                   "$ref": "#/components/schemas/User-signup-response"
                 },
                 "examples": {
-                  "user": {
+                  "response": {
                     "value": {
                       "code": 201,
                       "success": true,
@@ -84,7 +84,7 @@
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "email": "The passwords do not match!"
                       }
@@ -125,7 +125,7 @@
                 "Login user": {
                   "value": {
                     "email": "anaxi@gmail.com",
-                    "password": "coelhinh0Malv4do#$%"
+                    "password": "coelhinh0Malv4do"
                   }
                 }
               }
@@ -141,7 +141,7 @@
                   "$ref": "#/components/schemas/User-login-response"
                 },
                 "examples": {
-                  "user": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -179,7 +179,7 @@
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "email": "The email or password provided is incorrect!"
                       }
@@ -209,6 +209,11 @@
         "tags": [
           "Comic"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Endpoint to fetch comics from the API.",
         "responses": {
           "201": {
@@ -219,7 +224,7 @@
                   "$ref": "#/components/schemas/Comic-fetch-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 201,
                       "success": true,
@@ -241,6 +246,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -249,6 +276,11 @@
       "get": {
         "tags": [
           "Comic"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to reset comics.",
         "responses": {
@@ -260,7 +292,7 @@
                   "$ref": "#/components/schemas/Comic-fetch-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -281,6 +313,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -289,6 +343,11 @@
       "get": {
         "tags": [
           "Comic"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to get all comics.",
         "responses": {
@@ -300,7 +359,7 @@
                   "$ref": "#/components/schemas/Comic-fetch-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -330,13 +389,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -351,6 +432,11 @@
       "get": {
         "tags": [
           "Comic"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to get comics by number of pages.",
         "parameters": [
@@ -373,7 +459,7 @@
                   "$ref": "#/components/schemas/Comic-fetch-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -394,6 +480,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -402,6 +510,11 @@
       "post": {
         "tags": [
           "Comic"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to add a new comic.",
         "requestBody": {
@@ -433,7 +546,7 @@
                   "$ref": "#/components/schemas/Comic-fetch-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 201,
                       "success": true,
@@ -474,14 +587,41 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/v1/comic/:comicId": {
+    "/api/v1/comic/{comicId}": {
       "get": {
         "tags": [
           "Comic"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to get a single comic.",
         "parameters": [
@@ -504,7 +644,7 @@
                   "$ref": "#/components/schemas/Comic-get-single-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -556,13 +696,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "There is no comic registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -575,6 +737,11 @@
       "put": {
         "tags": [
           "Comic"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to update a comic.",
         "parameters": [
@@ -617,7 +784,7 @@
                   "$ref": "#/components/schemas/Comic-get-single-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -656,7 +823,7 @@
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "email": "The id format is invalid!"
                       }
@@ -686,13 +853,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "there is no register asociated to this id"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -705,6 +894,11 @@
       "delete": {
         "tags": [
           "Comic"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to delete a comic.",
         "parameters": [
@@ -727,7 +921,7 @@
                   "$ref": "#/components/schemas/Comic-get-single-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -759,7 +953,7 @@
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "email": "The id format is invalid!"
                       }
@@ -777,13 +971,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "there is no register asociated to this id"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -798,6 +1014,11 @@
       "get": {
         "tags": [
           "Creators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to fetch creators from API.",
         "responses": {
@@ -852,6 +1073,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -860,6 +1103,11 @@
       "get": {
         "tags": [
           "Creators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to reset creators.",
         "parameters": [
@@ -880,7 +1128,7 @@
                   "$ref": "#/components/schemas/Creator-fetch-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 200,
                       "success": true,
@@ -923,6 +1171,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -931,6 +1201,11 @@
       "get": {
         "tags": [
           "Creators"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to fetch creators from API.",
         "parameters": [
@@ -1003,13 +1278,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
-                      "code": 400,
+                      "code": 404,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
-                        "message": "There is no comic registered"
+                        "message": "There is no creators registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1025,6 +1322,11 @@
         "tags": [
           "Creators"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Endpoint to add a new creator.",
         "requestBody": {
           "content": {
@@ -1037,7 +1339,7 @@
                   "value": {
                     "name": "Stan Lee",
                     "role": "writer",
-                    "sagaComics": "Marvel #1",
+                    "sagaComic": "Marvel #1",
                     "otherComics": [
                       "All"
                     ]
@@ -1056,7 +1358,7 @@
                   "$ref": "#/components/schemas/Create-creator-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 201,
                       "success": true,
@@ -1097,6 +1399,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1106,14 +1430,23 @@
         "tags": [
           "Creators"
         ],
-        "description": "Endpoint to fetch creators by collection size.",
-        "parameters": {
-          "name": "collSize",
-          "in": "query",
-          "schema": {
-            "type": "string"
+        "security": [
+          {
+            "bearerAuth": []
           }
-        },
+        ],
+        "description": "Endpoint to fetch creators by collection size.",
+        "parameters": [
+          {
+            "name": "collSize",
+            "description": "Size of creators collection",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successfully operation",
@@ -1175,13 +1508,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "The resource searched was not found!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1197,14 +1552,21 @@
         "tags": [
           "Creators"
         ],
-        "description": "Endpoint to fetch creators by name length.",
-        "parameters": {
-          "name": "nameLength",
-          "in": "query",
-          "schema": {
-            "type": "string"
+        "security": [
+          {
+            "bearerAuth": []
           }
-        },
+        ],
+        "description": "Endpoint to fetch creators by name length.",
+        "parameters": [
+          {
+            "name": "nameLength",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successfully operation",
@@ -1266,13 +1628,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "The resource searched was not found!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1283,20 +1667,27 @@
         }
       }
     },
-    "/api/v1/creator/:creatorID": {
+    "/api/v1/creator/{creatorID}": {
       "get": {
         "tags": [
           "Creators"
         ],
-        "description": "Endpoint to fetch a single creator by ID.",
-        "parameters": {
-          "name": "creatorID",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
+        "security": [
+          {
+            "bearerAuth": []
           }
-        },
+        ],
+        "description": "Endpoint to fetch a single creator by ID.",
+        "parameters": [
+          {
+            "name": "creatorID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successfully operation",
@@ -1306,7 +1697,7 @@
                   "$ref": "#/components/schemas/Creator-get-single-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 201,
                       "success": true,
@@ -1356,13 +1747,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "There is no creator registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1376,15 +1789,22 @@
         "tags": [
           "Creators"
         ],
-        "description": "Endpoint to update a creator by ID.",
-        "parameters": {
-          "name": "creatorID",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
+        "security": [
+          {
+            "bearerAuth": []
           }
-        },
+        ],
+        "description": "Endpoint to update a creator by ID.",
+        "parameters": [
+          {
+            "name": "creatorID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1396,7 +1816,7 @@
                   "value": {
                     "name": "Stan Lee",
                     "role": "writer",
-                    "sagaComics": "Marvel #1",
+                    "sagaComic": "Marvel #1",
                     "otherComics": [
                       "All"
                     ]
@@ -1415,7 +1835,7 @@
                   "$ref": "#/components/schemas/Creator-get-single-response"
                 },
                 "examples": {
-                  "comic": {
+                  "response": {
                     "value": {
                       "code": 201,
                       "success": true,
@@ -1465,13 +1885,35 @@
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
                       "code": 400,
                       "success": false,
-                      "error": {
+                      "API-Error": {
                         "name": "Bad-Request-Error",
                         "message": "There is no creator registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1485,81 +1927,110 @@
         "tags": [
           "Creators"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Endpoint to delete a creator by ID.",
-        "parameters": {
-          "name": "creatorID",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
+        "parameters": [
+          {
+            "name": "creatorID",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Creator-get-single-response"
+                },
+                "examples": {
+                  "response": {
+                    "value": {
+                      "code": 201,
+                      "success": true,
+                      "message": "New creator added!",
+                      "data": {
+                        "name": "Comic Title",
+                        "role": "Comic Description",
+                        "sagaComic": "Comic Publish date",
+                        "otherComics": 20,
+                        "collectionSize": 2
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
-          "responses": {
-            "200": {
-              "description": "successfully operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/Creator-get-single-response"
-                  },
-                  "examples": {
-                    "comic": {
-                      "value": {
-                        "code": 201,
-                        "success": true,
-                        "message": "New creator added!",
-                        "data": {
-                          "name": "Comic Title",
-                          "role": "Comic Description",
-                          "sagaComic": "Comic Publish date",
-                          "otherComics": 20,
-                          "collectionSize": 2
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Payload invalid.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/API-error"
-                  },
-                  "examples": {
-                    "API-Error": {
-                      "value": {
-                        "code": 400,
-                        "success": false,
-                        "errors": [
-                          {
-                            "name": "Bad-Request-Error",
-                            "message": "id format is invalid."
-                          }
-                        ]
-                      }
-                    }
-                  }
-                }
-              }
-            },
-            "404": {
-              "description": "Not found.",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/API-error"
-                  },
-                  "examples": {
-                    "user": {
-                      "value": {
-                        "code": 400,
-                        "success": false,
-                        "error": {
+          "400": {
+            "description": "Payload invalid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "errors": [
+                        {
                           "name": "Bad-Request-Error",
-                          "message": "There is no creator registered"
+                          "message": "id format is invalid."
                         }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 400,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Bad-Request-Error",
+                        "message": "There is no creator registered"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1574,6 +2045,11 @@
       "get": {
         "tags": [
           "Character"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to fetch characters from the Marvel API",
         "responses": {
@@ -1595,6 +2071,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1603,6 +2101,11 @@
       "post": {
         "tags": [
           "Character"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to create a new character",
         "requestBody": {
@@ -1675,6 +2178,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1683,6 +2208,11 @@
       "get": {
         "tags": [
           "Character"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to get all characters",
         "responses": {
@@ -1727,14 +2257,36 @@
                     "$ref": "#/components/schemas/API-error"
                   },
                   "examples": {
-                    "user": {
+                    "API-Error": {
                       "value": {
                         "code": 400,
                         "success": false,
-                        "error": {
+                        "API-Error": {
                           "name": "Bad-Request-Error",
                           "message": "There is no comic registered"
                         }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1749,6 +2301,11 @@
       "get": {
         "tags": [
           "Character"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to reset characters",
         "responses": {
@@ -1770,6 +2327,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1779,13 +2358,18 @@
         "tags": [
           "Character"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Endpoint to get characters by comic count",
         "parameters": [
           {
-            "name": "*",
+            "name": "comicCount",
             "in": "query",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
@@ -1808,6 +2392,28 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -1816,6 +2422,11 @@
       "get": {
         "tags": [
           "Character"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to get characters with a second title",
         "responses": {
@@ -1837,14 +2448,41 @@
                 }
               }
             }
+          },
+          "401": {
+            "description": "Unauthenticated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/API-error"
+                },
+                "examples": {
+                  "API-Error": {
+                    "value": {
+                      "code": 401,
+                      "success": false,
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
-    "/api/v1/character/:characterId": {
+    "/api/v1/character/{characterId}": {
       "get": {
         "tags": [
           "Character"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to get a single character by ID",
         "parameters": [
@@ -1886,8 +2524,8 @@
               }
             }
           },
-          "400": {
-            "description": "Payload invalid.",
+          "401": {
+            "description": "Unauthenticated.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1896,35 +2534,11 @@
                 "examples": {
                   "API-Error": {
                     "value": {
-                      "code": 400,
+                      "code": 401,
                       "success": false,
-                      "errors": [
-                        {
-                          "name": "Bad-Request-Error",
-                          "message": "id format is invalid."
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/API-error"
-                },
-                "examples": {
-                  "user": {
-                    "value": {
-                      "code": 400,
-                      "success": false,
-                      "error": {
-                        "name": "Bad-Request-Error",
-                        "message": "There is no comic registered"
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -1938,6 +2552,11 @@
         "tags": [
           "Character"
         ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "description": "Endpoint to update a character by ID",
         "parameters": [
           {
@@ -1949,6 +2568,26 @@
             }
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Create-character-payload"
+              },
+              "examples": {
+                "Create character": {
+                  "value": {
+                    "name": "Doctor Strange",
+                    "description": "Supreme Sourcerer",
+                    "thumbnail": "url",
+                    "comic": "Marvel #1",
+                    "comicCount": 1800
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "successfully operation",
@@ -2002,21 +2641,21 @@
               }
             }
           },
-          "404": {
-            "description": "Not found.",
+          "401": {
+            "description": "Unauthenticated.",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/API-error"
                 },
                 "examples": {
-                  "user": {
+                  "API-Error": {
                     "value": {
-                      "code": 400,
+                      "code": 401,
                       "success": false,
-                      "error": {
-                        "name": "Bad-Request-Error",
-                        "message": "There is no comic registered"
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -2029,6 +2668,11 @@
       "delete": {
         "tags": [
           "Character"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
         ],
         "description": "Endpoint to delete a character by ID",
         "parameters": [
@@ -2070,8 +2714,8 @@
               }
             }
           },
-          "400": {
-            "description": "Payload invalid.",
+          "401": {
+            "description": "Unauthenticated.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2080,35 +2724,11 @@
                 "examples": {
                   "API-Error": {
                     "value": {
-                      "code": 400,
+                      "code": 401,
                       "success": false,
-                      "errors": [
-                        {
-                          "name": "Bad-Request-Error",
-                          "message": "id format is invalid."
-                        }
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/API-error"
-                },
-                "examples": {
-                  "user": {
-                    "value": {
-                      "code": 400,
-                      "success": false,
-                      "error": {
-                        "name": "Bad-Request-Error",
-                        "message": "There is no comic registered"
+                      "API-Error": {
+                        "name": "Unauthenticated-Error",
+                        "message": "You do not permissions to access this content!"
                       }
                     }
                   }
@@ -2118,107 +2738,150 @@
           }
         }
       }
-    },
-    "components": {
-      "schemas": {
-        "User-signup-payload": {
-          "type": "object",
-          "properties": {
-            "username": {
-              "type": "string"
-            },
-            "email": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
-            },
-            "confirmPassword": {
-              "type": "string"
+    }
+  },
+  "components": {
+    "schemas": {
+      "User-signup-payload": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "User-signup-response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "_id": {
+                "type": "string"
+              }
             }
           }
-        },
-        "User-signup-response": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "number"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "message": {
-              "type": "string"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "username": {
-                  "type": "string"
-                },
-                "email": {
-                  "type": "string"
-                },
-                "password": {
-                  "type": "string"
-                },
-                "_id": {
-                  "type": "string"
+        }
+      },
+      "User-login-payload": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "User-login-response": {
+        "type": "object",
+        "properties": {
+          "code": "number",
+          "success": "boolean",
+          "message": "string",
+          "data": {
+            "type": "object",
+            "properties": {
+              "user": {
+                "type": "object",
+                "properties": {
+                  "username": "string",
+                  "email": "string",
+                  "password": "string",
+                  "_id": "string"
+                }
+              },
+              "token": "string"
+            }
+          }
+        }
+      },
+      "Comic-get-single-response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "publishDate": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "pageCount": {
+                    "type": "integer"
+                  },
+                  "folder": {
+                    "type": "string"
+                  }
                 }
               }
             }
           }
-        },
-        "User-login-payload": {
-          "type": "object",
-          "properties": {
-            "email": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
-            }
-          }
-        },
-        "User-login-response": {
-          "type": "object",
-          "properties": {
-            "code": "number",
-            "success": "boolean",
-            "message": "string",
-            "data": {
-              "type": "object",
-              "properties": {
-                "user": {
-                  "type": "object",
-                  "properties": {
-                    "username": "string",
-                    "email": "string",
-                    "password": "string",
-                    "_id": "string"
-                  }
-                },
-                "token": "string"
-              }
-            }
-          }
-        },
-        "Comic-get-single-response": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "integer"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "message": {
-              "type": "string"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "result": {
+        }
+      },
+      "Comic-fetch-response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "array",
+                "items": {
                   "type": "object",
                   "properties": {
                     "title": {
@@ -2242,396 +2905,353 @@
               }
             }
           }
-        },
-        "Comic-fetch-response": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "integer"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "message": {
-              "type": "string"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "title": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "publishDate": {
-                        "type": "string",
-                        "format": "date"
-                      },
-                      "pageCount": {
-                        "type": "integer"
-                      },
-                      "folder": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            }
+        }
+      },
+      "Create-comic-payload": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "publishDate": {
+            "type": "string"
+          },
+          "pageCount": {
+            "type": "number"
+          },
+          "folder": {
+            "type": "string"
           }
-        },
-        "Create-comic-payload": {
-          "type": "object",
-          "properties": {
-            "title": {
-              "type": "string"
-            },
-            "description": {
-              "type": "string"
-            },
-            "publishDate": {
-              "type": "string"
-            },
-            "pageCount": {
-              "type": "number"
-            },
-            "folder": {
-              "type": "string"
-            }
-          }
-        },
-        "Create-comic-response": {
-          "type": "object",
-          "properties": {
-            "code": "number",
-            "success": "boolean",
-            "message": "string",
-            "data": {
-              "type": "object",
-              "properties": {
-                "title": {
-                  "type": "string"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "publishDate": {
-                  "type": "string"
-                },
-                "pageCount": {
-                  "type": "number"
-                },
-                "folder": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "Creator-fetch-response": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "number"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "message": {
-              "type": "string"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "role": {
-                        "type": "string"
-                      },
-                      "sagaComics": {
-                        "type": "string"
-                      },
-                      "otherComics": {
-                        "type": "array",
-                        "properties": {
-                          "type": "string"
-                        }
-                      }
-                    }
-                  }
-                },
-                "available": {
-                  "type": "number"
-                }
-              }
-            }
-          }
-        },
-        "Create-creator-payload": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string"
-            },
-            "role": {
-              "type": "string"
-            },
-            "sagaComics": {
-              "type": "string"
-            },
-            "otherComics": {
-              "type": "array",
-              "properties": {
+        }
+      },
+      "Create-comic-response": {
+        "type": "object",
+        "properties": {
+          "code": "number",
+          "success": "boolean",
+          "message": "string",
+          "data": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "publishDate": {
+                "type": "string"
+              },
+              "pageCount": {
+                "type": "number"
+              },
+              "folder": {
                 "type": "string"
               }
             }
           }
-        },
-        "Create-creator-response": {
-          "type": "object",
-          "properties": {
-            "code": "number",
-            "success": "boolean",
-            "message": "string",
-            "data": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                },
-                "sagaComics": {
-                  "type": "string"
-                },
-                "otherComics": {
-                  "type": "array",
+        }
+      },
+      "Creator-fetch-response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "array",
+                "items": {
+                  "type": "object",
                   "properties": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "Creator-get-single-response": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "integer"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "message": {
-              "type": "string"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "role": {
-                  "type": "string"
-                },
-                "sagaComics": {
-                  "type": "string"
-                },
-                "otherComics": {
-                  "type": "array",
-                  "properties": {
-                    "type": "string"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "Characters-fetch-response": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "number"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "message": {
-              "type": "string"
-            }
-          }
-        },
-        "Create-character-payload": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "String"
-            },
-            "description": {
-              "type": "String"
-            },
-            "thumbnail": {
-              "type": "String"
-            },
-            "comic": {
-              "type": "String"
-            },
-            "comicCount": {
-              "type": "Number"
-            }
-          }
-        },
-        "Create-character-response": {
-          "type": "object",
-          "properties": {
-            "code": "number",
-            "success": "boolean",
-            "message": "string",
-            "name": {
-              "type": "String"
-            },
-            "description": {
-              "type": "String"
-            },
-            "thumbnail": {
-              "type": "String"
-            },
-            "comic": {
-              "type": "String"
-            },
-            "comicCount": {
-              "type": "Number"
-            }
-          }
-        },
-        "Get-characters-response": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "number"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "message": {
-              "type": "string"
-            },
-            "data": {
-              "type": "object",
-              "properties": {
-                "result": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "sagaComic": {
+                      "type": "string"
+                    },
+                    "otherComics": {
+                      "type": "array",
+                      "properties": {
                         "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "thumbnail": {
-                        "type": "string"
-                      },
-                      "comic": {
-                        "type": "string"
-                      },
-                      "comicCount": {
-                        "type": "number"
                       }
                     }
                   }
-                },
-                "available": {
-                  "type": "number"
+                }
+              },
+              "available": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      },
+      "Create-creator-payload": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "sagaComic": {
+            "type": "string"
+          },
+          "otherComics": {
+            "type": "array",
+            "properties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Create-creator-response": {
+        "type": "object",
+        "properties": {
+          "code": "number",
+          "success": "boolean",
+          "message": "string",
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "sagaComic": {
+                "type": "string"
+              },
+              "otherComics": {
+                "type": "array",
+                "properties": {
+                  "type": "string"
                 }
               }
             }
           }
-        },
-        "API-error": {
-          "type": "object",
-          "properties": {
-            "code": {
-              "type": "boolean"
-            },
-            "success": {
-              "type": "boolean"
-            },
-            "error": {
-              "type": "object",
-              "properties": {
-                "name": "string",
-                "message": "string"
+        }
+      },
+      "Creator-get-single-response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "sagaComic": {
+                "type": "string"
+              },
+              "otherComics": {
+                "type": "array",
+                "properties": {
+                  "type": "string"
+                }
               }
             }
           }
-        },
-        "validation-error": {
+        }
+      },
+      "Characters-fetch-response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "Create-character-payload": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "String"
+          },
+          "description": {
+            "type": "String"
+          },
+          "thumbnail": {
+            "type": "String"
+          },
+          "comic": {
+            "type": "String"
+          },
+          "comicCount": {
+            "type": "Number"
+          }
+        }
+      },
+      "Create-character-response": {
+        "type": "object",
+        "properties": {
+          "code": "number",
+          "success": "boolean",
+          "message": "string",
+          "name": {
+            "type": "String"
+          },
+          "description": {
+            "type": "String"
+          },
+          "thumbnail": {
+            "type": "String"
+          },
+          "comic": {
+            "type": "String"
+          },
+          "comicCount": {
+            "type": "Number"
+          }
+        }
+      },
+      "Get-characters-response": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "number"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "result": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "thumbnail": {
+                      "type": "string"
+                    },
+                    "comic": {
+                      "type": "string"
+                    },
+                    "comicCount": {
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "available": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      },
+      "API-error": {
+        "type": "object",
+        "properties": {
           "code": {
             "type": "boolean"
           },
           "success": {
             "type": "boolean"
           },
-          "type": {
-            "type": "string"
-          },
-          "errors": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "resource": {
-                  "type": "string"
-                },
-                "message": {
-                  "type": "string"
-                }
-              }
+          "API-Error": {
+            "type": "object",
+            "properties": {
+              "name": "string",
+              "message": "string"
             }
           }
         }
       },
-      "securitySchemes": {
-        "bearerAuth": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
+      "validation-error": {
+        "code": {
+          "type": "boolean"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "type": {
+          "type": "string"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "resource": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              }
+            }
+          }
         }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "tags": [
+      {
+        "name": "User",
+        "description": "User endpoints"
       },
-      "tags": [
-        {
-          "name": "User",
-          "description": "User endpoints"
-        },
-        {
-          "name": "Comic",
-          "description": "Comic endpoints"
-        },
-        {
-          "name": "Creator",
-          "description": "Creator endpoints"
-        },
-        {
-          "name": "Character",
-          "description": "Character endpoints"
-        }
-      ]
-    }
+      {
+        "name": "Comic",
+        "description": "Comic endpoints"
+      },
+      {
+        "name": "Creator",
+        "description": "Creator endpoints"
+      },
+      {
+        "name": "Character",
+        "description": "Character endpoints"
+      }
+    ]
   }
 }
