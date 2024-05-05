@@ -52,7 +52,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     }, 10000);
@@ -83,7 +83,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .get('/api/v1/comics')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('There is no comic registered');
     });
@@ -106,7 +106,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .send(newComic)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(201);
+      expect(response.body.code).toBe(StatusCodes.CREATED);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('New Comic added!');
     }, 15000);
@@ -129,7 +129,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -158,7 +158,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .get(`/api/v1/comic/${ComicID}`)
         .auth(token, { type: 'bearer' });;
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('Single comic retrieved!');
       expect(response.body.data.result._id).toBe(`${ComicID}`);
@@ -171,7 +171,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .get('/api/v1/comic/invalid')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(400);
+      expect(response.body.code).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('Id format is invalid');
     });
@@ -185,7 +185,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -198,7 +198,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('there is no register asociated to this id');
     });
@@ -236,7 +236,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .send(newComicInfo)
         .auth(token, { type: 'bearer' });;
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('The Comic were updated!');
       expect(response.body.data.result.title).toBe('How to make good tests with pytest');
@@ -258,7 +258,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .send(updateComic)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('there is no register asociated to this id');
     });
@@ -279,7 +279,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .send(updateComic)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(400);
+      expect(response.body.code).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('Id format is invalid');
     });
@@ -302,7 +302,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -331,7 +331,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .delete(`/api/v1/comic/${ComicID}`)
         .auth(token, { type: 'bearer' });;
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('Comic successfully deleted!');
       expect(response.body.data.result._id).toBe(`${ComicID}`);
@@ -346,7 +346,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -360,7 +360,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .get('/api/v1/reset-comics')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('Comics successfully reseted!');
       expect(response.body.data.available).toBe(20);
@@ -375,7 +375,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -390,7 +390,7 @@ describe('Check for Comic Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });

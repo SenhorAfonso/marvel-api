@@ -131,7 +131,7 @@ describe('Check for Characters Entity\'s routes', () => {
       .send(newCharacterInfo)
       .auth(token, { type: 'bearer' });;
 
-    expect(response.body.code).toBe(200);
+    expect(response.body.code).toBe(StatusCodes.OK);
     expect(response.body.success).toBeTruthy();
     expect(response.body.message).toBe('The character were updated!');
   }, 15000);
@@ -157,7 +157,7 @@ describe('Check for Characters Entity\'s routes', () => {
       .delete(`/api/v1/character/${ComicID}`)
       .auth(token, { type: 'bearer' });;
 
-    expect(response.status).toBe(StatusCodes.NO_CONTENT);
+    expect(response.status).toBe(StatusCodes.OK);
   }, 15000);
 
   it('Reset Comic route should be working', async () => {

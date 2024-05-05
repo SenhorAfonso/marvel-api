@@ -1,6 +1,7 @@
 import request from 'supertest';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
+import { StatusCodes } from 'http-status-codes';
 import server from '../../server';
 import creatorSchema from '../../app/models/creatorModel';
 import client from '../../app/models/extra/mongooseCache';
@@ -53,7 +54,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .get('/api/v1/fetch-creators')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     }, LONG_RUNNING_TEST);
@@ -72,7 +73,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .get('/api/v1/creators')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('All creators were retrieved!');
       expect(response.body.data.available).toBe(3);
@@ -85,7 +86,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .get('/api/v1/creators')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('There is no creatores registered!');
     }, LONG_RUNNING_TEST);
@@ -98,7 +99,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     }, LONG_RUNNING_TEST);
@@ -110,7 +111,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .get('/api/v1/creators')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(401);
+      expect(response.body.code).toBe(StatusCodes.UNAUTHORIZED);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('You do not permissions to access this content!');
     });
@@ -125,7 +126,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .get('/api/v1/creator/invalid')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(400);
+      expect(response.body.code).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('Id format is invalid');
     });
@@ -139,7 +140,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -152,7 +153,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('There is no creator with such id');
     });
@@ -178,7 +179,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .send(newCreator)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.CREATED);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('New creator added!');
     }, LONG_RUNNING_TEST);
@@ -204,7 +205,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     }, LONG_RUNNING_TEST);
@@ -236,7 +237,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .get(`/api/v1/creator/${creatorID}`)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('Single creator retrieved!');
       expect(response.body.data.result._id).toBe(`${creatorID}`);
@@ -281,7 +282,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .send(newCreatorInfo)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('The creator were updated!');
       expect(response.body.data.result.sagaComic).toBe('python');
@@ -306,7 +307,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .send(newCreator)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(400);
+      expect(response.body.code).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('Id format is invalid');
     });
@@ -330,7 +331,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .send(newCreator)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('The id 66329e3161d5caedd247e111 is not associated with an record');
     });
@@ -356,7 +357,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -370,7 +371,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .delete('/api/v1/creator/invalid')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(400);
+      expect(response.body.code).toBe(StatusCodes.BAD_REQUEST);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('Id format is invalid');
     });
@@ -382,7 +383,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .delete('/api/v1/creator/66329e3161d5caedd247e111')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('The id 66329e3161d5caedd247e111 is not associated with an record');
     });
@@ -396,7 +397,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -428,7 +429,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .delete(`/api/v1/creator/${creatorID}`)
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('Creator deleted');
       expect(response.body.data.result._id).toBe(`${creatorID}`);
@@ -443,7 +444,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .get('/api/v1/reset-creators')
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(200);
+      expect(response.body.code).toBe(StatusCodes.OK);
       expect(response.body.success).toBeTruthy();
       expect(response.body.message).toBe('The creators were reseted!');
       expect(response.body.data.available).toBe(84);
@@ -458,7 +459,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -475,7 +476,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -488,7 +489,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .query({ collSize: LONG_RUNNING_TEST })
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('The resource searched was not found!');
     });
@@ -503,7 +504,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .auth(token, { type: 'bearer' });
 
       await mongoose.connect(mongoURI);
-      expect(response.body.code).toBe(500);
+      expect(response.body.code).toBe(StatusCodes.INTERNAL_SERVER_ERROR);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('An unknown error occured. Please try again later');
     });
@@ -516,7 +517,7 @@ describe('Check for Creator Entity\'s routes', () => {
         .query({ nameLength: 100 })
         .auth(token, { type: 'bearer' });
 
-      expect(response.body.code).toBe(404);
+      expect(response.body.code).toBe(StatusCodes.NOT_FOUND);
       expect(response.body.success).toBeFalsy();
       expect(response.body.error.message).toBe('The resource searched was not found!');
     });
