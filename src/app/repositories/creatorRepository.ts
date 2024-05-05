@@ -8,6 +8,7 @@ import InternalServerError from '../errors/internalServerError';
 import BadRequestError from '../errors/badRequestError';
 import APIUtils from '../utils/APIUtils';
 import NotFoundError from '../errors/notFoundError';
+import IAddNewCreator from '../../interfaces/creators/IAddNewCreator';
 
 class CreatorRepository {
 
@@ -82,7 +83,7 @@ class CreatorRepository {
   }
 
   static async addCreator(
-    newCreator: any
+    newCreator: IAddNewCreator
   ): Promise<{
     result: mongoose.Document
   }> {
@@ -166,7 +167,7 @@ class CreatorRepository {
     let result: mongoose.Document[] | null;
 
     try {
-      result = await creatorModel.find({ collectionSize: { $gt: collSize } });
+      result = await creatorModel.find({ collectionSize: { $gte: collSize } });
     } catch (error) {
       throw new InternalServerError();
     }

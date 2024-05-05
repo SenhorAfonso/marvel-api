@@ -19,7 +19,7 @@ export default class CharacterService {
 
   allCharacters: ICharacter[] = [];
 
-  async fetchCharData(URL: string, comic: any) {
+  async fetchCharData(URL: string, comic: string) {
     const characterRequest = await fetch(`${URL}${serverConfig.MARVEL_API_AUTH}`);
 
     const response: IHasResponseBody<ICharacterResponseBody> = await characterRequest.json();
