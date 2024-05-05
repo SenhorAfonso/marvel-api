@@ -26,6 +26,7 @@ export default class CharacterController {
 
     const { characterId } = request.params;
     const result = await this.characterService.getSinglecharacter(characterId);
+
     response.status(status).json({ code: status, success, message, data: { result } });
   }
 
@@ -62,7 +63,7 @@ export default class CharacterController {
 
   async deleteById(request: Request, response: Response) {
     const message: string = 'The character were deleted!';
-    const status: number = StatusCodes.NO_CONTENT;
+    const status: number = StatusCodes.OK;
     const success: boolean = true;
     const { characterId } = request.params;
 
